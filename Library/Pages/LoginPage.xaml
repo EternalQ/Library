@@ -1,0 +1,89 @@
+﻿<Page
+    x:Class="Library.Pages.LoginPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Library.Pages"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mdes="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Title="LoginPage"
+    d:DesignHeight="450"
+    mc:Ignorable="d">
+
+    <StackPanel Background="Transparent">
+
+        <Label
+            Margin="0,50,0,30"
+            HorizontalAlignment="Center"
+            Content="Authorization"
+            FontSize="26"
+            Foreground="Black" />
+
+        <StackPanel
+            HorizontalAlignment="Center">
+            <StackPanel
+                Height="40"
+                Margin="30,0,30,0"
+                Orientation="Horizontal">
+
+                <TextBox
+                    Name="txtLogin"
+                    TabIndex="0"
+                    Width="280"
+                    mdes:HintAssist.Hint="Login"
+                    BorderBrush="Black"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                <mdes:PackIcon
+                    Width="30"
+                    Height="30"
+                    Margin="20 0 0 0"
+                    VerticalAlignment="Center"
+                    Foreground="Black"
+                    Kind="User" />
+            </StackPanel>
+
+            <StackPanel
+                Height="40"
+                Margin="30,30,30,0"
+                Orientation="Horizontal">
+
+                <PasswordBox
+                    Name="txtPassword"
+                    TabIndex="1"
+                    Width="280"
+                    mdes:HintAssist.Hint="Password"
+                    Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
+                <mdes:PackIcon
+                    Width="30"
+                    Height="30"
+                    Margin="20 0 0 0"
+                    VerticalAlignment="Center"
+                    Foreground="Black"
+                    Kind="Lock" />
+            </StackPanel>
+
+            <StackPanel
+                Margin="30 120 30 0"
+                Orientation="Horizontal">
+
+                <Button 
+                    Width="130"
+                    TabIndex="2"
+                    Content="Sign in"
+                    mdes:ButtonAssist.CornerRadius="0"
+                    Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                    Click="Button_Click_1"/>
+
+                <Button 
+                    Width="130"
+                    TabIndex="3"
+                    Content="Create account"
+                    Margin="70 0 0 0"
+                    mdes:ButtonAssist.CornerRadius="0"
+                    Style="{StaticResource MaterialDesignFlatLightBgButton}"
+                    Click="Button_Click"/>
+
+            </StackPanel>
+        </StackPanel>
+    </StackPanel>
+</Page>
