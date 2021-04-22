@@ -19,71 +19,86 @@
             FontSize="26"
             Foreground="Black" />
 
-        <StackPanel
-            HorizontalAlignment="Center">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition MinHeight="70"/>
+                <RowDefinition MinHeight="70"/>
+                <RowDefinition MinHeight="70"/>
+                <RowDefinition MinHeight="70"/>
+            </Grid.RowDefinitions>
             <StackPanel
+                VerticalAlignment="Top"
+                Grid.Row="0"
                 Height="40"
                 Margin="30,0,30,0"
                 Orientation="Horizontal">
 
                 <TextBox
                     Name="txtLogin"
-                    TabIndex="0"
                     Width="280"
                     mdes:HintAssist.Hint="Login"
                     BorderBrush="Black"
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    TabIndex="0">
+                    <Validation.ErrorTemplate>
+                        <ControlTemplate />
+                    </Validation.ErrorTemplate>
+                </TextBox>
                 <mdes:PackIcon
                     Width="30"
                     Height="30"
-                    Margin="20 0 0 0"
+                    Margin="20,0,0,0"
                     VerticalAlignment="Center"
                     Foreground="Black"
                     Kind="User" />
             </StackPanel>
 
             <StackPanel
+                VerticalAlignment="Top"
+                Grid.Row="1"
                 Height="40"
-                Margin="30,30,30,0"
+                Margin="30,0,30,0"
                 Orientation="Horizontal">
 
                 <PasswordBox
                     Name="txtPassword"
-                    TabIndex="1"
                     Width="280"
                     mdes:HintAssist.Hint="Password"
-                    Style="{StaticResource MaterialDesignFloatingHintPasswordBox}" />
+                    Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
+                    TabIndex="1" />
                 <mdes:PackIcon
                     Width="30"
                     Height="30"
-                    Margin="20 0 0 0"
+                    Margin="20,0,0,0"
                     VerticalAlignment="Center"
                     Foreground="Black"
                     Kind="Lock" />
             </StackPanel>
 
             <StackPanel
-                Margin="30 120 30 0"
+                VerticalAlignment="Top"
+                Grid.Row="3"
+                Margin="30,0,30,0"
                 Orientation="Horizontal">
 
-                <Button 
+                <Button
                     Width="130"
-                    TabIndex="2"
+                    mdes:ButtonAssist.CornerRadius="0"
+                    Click="Button_Click_1"
                     Content="Sign in"
-                    mdes:ButtonAssist.CornerRadius="0"
                     Style="{StaticResource MaterialDesignFlatDarkBgButton}"
-                    Click="Button_Click_1"/>
+                    TabIndex="2" />
 
-                <Button 
+                <Button
                     Width="130"
-                    TabIndex="3"
-                    Content="Create account"
-                    Margin="70 0 0 0"
+                    Margin="70,0,0,0"
                     mdes:ButtonAssist.CornerRadius="0"
+                    Click="Button_Click"
+                    Content="Create account"
                     Style="{StaticResource MaterialDesignFlatLightBgButton}"
-                    Click="Button_Click"/>
+                    TabIndex="3" />
 
             </StackPanel>
-        </StackPanel>
+        </Grid>
     </StackPanel>
 </Page>

@@ -15,29 +15,28 @@
     ResizeMode="NoResize"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    UseLayoutRounding="True">
 
     <Window.DataContext>
         <viewModel:MainViewModel />
     </Window.DataContext>
 
-    <Border Background="#eef3fb">
+    <Border Background="{StaticResource BackgroundColor}">
 
         <Grid>
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
-                <RowDefinition Height="60" />
+                <RowDefinition Height="auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
             <Border
                 Grid.Row="0"
-                Grid.RowSpan="2"
-                Margin="0,0,0,56.4"
                 Padding="0"
                 Panel.ZIndex="10"
-                Background="#4582af"
+                Background="{StaticResource MainColor}"
                 MouseDown="Grid_MouseDown">
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
 
@@ -72,50 +71,24 @@
 
             <StackPanel
                 Grid.Row="1"
-                Height="60"
                 VerticalAlignment="Bottom"
                 Orientation="Horizontal">
                 <RadioButton
-                    Margin="0"
                     Content="All books"
-                    Foreground="Black"
                     Style="{StaticResource RadioButtonStyle}" />
                 <RadioButton
                     Content="My Libary"
-                    Foreground="Black"
                     Style="{StaticResource RadioButtonStyle}" />
                 <RadioButton
                     Content="Account"
-                    Foreground="Black"
                     Style="{StaticResource RadioButtonStyle}" />
                 <RadioButton
                     Content="Reader [WIP]"
-                    Foreground="Black"
                     Style="{StaticResource RadioButtonStyle}" />
             </StackPanel>
-            <Label
-                Grid.Row="1"
-                Margin="0,0,15,0"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
-                Content="Libra"
-                FontSize="26"
-                FontWeight="Medium" />
+            
 
-            <!--<Grid
-                Grid.Row="1"
-                Height="570"
-                Margin="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="100" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="60" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-            </Grid>-->
+            <ContentControl Grid.Row="2" Content="{Binding CurrentView}"/>
 
         </Grid>
     </Border>

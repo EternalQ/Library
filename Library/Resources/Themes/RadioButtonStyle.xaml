@@ -4,7 +4,7 @@
         BasedOn="{StaticResource {x:Type ToggleButton}}"
         TargetType="{x:Type RadioButton}">
         <Style.Setters>
-            
+
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="RadioButton">
@@ -14,26 +14,31 @@
                             VerticalAlignment="Stretch"
                             Background="{TemplateBinding Background}">
 
-                            <TextBlock 
+                            <TextBlock
+                                Margin="20"
                                 VerticalAlignment="Center"
-                                Text="{TemplateBinding Property=Content}" 
-                                Margin="20"/>
+                                FontSize="15"
+                                FontWeight="SemiBold"
+                                Text="{TemplateBinding Property=Content}" />
 
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-            
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BorderThickness" Value="0"/>
+
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
         </Style.Setters>
-        
+
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="#e3e3e3"/>
+                <Setter Property="Background" Value="{DynamicResource FocusColor}" />
+                <Setter Property="Foreground" Value="{DynamicResource PrimColor}" />
             </Trigger>
             <Trigger Property="IsChecked" Value="True">
-                <Setter Property="Background" Value="#4582af"/>
+                <Setter Property="Background" Value="{DynamicResource MainColor}" />
+                <Setter Property="Foreground" Value="{DynamicResource PrimColor}" />
             </Trigger>
         </Style.Triggers>
     </Style>
