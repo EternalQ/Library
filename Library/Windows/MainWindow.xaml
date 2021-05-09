@@ -13,10 +13,10 @@
     Background="Transparent"
     IsTabStop="False"
     ResizeMode="NoResize"
+    UseLayoutRounding="True"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
-    mc:Ignorable="d"
-    UseLayoutRounding="True">
+    mc:Ignorable="d">
 
     <Window.DataContext>
         <viewModel:MainViewModel />
@@ -73,22 +73,13 @@
                 Grid.Row="1"
                 VerticalAlignment="Bottom"
                 Orientation="Horizontal">
-                <RadioButton
-                    Content="All books"
-                    Style="{StaticResource RadioButtonStyle}" />
-                <RadioButton
-                    Content="My Libary"
-                    Style="{StaticResource RadioButtonStyle}" />
-                <RadioButton
-                    Content="Account"
-                    Style="{StaticResource RadioButtonStyle}" />
-                <RadioButton
-                    Content="Reader [WIP]"
-                    Style="{StaticResource RadioButtonStyle}" />
+                <RadioButton Content="All books" Style="{StaticResource RadioButtonStyle}" />
+                <RadioButton Content="My Libary" Style="{StaticResource RadioButtonStyle}" />
+                <RadioButton Content="Account" Style="{StaticResource RadioButtonStyle}" />
+                <RadioButton Content="Reader [WIP]" Style="{StaticResource RadioButtonStyle}" />
             </StackPanel>
-            
 
-            <ContentControl Grid.Row="2" Content="{Binding CurrentView}"/>
+            <ContentControl Grid.Row="2" Content="{Binding CurrentView}" />
 
         </Grid>
     </Border>

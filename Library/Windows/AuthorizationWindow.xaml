@@ -1,25 +1,25 @@
-﻿<Window x:Class="Library.Windows.AuthorizationWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Library.Windows"
-        xmlns:mdes="http://materialdesigninxaml.net/winfx/xaml/themes"
-        mc:Ignorable="d"
-        Height="480" Width="390"
-        WindowStyle="None"
-        ResizeMode="NoResize"
-        WindowStartupLocation="CenterScreen">
-    <StackPanel>
+﻿<Window
+    x:Class="Library.Windows.AuthorizationWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Library.Windows"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mdes="http://materialdesigninxaml.net/winfx/xaml/themes"
+    Width="390"
+    Height="480"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterScreen"
+    WindowStyle="None"
+    mc:Ignorable="d">
+    <StackPanel Background="{StaticResource BackgroundColor}">
         <Grid
             Height="30"
             VerticalAlignment="Top"
-            Background="#4582af"
+            Background="{StaticResource MainColor}"
             MouseDown="Grid_MouseDown">
 
-            <StackPanel
-                HorizontalAlignment="Right"
-                Orientation="Horizontal">
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
 
                 <Button
                     Width="30"
@@ -42,17 +42,17 @@
                     Background="{x:Null}"
                     BorderBrush="{x:Null}"
                     Click="Button_Click"
-                        Foreground="White"
+                    Foreground="White"
                     IsTabStop="False">
-                    <mdes:PackIcon Kind="Close"/>
+                    <mdes:PackIcon Kind="Close" />
                 </Button>
 
             </StackPanel>
         </Grid>
 
         <Frame
-            Name="mainFraim" 
-            NavigationUIVisibility="Hidden" 
-            IsTabStop="False"/>
+            Name="mainFraim"
+            IsTabStop="False"
+            NavigationUIVisibility="Hidden" />
     </StackPanel>
 </Window>

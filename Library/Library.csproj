@@ -94,8 +94,10 @@
     <Compile Include="Core\ObservableObject.cs" />
     <Compile Include="Core\RelayCommand.cs" />
     <Compile Include="MVVM\Model\Book.cs" />
-    <Compile Include="MVVM\Model\FavBook.cs" />
+    <Compile Include="MVVM\Model\DatabaseContext.cs" />
+    <Compile Include="MVVM\Model\UserCard.cs" />
     <Compile Include="MVVM\Model\User.cs" />
+    <Compile Include="MVVM\ViewModel\RegistrationViewModel.cs" />
     <Compile Include="Windows\AuthorizationWindow.xaml.cs">
       <DependentUpon>AuthorizationWindow.xaml</DependentUpon>
     </Compile>
@@ -146,6 +148,7 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="packages.config" />
+    <Resource Include="Resources\Fonts\Password.ttf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -155,7 +158,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\Fonts\" />
     <Folder Include="Resources\Images\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

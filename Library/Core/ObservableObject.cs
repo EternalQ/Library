@@ -21,7 +21,7 @@ namespace Library.Core
             return (_propertyErrors.ContainsKey(propertyName)) ? _propertyErrors[propertyName] : null;
         }
 
-        public virtual void AddError(string propertyName, string errorMessage)
+        public virtual void AddError(string errorMessage, [CallerMemberName]string propertyName = null)
         {
             if (!_propertyErrors.ContainsKey(propertyName))
             {
@@ -44,7 +44,7 @@ namespace Library.Core
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
-        protected void OnErrorsChanged([CallerMemberName] string propertyName = null)
+        public virtual void OnErrorsChanged([CallerMemberName] string propertyName = null)
         {
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         }

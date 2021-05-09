@@ -16,10 +16,6 @@
                 <ResourceDictionary Source="Resources/Dictionaries/Colors.xaml"/>
             </ResourceDictionary.MergedDictionaries>
 
-            <DataTemplate DataType="{x:Type viewModel:LoginViewModel}">
-                
-            </DataTemplate>
-            
         </ResourceDictionary>
     </Application.Resources>
 </Application>

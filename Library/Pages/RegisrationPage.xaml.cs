@@ -1,4 +1,5 @@
 ﻿using Library.Windows;
+using Library.MVVM.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,13 +25,15 @@ namespace Library.Pages
         public RegisrationPage()
         {
             InitializeComponent();
+            DataContext = new RegistrationViewModel();
+            //Createbtn.IsEnabled = false;
         }
 
-        AuthorizationWindow mainWindow { get => Application.Current.MainWindow as AuthorizationWindow; }
+        //AuthorizationWindow mainWindow { get => Application.Current.MainWindow as AuthorizationWindow; }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            mainWindow.mainFraim.Navigate(new Uri("/Pages/LoginPage.xaml", UriKind.RelativeOrAbsolute));
-        }
+        //private void Button_Click(object sender, RoutedEventArgs e)
+        //{
+            
+        //}
     }
 }

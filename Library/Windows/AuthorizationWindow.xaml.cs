@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Library.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,10 +20,15 @@ namespace Library.Windows
     /// </summary>
     public partial class AuthorizationWindow : Window
     {
+        public LoginPage login = new LoginPage();
+        public RegisrationPage regisration = new RegisrationPage();
+
         public AuthorizationWindow()
         {
             InitializeComponent();
-            this.mainFraim.Navigate(new Uri("/Pages/LoginPage.xaml", UriKind.RelativeOrAbsolute));
+
+            mainFraim.Content = login;
+            //this.mainFraim.Navigate(new Uri("/Pages/LoginPage.xaml", UriKind.RelativeOrAbsolute));
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

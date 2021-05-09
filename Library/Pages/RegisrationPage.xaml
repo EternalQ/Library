@@ -6,9 +6,25 @@
     xmlns:local="clr-namespace:Library.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mdes="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:viewmodel="clr-namespace:Library.MVVM.ViewModel"
     Title="RegisrationPage"
     d:DesignHeight="450"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <Style
+            x:Key="TextBoxVal"
+            BasedOn="{StaticResource MaterialDesignFloatingHintTextBox}"
+            TargetType="TextBox">
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <AdornedElementPlaceholder/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
     <StackPanel Background="Transparent">
 
@@ -38,8 +54,9 @@
                     Width="280"
                     mdes:HintAssist.Hint="Login"
                     BorderBrush="Black"
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    TabIndex="0" />
+                    Style="{StaticResource TextBoxVal}"
+                    TabIndex="0"
+                    Text="{Binding Login, UpdateSourceTrigger=LostFocus}" />
                 <mdes:PackIcon
                     Width="30"
                     Height="30"
@@ -56,12 +73,13 @@
                 VerticalAlignment="Top"
                 Orientation="Horizontal">
 
-                <PasswordBox
+                <TextBox
                     Name="txtPassword"
                     Width="280"
                     mdes:HintAssist.Hint="Password"
-                    Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
-                    TabIndex="1" />
+                    Style="{StaticResource TextBoxVal}"
+                    TabIndex="1"
+                    Text="{Binding Password, UpdateSourceTrigger=LostFocus}" />
                 <mdes:PackIcon
                     Width="30"
                     Height="30"
@@ -78,12 +96,13 @@
                 VerticalAlignment="Top"
                 Orientation="Horizontal">
 
-                <PasswordBox
+                <TextBox
                     Name="txtPasswordVerify"
                     Width="280"
                     mdes:HintAssist.Hint="Verify Password"
-                    Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
-                    TabIndex="2" />
+                    Style="{StaticResource TextBoxVal}"
+                    TabIndex="2"
+                    Text="{Binding PasswordVerify, UpdateSourceTrigger=LostFocus}" />
                 <mdes:PackIcon
                     Width="30"
                     Height="30"
@@ -100,19 +119,24 @@
                 Orientation="Horizontal">
 
                 <Button
+                    Name="Createbtn"
                     Width="130"
                     mdes:ButtonAssist.CornerRadius="0"
+                    Command="{Binding Registration}"
                     Content="Create"
+                    IsEnabled="{Binding RegBtnEnable}"
                     Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                    Background="{DynamicResource PrimColor}"
                     TabIndex="3" />
 
                 <Button
                     Width="130"
                     Margin="70,0,0,0"
                     mdes:ButtonAssist.CornerRadius="0"
-                    Click="Button_Click"
+                    Command="{Binding Cancel}"
                     Content="Cancel"
                     Style="{StaticResource MaterialDesignFlatLightBgButton}"
+                    Background="{DynamicResource MainColor}"
                     TabIndex="4" />
 
             </StackPanel>
