@@ -99,6 +99,7 @@
     <Compile Include="Core\BaseProvider.cs" />
     <Compile Include="MVVM\Model\Book.cs" />
     <Compile Include="MVVM\Model\DatabaseContext.cs" />
+    <Compile Include="MVVM\Model\LocalDataSaver.cs" />
     <Compile Include="MVVM\Model\LoginProvider.cs" />
     <Compile Include="MVVM\Model\RegistrationProvider.cs" />
     <Compile Include="MVVM\Model\Tag.cs" />

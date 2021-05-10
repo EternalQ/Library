@@ -25,6 +25,7 @@ namespace Library.Windows
         {
             InitializeComponent();
             DataContext = AuthWindViewModel.Instance;
+            LoginViewModel.Instance.RootWindow = this;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

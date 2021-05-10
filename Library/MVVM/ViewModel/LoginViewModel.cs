@@ -1,6 +1,7 @@
 ﻿using Library.Core;
 using Library.MVVM.Model;
 using Library.MVVM.View;
+using Library.Pages;
 using Library.Windows;
 using System;
 using System.Collections.Generic;
@@ -8,11 +9,27 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Library.MVVM.ViewModel
 {
     class LoginViewModel : ObservableObject
     {
+        private static LoginViewModel instance;
+
+        public static LoginViewModel Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new LoginViewModel();
+                }
+                return instance;
+            }
+            set => instance = value;
+        }
+
         public RelayCommand Registration { get; set; }
         public RelayCommand Signin { get; set; }
 
@@ -75,6 +92,34 @@ namespace Library.MVVM.ViewModel
         }
         #endregion
 
+        #region CheckBox1
+        private bool _isRemember;
+
+        public bool IsRememberChecked
+        {
+            get { return _isRemember; }
+            set
+            {
+                _isRemember = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region CheckBox2
+        private bool _isAutologin;
+
+        public bool IsAutologinChecked
+        {
+            get { return _isAutologin; }
+            set
+            {
+                _isAutologin = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
         private bool SendRequestTo(BaseProvider provider, Action succesCallback)
         {
             DatabaseError = string.Empty;
@@ -105,12 +150,13 @@ namespace Library.MVVM.ViewModel
             return output;
         }
 
-        public Window RootWindow;
-
-        public LoginViewModel()
+        private void OnSignin(object o)
         {
-            Signin = new RelayCommand(o =>
-            {
+                if (IsRememberChecked)
+                    LocalDataSaver.SaveLoginSettings(Login, Password, IsRememberChecked, IsAutologinChecked);
+                else
+                    LocalDataSaver.SaveLoginSettings("", "", IsRememberChecked, IsAutologinChecked);
+
                 var provider = new LoginProvider();
 
                 Action succesAction = () =>
@@ -126,7 +172,21 @@ namespace Library.MVVM.ViewModel
                 };
 
                 SendRequestTo(provider, succesAction);
-            }, o =>
+        }
+
+        public Window RootWindow;
+        public LoginPage RootPage;
+        
+        public LoginViewModel()
+        {
+            LocalDataSaver.GetLoginSettings(out _login, out _password, out _isRemember, out _isAutologin);
+
+            if (IsAutologinChecked && IsRememberChecked)
+            {
+                OnSignin(null);
+            }
+
+            Signin = new RelayCommand(OnSignin, o =>
             {
                 if (Login == "" || Login == null ||
                 Password == "" || Password == null ||

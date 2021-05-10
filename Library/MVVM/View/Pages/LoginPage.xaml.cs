@@ -25,27 +25,23 @@ namespace Library.Pages
         public LoginPage()
         {
             InitializeComponent();
-            DataContext = new LoginViewModel();
+            DataContext = LoginViewModel.Instance;
+            LoginViewModel.Instance.RootPage = this;
         }
 
-        //AuthorizationWindow aWindow { get => Application.Current.MainWindow as AuthorizationWindow; }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public void SetPassword(string password)
         {
-            //aWindow.mainFraim.Navigate(new Uri("MVVM/View/Pages/RegisrationPage.xaml", UriKind.RelativeOrAbsolute));
-            //aWindow.SwapPage();
+            txtPassbox.Password = password;
         }
-
-        //private void Button_Click_1(object sender, RoutedEventArgs e)
-        //{
-        //    MainWindow main = new MainWindow();
-        //    main.Show();
-        //    aWindow.Close();
-        //}
 
         private void txtPassbox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             txtPassword.Text = txtPassbox.Password;
+        }
+
+        private void txtPassword_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            txtPassbox.Password = txtPassword.Text;
         }
     }
 }

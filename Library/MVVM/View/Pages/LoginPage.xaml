@@ -68,6 +68,7 @@
                         Width="280"
                         Panel.ZIndex="-1"
                         mdes:HintAssist.Hint="Password"
+                        TextChanged="txtPassword_TextChanged"
                         Foreground="Transparent"
                         IsTabStop="False"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -77,7 +78,7 @@
                         Name="txtPassbox"
                         Width="280"
                         mdes:HintAssist.Hint="Password"
-                        PasswordChanged="txtPassbox_PasswordChanged"
+                        LostFocus="txtPassbox_PasswordChanged"
                         Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
                         TabIndex="2" />
                 </Grid>
@@ -91,12 +92,24 @@
             </StackPanel>
 
             <CheckBox
+                FontSize="15"
+                Name="remember"
                 Grid.Row="2"
-                Margin="30,0,0,10"
+                Margin="30,0,0,30"
                 VerticalAlignment="Bottom"
                 Content="Remember me"
                 Cursor="Hand"
-                IsChecked="True" />
+                IsChecked="{Binding IsRememberChecked}" />
+
+            <CheckBox
+                FontSize="15"
+                Grid.Row="2"
+                Margin="30,0,0,10"
+                VerticalAlignment="Bottom"
+                Content="Auto login"
+                Cursor="Hand"
+                IsChecked="{Binding IsAutologinChecked}"
+                IsEnabled="{Binding ElementName=remember, Path=IsChecked}" />
 
             <StackPanel Grid.Row="3" Margin="30,0,30,0">
                 <StackPanel VerticalAlignment="Top" Orientation="Horizontal">
@@ -152,10 +165,10 @@
 
                 </StackPanel>
                 <TextBlock
-                        Margin="0,5,0,0"
-                        FontSize="12"
-                        Foreground="Red"
-                        Text="{Binding DatabaseError}" />
+                    Margin="0,5,0,0"
+                    FontSize="12"
+                    Foreground="Red"
+                    Text="{Binding DatabaseError}" />
             </StackPanel>
 
         </Grid>
