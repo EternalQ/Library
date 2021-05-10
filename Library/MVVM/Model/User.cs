@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Library.MVVM.Model
 {
-    class User
+    public class User
     {
         //[Identity]
         public int UserId { get; set; }
@@ -27,6 +27,7 @@ namespace Library.MVVM.Model
         {
             Login = login;
             Password = password;
+            Card = new UserCard();
         }
     }
 }

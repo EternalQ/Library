@@ -53,6 +53,7 @@
         <Frame
             Name="mainFraim"
             IsTabStop="False"
-            NavigationUIVisibility="Hidden" />
+            NavigationUIVisibility="Hidden"
+            Source="{Binding CurrentView}" />
     </StackPanel>
 </Window>

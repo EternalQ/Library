@@ -1,5 +1,4 @@
-﻿using Library.Pages;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,24 +10,28 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Library.MVVM.Model;
+using Library.MVVM.ViewModel;
 
-namespace Library.Windows
+namespace Library
 {
     /// <summary>
-    /// Логика взаимодействия для AuthorizationWindow.xaml
+    /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class AuthorizationWindow : Window
+    public partial class MainWindow : Window
     {
-        public LoginPage login = new LoginPage();
-        public RegisrationPage regisration = new RegisrationPage();
-
-        public AuthorizationWindow()
+        public MainWindow()
         {
+            //Ошибка
             InitializeComponent();
+            //DataContext = new MainWindViewModel();
+        }
 
-            mainFraim.Content = login;
-            //this.mainFraim.Navigate(new Uri("/Pages/LoginPage.xaml", UriKind.RelativeOrAbsolute));
+        public void SetVM(User user)
+        {
+            DataContext = new MainWindViewModel(user);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -38,7 +41,7 @@ namespace Library.Windows
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if(e.LeftButton == MouseButtonState.Pressed)
             {
                 DragMove();
             }

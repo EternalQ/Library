@@ -8,8 +8,9 @@ namespace Library.MVVM.Model
         public DatabaseContext() : base("DefaultConnection")
         { }
 
-        public DbSet<User> Users { get; set; }
         public DbSet<Book> Books { get; set; }
-        //public DbSet<FavBook> FavBooks { get; set; }
+        public DbSet<Tag> Tags { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserCard> UserCards { get; set; }
     }
 }

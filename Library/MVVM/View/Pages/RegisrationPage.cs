@@ -26,14 +26,16 @@ namespace Library.Pages
         {
             InitializeComponent();
             DataContext = new RegistrationViewModel();
-            //Createbtn.IsEnabled = false;
         }
 
-        //AuthorizationWindow mainWindow { get => Application.Current.MainWindow as AuthorizationWindow; }
+        private void txtPassbox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            txtPassword.Text = txtPassbox.Password;
+        }
 
-        //private void Button_Click(object sender, RoutedEventArgs e)
-        //{
-            
-        //}
+        private void txtPassVerifbox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            txtPasswordVerify.Text = txtPassVerifbox.Password;
+        }
     }
 }

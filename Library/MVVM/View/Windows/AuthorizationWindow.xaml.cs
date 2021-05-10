@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Library.Pages;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,20 +11,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Library.MVVM.ViewModel;
 
-namespace Library
+namespace Library.Windows
 {
     /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
+    /// Логика взаимодействия для AuthorizationWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AuthorizationWindow : Window
     {
-        public MainWindow()
+        public AuthorizationWindow()
         {
             InitializeComponent();
-            
+            DataContext = AuthWindViewModel.Instance;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -33,7 +34,7 @@ namespace Library
 
         private void Grid_MouseDown(object sender, MouseButtonEventArgs e)
         {
-            if(e.LeftButton == MouseButtonState.Pressed)
+            if (e.LeftButton == MouseButtonState.Pressed)
             {
                 DragMove();
             }

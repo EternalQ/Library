@@ -15,19 +15,11 @@ namespace Library.MVVM.ViewModel
 {
     class RegistrationViewModel : ObservableObject
     {
-        //public override void OnErrorsChanged([CallerMemberName] string propertyName = null)
-        //{
-        //    base.OnErrorsChanged(propertyName);
-        //    OnPropertyChanged(nameof(RegBtnEnable));
-        //}
-
-        AuthorizationWindow mainWindow { get => Application.Current.MainWindow as AuthorizationWindow; }
-
         public RelayCommand Cancel { get; set; }
         public RelayCommand Registration { get; set; }
+        public RelayCommand ToLogin { get; set; }
 
-        DatabaseContext dbcontext = new DatabaseContext();
-
+        #region Login
         private string _login;
 
         public string Login
@@ -52,7 +44,9 @@ namespace Library.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
+        #endregion
 
+        #region Password/Verify
         private string _password;
 
         public string Password
@@ -95,28 +89,82 @@ namespace Library.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
+        #endregion
 
-        public RegistrationViewModel()
+        #region DBError
+        /// <summary>
+        /// Database connection errors
+        /// </summary>
+        private string _dbError;
+
+        public string DatabaseError
         {
-            Cancel = new RelayCommand(o =>
+            get { return _dbError; }
+            set
             {
-                mainWindow.mainFraim.Navigate(new Uri("/Pages/LoginPage.xaml", UriKind.RelativeOrAbsolute));
-                //mainWindow.mainFraim.Content = mainWindow.login;
-            });
+                _dbError = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
 
-            Registration = new RelayCommand(o =>
+        #region RequestProc
+        /// <summary>
+        /// Loading?
+        /// </summary>
+        private bool _isRequestProcessing;
+
+        public bool IsRequestProcessing
+        {
+            get { return _isRequestProcessing; }
+            set
             {
-                Task regin = new Task(() =>
+                _isRequestProcessing = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        private bool SendRequestTo(BaseProvider provider, Action succesCallback)
+        {
+            DatabaseError = string.Empty;
+            bool output = false;
+
+            if (IsRequestProcessing == true)
+                return false;
+
+            if (HasErrors == false)
+            {
+                Action<bool> callback = (succes) =>
                 {
-                    User user = new User(Login.ToLower(), Password);
+                    IsRequestProcessing = false;
 
-                    if (dbcontext.Users.FirstOrDefault(u => u.Login == Login.ToLower()) == null)
-                        dbcontext.Users.Add(user);
+                    if (succes == false)
+                    {
+                        DatabaseError = provider.Error;
+                    }
                     else
                     {
-
+                        succesCallback?.Invoke();
                     }
-                });
+                };
+                IsRequestProcessing = true;
+                provider.SendRequest(Login.Trim(), Password.Trim(), callback);
+                output = true;
+            }
+            return output;
+        }
+        
+        public RegistrationViewModel()
+        {
+            Registration = new RelayCommand(o =>
+            {
+                Action succesAction = () =>
+                {
+                    Cancel.Execute(o);
+                };
+
+                SendRequestTo(new RegistrationProvider(), succesAction);
             },
             o =>
             {
@@ -125,6 +173,11 @@ namespace Library.MVVM.ViewModel
                 PasswordVerify == "" || PasswordVerify == null ||
                 HasErrors) return false;
                 return true;
+            });
+
+            Cancel = new RelayCommand(o =>
+            {
+                AuthWindViewModel.Instance.CurrentView = new Uri("../Pages/LoginPage.xaml", UriKind.RelativeOrAbsolute);
             });
         }
     }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Library.MVVM.Model
 {
-    class UserCard
+    public class UserCard
     {
         [Key]
         [ForeignKey("User")]

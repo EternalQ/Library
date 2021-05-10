@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Library.MVVM.Model
 {
-    class Book
+    public class Book
     {
         public int BookId { get; set; }
 
@@ -16,6 +16,11 @@ namespace Library.MVVM.Model
         public string Author { get; set; }
         public string Description { get; set; }
 
-        public List<User> users { get; set; }
+        public List<User> Users { get; set; }
+        public List<Tag> Tags { get; set; }
+
+        public Book() { }
+
+        
     }
 }

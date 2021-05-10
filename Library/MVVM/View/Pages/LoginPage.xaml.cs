@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Library.MVVM.ViewModel;
 
 namespace Library.Pages
 {
@@ -24,20 +25,27 @@ namespace Library.Pages
         public LoginPage()
         {
             InitializeComponent();
+            DataContext = new LoginViewModel();
         }
 
-        AuthorizationWindow aWindow { get => Application.Current.MainWindow as AuthorizationWindow; }
+        //AuthorizationWindow aWindow { get => Application.Current.MainWindow as AuthorizationWindow; }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            aWindow.mainFraim.Navigate(new Uri("/Pages/RegisrationPage.xaml", UriKind.RelativeOrAbsolute));
+            //aWindow.mainFraim.Navigate(new Uri("MVVM/View/Pages/RegisrationPage.xaml", UriKind.RelativeOrAbsolute));
+            //aWindow.SwapPage();
         }
 
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        //private void Button_Click_1(object sender, RoutedEventArgs e)
+        //{
+        //    MainWindow main = new MainWindow();
+        //    main.Show();
+        //    aWindow.Close();
+        //}
+
+        private void txtPassbox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            MainWindow main = new MainWindow();
-            main.Show();
-            aWindow.Close();
+            txtPassword.Text = txtPassbox.Password;
         }
     }
 }

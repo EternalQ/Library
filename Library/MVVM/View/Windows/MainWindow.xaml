@@ -19,7 +19,7 @@
     mc:Ignorable="d">
 
     <Window.DataContext>
-        <viewModel:MainViewModel />
+        <viewModel:MainWindViewModel />
     </Window.DataContext>
 
     <Border Background="{StaticResource BackgroundColor}">
@@ -76,10 +76,13 @@
                 <RadioButton Content="All books" Style="{StaticResource RadioButtonStyle}" />
                 <RadioButton Content="My Libary" Style="{StaticResource RadioButtonStyle}" />
                 <RadioButton Content="Account" Style="{StaticResource RadioButtonStyle}" />
-                <RadioButton Content="Reader [WIP]" Style="{StaticResource RadioButtonStyle}" />
+                <RadioButton
+                    Content="Reader [WIP]"
+                    IsEnabled="False"
+                    Style="{StaticResource RadioButtonStyle}" />
             </StackPanel>
 
-            <ContentControl Grid.Row="2" Content="{Binding CurrentView}" />
+            <ContentControl Grid.Row="2" Content="{Binding}" />
 
         </Grid>
     </Border>
