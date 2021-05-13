@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using Library.Core;
@@ -94,6 +95,17 @@ namespace Library.MVVM.ViewModel
             set
             {
                 //validation
+                Dictionary<string, string> emailValidation = new Dictionary<string, string>()
+                {
+                    {@"^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$", "Wrong E-Mail"}
+                };
+                ClearErrors();
+                foreach (var pattern in emailValidation.Keys)
+                    if (!Regex.IsMatch(value, pattern))
+                    {
+                        AddError(emailValidation[pattern]);
+                        break;
+                    }
                 _email = value;
                 OnPropertyChanged();
             }
