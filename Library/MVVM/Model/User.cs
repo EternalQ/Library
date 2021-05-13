@@ -16,9 +16,15 @@ namespace Library.MVVM.Model
 
         public string Login { get; set; }
         public string Password { get; set; }
-
+        
+        /// <summary>
+        /// User additive info
+        /// </summary>
         [Required]
         public UserCard Card { get; set; }
+        /// <summary>
+        /// Favourit books of user
+        /// </summary>
         public List<Book> FavBooks { get; set; }
 
         public User() { }
@@ -27,7 +33,9 @@ namespace Library.MVVM.Model
         {
             Login = login;
             Password = password;
+
             Card = new UserCard();
+            FavBooks = new List<Book>();
         }
     }
 }

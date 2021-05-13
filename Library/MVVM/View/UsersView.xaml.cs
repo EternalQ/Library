@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Library.MVVM.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,13 +17,14 @@ using System.Windows.Shapes;
 namespace Library.MVVM.View
 {
     /// <summary>
-    /// Логика взаимодействия для test.xaml
+    /// Логика взаимодействия для UsersView.xaml
     /// </summary>
-    public partial class test : UserControl
+    public partial class UsersView : UserControl
     {
-        public test()
+        public UsersView()
         {
             InitializeComponent();
+            DataContext = new UsersViewModel();
         }
     }
 }

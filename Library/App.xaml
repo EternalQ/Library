@@ -14,10 +14,16 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
-                <ResourceDictionary Source="Resources/Themes/RadioButtonStyle.xaml" />
+                <ResourceDictionary Source="Resources/Themes/Buttons.xaml" />
                 <ResourceDictionary Source="Resources/Dictionaries/Colors.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
+            <DataTemplate DataType="{x:Type viewModel:UsersViewModel}">
+                <view:UsersView />
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewModel:BooksAdminViewModel}">
+                <view:BooksView />
+            </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

@@ -1,6 +1,7 @@
 ﻿using Library.Core;
 using Library.MVVM.Model;
 using Library.MVVM.View;
+using Library.MVVM.View.Windows;
 using Library.Pages;
 using Library.Windows;
 using System;
@@ -152,31 +153,49 @@ namespace Library.MVVM.ViewModel
 
         private void OnSignin(object o)
         {
-                if (IsRememberChecked)
-                    LocalDataSaver.SaveLoginSettings(Login, Password, IsRememberChecked, IsAutologinChecked);
-                else
-                    LocalDataSaver.SaveLoginSettings("", "", IsRememberChecked, IsAutologinChecked);
+            if (IsRememberChecked)
+                LocalDataSaver.SaveLoginSettings(Login, Password, IsRememberChecked, IsAutologinChecked);
+            else
+                LocalDataSaver.SaveLoginSettings("", "", IsRememberChecked, IsAutologinChecked);
 
-                var provider = new LoginProvider();
+            var provider = new LoginProvider();
 
-                Action succesAction = () =>
+            Action succesAction = () =>
+            {
+                switch (Login.Trim().ToLower())
                 {
-                    Application.Current.Dispatcher.Invoke(() =>
-                    {
-                        MainWindow mainwindow = new MainWindow();
-                        mainwindow.SetVM(provider.AuthorizedUser);
+                    case "admin":
+                        {
+                            Application.Current.Dispatcher.Invoke(() =>
+                            {
+                                AdminWindow mainwindow = new AdminWindow();
 
-                        RootWindow.Close();
-                        mainwindow.Show();
-                    });
-                };
+                                RootWindow.Close();
+                                mainwindow.Show();
+                            });
+                            break;
+                        }
+                    default:
+                        {
+                            Application.Current.Dispatcher.Invoke(() =>
+                            {
+                                MainWindow mainwindow = new MainWindow();
+                                mainwindow.SetVM(provider.AuthorizedUser);
 
-                SendRequestTo(provider, succesAction);
+                                RootWindow.Close();
+                                mainwindow.Show();
+                            });
+                            break;
+                        }
+                }
+            };
+
+            SendRequestTo(provider, succesAction);
         }
 
         public Window RootWindow;
         public LoginPage RootPage;
-        
+
         public LoginViewModel()
         {
             LocalDataSaver.GetLoginSettings(out _login, out _password, out _isRemember, out _isAutologin);

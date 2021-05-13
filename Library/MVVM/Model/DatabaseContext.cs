@@ -5,6 +5,7 @@ namespace Library.MVVM.Model
 {
     class DatabaseContext : DbContext
     {
+        
         public DatabaseContext() : base("DefaultConnection")
         { }
 
