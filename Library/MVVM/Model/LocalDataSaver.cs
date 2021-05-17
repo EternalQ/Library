@@ -147,6 +147,8 @@ namespace Library.MVVM.Model
         static LocalDataSaver()
         {
             Directory.CreateDirectory(dataPath);
+            if (!File.Exists(loginSettingsPath))
+                SaveLoginSettings(LoginSettings.Default());
         }
     }
 }

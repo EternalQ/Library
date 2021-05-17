@@ -35,42 +35,42 @@ namespace Library.MVVM.ViewModel
         public RelayCommand Signin { get; set; }
 
         #region Login
-        private string _login;
+        private string _Login;
 
         public string Login
         {
-            get { return _login; }
+            get { return _Login; }
             set
             {
-                _login = value;
+                _Login = value;
                 OnPropertyChanged();
             }
         }
         #endregion
 
         #region Password
-        private string _password;
+        private string _Password;
 
         public string Password
         {
-            get { return _password; }
+            get { return _Password; }
             set
             {
-                _password = value;
+                _Password = value;
                 OnPropertyChanged();
             }
         }
         #endregion
 
         #region DBError
-        private string _dbError;
+        private string _DBError;
 
         public string DatabaseError
         {
-            get { return _dbError; }
+            get { return _DBError; }
             set
             {
-                _dbError = value;
+                _DBError = value;
                 OnPropertyChanged();
             }
         }
@@ -80,42 +80,42 @@ namespace Library.MVVM.ViewModel
         /// <summary>
         /// Loading?
         /// </summary>
-        private bool _isRequestProcessing;
+        private bool _IsRequestProcessing;
 
         public bool IsRequestProcessing
         {
-            get { return _isRequestProcessing; }
+            get { return _IsRequestProcessing; }
             set
             {
-                _isRequestProcessing = value;
+                _IsRequestProcessing = value;
                 OnPropertyChanged();
             }
         }
         #endregion
 
         #region CheckBox1
-        private bool _isRemember;
+        private bool _IsRemember;
 
         public bool IsRememberChecked
         {
-            get { return _isRemember; }
+            get { return _IsRemember; }
             set
             {
-                _isRemember = value;
+                _IsRemember = value;
                 OnPropertyChanged();
             }
         }
         #endregion
 
         #region CheckBox2
-        private bool _isAutologin;
+        private bool _IsAutologin;
 
         public bool IsAutologinChecked
         {
-            get { return _isAutologin; }
+            get { return _IsAutologin; }
             set
             {
-                _isAutologin = value;
+                _IsAutologin = value;
                 OnPropertyChanged();
             }
         }
@@ -200,7 +200,7 @@ namespace Library.MVVM.ViewModel
 
         public LoginViewModel()
         {
-            LocalDataSaver.GetLoginSettings(out _login, out _password, out _isRemember, out _isAutologin);
+            LocalDataSaver.GetLoginSettings(out _Login, out _Password, out _IsRemember, out _IsAutologin);
 
             if (IsAutologinChecked && IsRememberChecked)
             {

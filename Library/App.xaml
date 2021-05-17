@@ -22,7 +22,7 @@
                 <view:UsersView />
             </DataTemplate>
             <DataTemplate DataType="{x:Type viewModel:BooksAdminViewModel}">
-                <view:BooksView />
+                <view:BooksAdminView />
             </DataTemplate>
         </ResourceDictionary>
     </Application.Resources>

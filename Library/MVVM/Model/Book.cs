@@ -10,8 +10,10 @@ namespace Library.MVVM.Model
     {
         public int BookId { get; set; }
 
-        public byte[] Image { get; set; }
         //public string ImagePath { get; set; }
+        public byte[] Image { get; set; }
+        public byte[] DataFB2 { get; set; }
+        public byte[] DataEPUB { get; set; }
         public string Name { get; set; }
         public string Author { get; set; }
         public string Description { get; set; }

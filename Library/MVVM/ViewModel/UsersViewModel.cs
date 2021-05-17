@@ -16,32 +16,32 @@ namespace Library.MVVM.ViewModel
         public RelayCommand DeleteSelectedUser { get; set; }
         public RelayCommand OpenSelectedBook { get; set; }
         public RelayCommand SaveUserInfo { get; set; }
-        public RelayCommand Test { get; set; }
+        //public RelayCommand Test { get; set; }
         //public RelayCommand ChangeUserInfo { get; set; }
 
         #region UsersList
-        private List<User> _userList;
+        private List<User> _UserList;
 
         public List<User> UserList
         {
-            get { return _userList; }
+            get { return _UserList; }
             set
             {
-                _userList = value;
+                _UserList = value;
                 OnPropertyChanged();
             }
         }
         #endregion
 
         #region SelectedItem
-        private User _selectedUser;
+        private User _SelectedUser;
 
         public User SelectedUser
         {
-            get { return _selectedUser; }
+            get { return _SelectedUser; }
             set
             {
-                _selectedUser = value;
+                _SelectedUser = value;
                 OnPropertyChanged();
                 ChangeUserInfo();
             }
@@ -67,70 +67,70 @@ namespace Library.MVVM.ViewModel
         #endregion
 
         #region Selection
-        private bool _isSelected;
+        private bool _IsSelected;
 
         public bool IsUserSelected
         {
-            get { return _isSelected; }
+            get { return _IsSelected; }
             set
             {
-                _isSelected = value;
+                _IsSelected = value;
                 OnPropertyChanged();
             }
         }
         #endregion
 
         #region Login
-        private string _login;
+        private string _Login;
 
         public string Login
         {
-            get { return _login; }
+            get { return _Login; }
             set
             {
                 ClearErrors();
                 if (value == "" || value == null)
                     AddError("Login can't be empty");
-                _login = value;
+                _Login = value;
                 OnPropertyChanged();
             }
         }
         #endregion
 
         #region Name
-        private string _name;
+        private string _Name;
 
         public string Name
         {
-            get { return _name; }
+            get { return _Name; }
             set
             {
-                _name = value;
+                _Name = value;
                 OnPropertyChanged();
             }
         }
         #endregion
 
         #region SecondName
-        private string _secName;
+        private string _SecName;
 
         public string SecondName
         {
-            get { return _secName; }
+            get { return _SecName; }
             set
             {
-                _secName = value;
+                _SecName = value;
                 OnPropertyChanged();
             }
         }
         #endregion
 
         #region Email
-        private string _email;
+        private string _Email;
 
         public string Email
         {
-            get { return _email; }
+            get { return _Email; }
             set
             {
                 //validation
@@ -147,35 +147,35 @@ namespace Library.MVVM.ViewModel
                             AddError(emailValidation[pattern]);
                             break;
                         }
-                _email = value;
+                _Email = value;
                 OnPropertyChanged();
             }
         }
         #endregion
 
         #region BookList
-        private List<Book> _bookList;
+        private List<Book> _BookList;
 
         public List<Book> UserBookList
         {
-            get { return _bookList; }
+            get { return _BookList; }
             set
             {
-                _bookList = value;
+                _BookList = value;
                 OnPropertyChanged();
             }
         }
         #endregion
 
         #region SelectedBook
-        private Book _book;
+        private Book _Book;
 
         public Book SelectedBook
         {
-            get { return _book; }
+            get { return _Book; }
             set
             {
-                _book = value;
+                _Book = value;
                 OnPropertyChanged();
             }
         }
@@ -242,10 +242,10 @@ namespace Library.MVVM.ViewModel
                      return true;
              });
 
-            Test = new RelayCommand(o =>
-            {
-                MessageBox.Show("working");
-            });
+            //Test = new RelayCommand(o =>
+            //{
+            //    MessageBox.Show("working");
+            //});
         }
     }
 }

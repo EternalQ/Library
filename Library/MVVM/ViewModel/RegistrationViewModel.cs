@@ -20,11 +20,11 @@ namespace Library.MVVM.ViewModel
         public RelayCommand ToLogin { get; set; }
 
         #region Login
-        private string _login;
+        private string _Login;
 
         public string Login
         {
-            get { return _login; }
+            get { return _Login; }
             set
             {
                 Dictionary<string, string> loginValidation = new Dictionary<string, string>()
@@ -40,18 +40,18 @@ namespace Library.MVVM.ViewModel
                         AddError(loginValidation[pattern]);
                         break;
                     }
-                _login = value;
+                _Login = value;
                 OnPropertyChanged();
             }
         }
         #endregion
 
         #region Password/Verify
-        private string _password;
+        private string _Password;
 
         public string Password
         {
-            get { return _password; }
+            get { return _Password; }
             set
             {
                 Dictionary<string, string> loginValidation = new Dictionary<string, string>()
@@ -69,23 +69,23 @@ namespace Library.MVVM.ViewModel
                         AddError(loginValidation[pattern]);
                         break;
                     }
-                _password = value;
+                _Password = value;
                 OnPropertyChanged();
             }
         }
 
-        private string _passwordVerify;
+        private string _PasswordVerify;
 
         public string PasswordVerify
         {
-            get { return _passwordVerify; }
+            get { return _PasswordVerify; }
             set
             {
                 ClearErrors();
                 if (Password != value)
                     AddError("Password mismatch");
 
-                _passwordVerify = value;
+                _PasswordVerify = value;
                 OnPropertyChanged();
             }
         }
@@ -95,14 +95,14 @@ namespace Library.MVVM.ViewModel
         /// <summary>
         /// Database connection errors
         /// </summary>
-        private string _dbError;
+        private string _DBError;
 
         public string DatabaseError
         {
-            get { return _dbError; }
+            get { return _DBError; }
             set
             {
-                _dbError = value;
+                _DBError = value;
                 OnPropertyChanged();
             }
         }
@@ -112,14 +112,14 @@ namespace Library.MVVM.ViewModel
         /// <summary>
         /// Loading?
         /// </summary>
-        private bool _isRequestProcessing;
+        private bool _IsRequestProcessing;
 
         public bool IsRequestProcessing
         {
-            get { return _isRequestProcessing; }
+            get { return _IsRequestProcessing; }
             set
             {
-                _isRequestProcessing = value;
+                _IsRequestProcessing = value;
                 OnPropertyChanged();
             }
         }

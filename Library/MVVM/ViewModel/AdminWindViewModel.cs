@@ -46,28 +46,28 @@ namespace Library.MVVM.ViewModel
         #endregion
 
         #region UserText
-        private string _txtUser;
+        private string _TxtUser;
 
         public string TxtUser
         {
-            get { return _txtUser; }
+            get { return _TxtUser; }
             set
             {
-                _txtUser = value;
+                _TxtUser = value;
                 OnPropertyChanged();
             }
         }
         #endregion
 
         #region BookText
-        private string _txtBook;
+        private string _TxtBook;
 
         public string TxtBook
         {
-            get { return _txtBook; }
+            get { return _TxtBook; }
             set
             {
-                _txtBook = value;
+                _TxtBook = value;
                 OnPropertyChanged();
             }
         }
