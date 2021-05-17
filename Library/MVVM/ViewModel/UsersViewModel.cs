@@ -14,7 +14,10 @@ namespace Library.MVVM.ViewModel
     class UsersViewModel : ObservableObject
     {
         public RelayCommand DeleteSelectedUser { get; set; }
+        public RelayCommand OpenSelectedBook { get; set; }
         public RelayCommand SaveUserInfo { get; set; }
+        public RelayCommand Test { get; set; }
+        //public RelayCommand ChangeUserInfo { get; set; }
 
         #region UsersList
         private List<User> _userList;
@@ -40,6 +43,39 @@ namespace Library.MVVM.ViewModel
             {
                 _selectedUser = value;
                 OnPropertyChanged();
+                ChangeUserInfo();
+            }
+        }
+
+        private void ChangeUserInfo()
+        {
+            User selected;
+            UserCard card;
+            using (DatabaseContext db = new DatabaseContext())
+            {
+                selected = db.Users.FirstOrDefault(u => u.UserId == SelectedUser.UserId);
+                card = db.UserCards.FirstOrDefault(u => u.UserId == SelectedUser.UserId);
+            }
+
+            Login = selected.Login;
+            Name = card.FirstName;
+            SecondName = card.SecondName;
+            Email = card.Email;
+            IsUserSelected = true;
+            UserBookList = selected.FavBooks;
+        }
+        #endregion
+
+        #region Selection
+        private bool _isSelected;
+
+        public bool IsUserSelected
+        {
+            get { return _isSelected; }
+            set
+            {
+                _isSelected = value;
+                OnPropertyChanged();
             }
         }
         #endregion
@@ -52,6 +88,9 @@ namespace Library.MVVM.ViewModel
             get { return _login; }
             set
             {
+                ClearErrors();
+                if (value == "" || value == null)
+                    AddError("Login can't be empty");
                 _login = value;
                 OnPropertyChanged();
             }
@@ -97,21 +136,51 @@ namespace Library.MVVM.ViewModel
                 //validation
                 Dictionary<string, string> emailValidation = new Dictionary<string, string>()
                 {
-                    {@"^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$", "Wrong E-Mail"}
+                    //{@"^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$", "Wrong E-Mail"},
+                    {@"^[a-zA-Z].[a-zA-Z0-9]*@[a-zA-Z].[a-zA-Z0-9]*\.[a-zA-Z0-9]{2,6}$", "Wrong E-Mail"}
                 };
                 ClearErrors();
-                foreach (var pattern in emailValidation.Keys)
-                    if (!Regex.IsMatch(value, pattern))
-                    {
-                        AddError(emailValidation[pattern]);
-                        break;
-                    }
+                if (value != null)
+                    foreach (var pattern in emailValidation.Keys)
+                        if (!Regex.IsMatch(value, pattern))
+                        {
+                            AddError(emailValidation[pattern]);
+                            break;
+                        }
                 _email = value;
                 OnPropertyChanged();
             }
         }
-
         #endregion
+
+        #region BookList
+        private List<Book> _bookList;
+
+        public List<Book> UserBookList
+        {
+            get { return _bookList; }
+            set
+            {
+                _bookList = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region SelectedBook
+        private Book _book;
+
+        public Book SelectedBook
+        {
+            get { return _book; }
+            set
+            {
+                _book = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
         public UsersViewModel()
         {
             using (DatabaseContext db = new DatabaseContext())
@@ -139,6 +208,21 @@ namespace Library.MVVM.ViewModel
                     return true;
             });
 
+            OpenSelectedBook = new RelayCommand(o =>
+            {
+                using (DatabaseContext db = new DatabaseContext())
+                {
+                    var selected = db.Books.FirstOrDefault(u => u.BookId == SelectedBook.BookId);
+                    AdminWindViewModel.Instance.ToBooksCommand.Execute(null);
+                }
+            }, o =>
+            {
+                if (SelectedBook == null)
+                    return false;
+                else
+                    return true;
+            });
+
             SaveUserInfo = new RelayCommand(o =>
             {
                 using (DatabaseContext db = new DatabaseContext())
@@ -149,6 +233,18 @@ namespace Library.MVVM.ViewModel
                     db.UserCards.FirstOrDefault(u => u.UserId == SelectedUser.UserId).SecondName = SecondName;
                     db.SaveChanges();
                 }
+            }, o =>
+             {
+                 if (Login == "" || Login == null ||
+                 HasErrors || SelectedUser == null)
+                     return false;
+                 else
+                     return true;
+             });
+
+            Test = new RelayCommand(o =>
+            {
+                MessageBox.Show("working");
             });
         }
     }

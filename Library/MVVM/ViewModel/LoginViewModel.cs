@@ -138,6 +138,8 @@ namespace Library.MVVM.ViewModel
                     if (succes == false)
                     {
                         DatabaseError = provider.Error;
+                        IsAutologinChecked = false;
+                        LocalDataSaver.SaveLoginSettings(Login, Password, IsRememberChecked, IsAutologinChecked);
                     }
                     else
                     {

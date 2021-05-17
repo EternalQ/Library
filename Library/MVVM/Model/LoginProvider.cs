@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Library.MVVM.Model
 {
@@ -33,8 +34,9 @@ namespace Library.MVVM.Model
                     }
                     AuthorizedUser = user;
                 }
-                catch
+                catch(Exception ex)
                 {
+                    //MessageBox.Show(ex.Message);
                     Error = $"Database connection error";
                     return;
                 }

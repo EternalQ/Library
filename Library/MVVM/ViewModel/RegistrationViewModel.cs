@@ -150,6 +150,7 @@ namespace Library.MVVM.ViewModel
                 };
                 IsRequestProcessing = true;
                 provider.SendRequest(Login.Trim(), Password.Trim(), callback);
+                //provider.SendRequest("Admin", "Admin", callback);
                 output = true;
             }
             return output;
