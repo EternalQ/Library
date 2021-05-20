@@ -30,6 +30,13 @@ namespace Library.MVVM.ViewModel
 
         BooksAdminViewModel BooksVM;
         UsersViewModel UsersVM;
+        AddBooksViewModel AddBookVM;
+
+        public RelayCommand ToUsersCommand { get; set; }
+        public RelayCommand ToBooksCommand { get; set; }
+        public RelayCommand ToAddBookCommand { get; set; }
+        public RelayCommand OffAutoLogin { get; set; }
+        public RelayCommand LogOut { get; set; }
 
         #region CurrentView
         private object _currentView;
@@ -73,21 +80,19 @@ namespace Library.MVVM.ViewModel
         }
         #endregion
 
-        public RelayCommand ToUsersCommand { get; set; }
-        public RelayCommand ToBooksCommand { get; set; }
-        public RelayCommand OffAutoLogin { get; set; }
-        public RelayCommand LogOut { get; set; }
-
         public AdminWindow RootWindow;
 
         public AdminWindViewModel()
         {
-            BooksVM = new BooksAdminViewModel();
+            BooksVM = new BooksAdminViewModel(null);
             UsersVM = new UsersViewModel();
+            AddBookVM = new AddBooksViewModel(null);
 
-            DatabaseContext db = new DatabaseContext();
-            TxtUser = "Users: " + db.Users.Count();
-            TxtBook = "Books: " + db.Books.Count();
+            using (DatabaseContext db = new DatabaseContext())
+            {
+                TxtUser = "Users: " + db.Users.Count();
+                TxtBook = "Books: " + db.Books.Count();
+            }
 
             CurrentView = UsersVM;
 
@@ -99,6 +104,11 @@ namespace Library.MVVM.ViewModel
             ToBooksCommand = new RelayCommand(o =>
             {
                 CurrentView = BooksVM;
+            });
+
+            ToAddBookCommand = new RelayCommand(o =>
+            {
+                CurrentView = AddBookVM;
             });
 
             LogOut = new RelayCommand(o =>

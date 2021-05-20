@@ -1,5 +1,4 @@
-﻿using Library.MVVM.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,14 +16,13 @@ using System.Windows.Shapes;
 namespace Library.MVVM.View
 {
     /// <summary>
-    /// Логика взаимодействия для BooksAdminView.xaml
+    /// Логика взаимодействия для AddBookView.xaml
     /// </summary>
-    public partial class BooksAdminView : UserControl
+    public partial class AddBookView : UserControl
     {
-        public BooksAdminView()
+        public AddBookView()
         {
             InitializeComponent();
-            DataContext = new BooksAdminViewModel(null);
         }
     }
 }

@@ -63,6 +63,9 @@ namespace Library.MVVM.ViewModel
             Email = card.Email;
             IsUserSelected = true;
             UserBookList = selected.FavBooks;
+            //if (SelectedBook != null)
+            //{
+            //}
         }
         #endregion
 
@@ -153,6 +156,48 @@ namespace Library.MVVM.ViewModel
         }
         #endregion
 
+        #region UserSearch
+        private string _UserSearch;
+
+        public string UserSearch
+        {
+            get { return _UserSearch; }
+            set
+            {
+                _UserSearch = value;
+                OnPropertyChanged();
+                using (DatabaseContext db = new DatabaseContext())
+                {
+                    if (UserSearch != "")
+                        UserList = db.Users.Where(u => u.Login.Trim().Contains(UserSearch.Trim())).ToList();
+                    else
+                        UserList = db.Users.ToList();
+                }
+            }
+        }
+        #endregion
+
+        #region BookSearch
+        private string _BookSearch;
+
+        public string BookSearch
+        {
+            get { return _BookSearch; }
+            set
+            {
+                _BookSearch = value;
+                OnPropertyChanged();
+                using (DatabaseContext db = new DatabaseContext())
+                {
+                    if (BookSearch != "")
+                        UserBookList = db.Books.Where(b => b.Name.Trim().Contains(BookSearch.Trim())).ToList();
+                    else
+                        UserBookList = db.Books.ToList();
+                }
+            }
+        }
+        #endregion
+
         #region BookList
         private List<Book> _BookList;
 
@@ -213,7 +258,8 @@ namespace Library.MVVM.ViewModel
                 using (DatabaseContext db = new DatabaseContext())
                 {
                     var selected = db.Books.FirstOrDefault(u => u.BookId == SelectedBook.BookId);
-                    AdminWindViewModel.Instance.ToBooksCommand.Execute(null);
+                    AdminWindViewModel.Instance.CurrentView = new BooksAdminViewModel(selected);
+                    //AdminWindViewModel.Instance.ToBooksCommand.Execute(null);
                 }
             }, o =>
             {
@@ -234,13 +280,13 @@ namespace Library.MVVM.ViewModel
                     db.SaveChanges();
                 }
             }, o =>
-             {
-                 if (Login == "" || Login == null ||
-                 HasErrors || SelectedUser == null)
-                     return false;
-                 else
-                     return true;
-             });
+            {
+                if (Login == "" || Login == null ||
+                HasErrors || SelectedUser == null)
+                    return false;
+                else
+                    return true;
+            });
 
             //Test = new RelayCommand(o =>
             //{

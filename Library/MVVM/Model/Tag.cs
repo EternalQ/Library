@@ -8,6 +8,13 @@ namespace Library.MVVM.Model
 {
     public class Tag
     {
+        public Tag() { }
+
+        public Tag(string name)
+        {
+            Name = name;
+        }
+
         public int TagId { get; set; }
 
         public string Name { get; set; }

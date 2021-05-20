@@ -3,16 +3,26 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Library.Core;
+using Library.MVVM.Model;
 
 namespace Library.MVVM.ViewModel
 {
     class BooksAdminViewModel : ObservableObject
     {
-        #region BookList
-        private string _BookList;
+        public RelayCommand DeleteSelectedBook { get; set; }
+        public RelayCommand SaveBookInfo { get; set; }
+        public RelayCommand DeleteSelectedTag { get; set; }
+        public RelayCommand AddTag { get; set; }
+        public RelayCommand OpenDialog { get; set; }
+        public RelayCommand AddBook { get; set; }
+        public RelayCommand BookEdit { get; set; }
 
-        public string BookList
+        #region BookList
+        private List<Book> _BookList;
+
+        public List<Book> BookList
         {
             get { return _BookList; }
             set
@@ -24,14 +34,75 @@ namespace Library.MVVM.ViewModel
         #endregion
 
         #region SelectedBook
-        private string _SelectedBook;
+        private Book _SelectedBook;
 
-        public string SelectedBook
+        public Book SelectedBook
         {
             get { return _SelectedBook; }
             set
             {
                 _SelectedBook = value;
+                OnPropertyChanged();
+                ChangeBookInfo();
+            }
+        }
+
+        private void ChangeBookInfo()
+        {
+            Book selected;
+            List<Tag> tags;
+            using (DatabaseContext db = new DatabaseContext())
+            {
+
+                selected = db.Books.Include("Tags").FirstOrDefault(b => b.BookId == SelectedBook.BookId);
+                tags = selected.Tags;
+            }
+
+            Name = selected.Name;
+            AuthorName = selected.Author;
+            Description = selected.Description;
+            SelectedBookTags = tags;
+            IsBookSelected = true;
+        }
+        #endregion
+
+        #region SelectedBookTags
+        private List<Tag> _SelectedBookTags;
+
+        public List<Tag> SelectedBookTags
+        {
+            get { return _SelectedBookTags; }
+            set
+            {
+                _SelectedBookTags = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region TagList
+        private List<Tag> _TagList;
+
+        public List<Tag> TagList
+        {
+            get { return _TagList; }
+            set
+            {
+                _TagList = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region SelectedTag
+        private Tag _SelectedTag;
+
+        public Tag SelectedTag
+        {
+            get { return _SelectedTag; }
+            set
+            {
+                _SelectedTag = value;
                 OnPropertyChanged();
             }
         }
@@ -79,6 +150,62 @@ namespace Library.MVVM.ViewModel
         }
         #endregion
 
+        #region TagName
+        private string _TagName;
+
+        public string TagName
+        {
+            get { return _TagName; }
+            set
+            {
+                _TagName = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region BookSearch
+        private string _BookSearch;
+
+        public string BookSearch
+        {
+            get { return _BookSearch; }
+            set
+            {
+                _BookSearch = value;
+                OnPropertyChanged();
+                using (DatabaseContext db = new DatabaseContext())
+                {
+                    if (BookSearch != "")
+                        BookList = db.Books.Where(b => b.Name.Trim().Contains(value.Trim())).ToList();
+                    else
+                        BookList = db.Books.ToList();
+                }
+            }
+        }
+        #endregion
+
+        #region TagSearch
+        private string _TagSearch;
+
+        public string TagSearch
+        {
+            get { return _TagSearch; }
+            set
+            {
+                _TagSearch = value;
+                OnPropertyChanged();
+                using (DatabaseContext db = new DatabaseContext())
+                {
+                    if (TagSearch != "")
+                        TagList = db.Tags.Where(t => t.Name.Trim().Contains(TagSearch.Trim())).ToList();
+                    else
+                        TagList = db.Tags.ToList();
+                }
+            }
+        }
+        #endregion
+
         #region IsFB2
         private bool _IsFB2;
 
@@ -107,9 +234,125 @@ namespace Library.MVVM.ViewModel
         }
         #endregion
 
-        public BooksAdminViewModel()
-        {
+        #region IsOpen
+        private bool _IsOpen;
 
+        public bool IsOpen
+        {
+            get { return _IsOpen; }
+            set
+            {
+                _IsOpen = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        #region Selection
+        private bool _IsBookSelected;
+
+        public bool IsBookSelected
+        {
+            get { return _IsBookSelected; }
+            set
+            {
+                _IsBookSelected = value;
+                OnPropertyChanged();
+            }
+        }
+        #endregion
+
+        public BooksAdminViewModel() { }
+
+        public BooksAdminViewModel(Book tbook)
+        {
+            if (tbook != null)
+                SelectedBook = tbook;
+
+            using (DatabaseContext db = new DatabaseContext())
+            {
+                BookList = db.Books.ToList();
+                TagList = db.Tags.ToList();
+            }
+
+            #region DeleteSelectedBook
+            DeleteSelectedBook = new RelayCommand(o =>
+            {
+                using (DatabaseContext db = new DatabaseContext())
+                {
+                    var book = db.Books.FirstOrDefault(b => b.BookId == SelectedBook.BookId);
+                    var users = db.Users.Where(u => u.FavBooks.Contains(book)).ToList();
+                    foreach (User user in users)
+                    {
+                        db.Users.FirstOrDefault(u => u.UserId == user.UserId).FavBooks.Remove(book);
+                    }
+                    db.Books.Remove(book);
+                    //db.SaveChanges();
+                }
+            }, o =>
+            {
+                if (SelectedBook == null)
+                    return false;
+                else
+                    return true;
+            });
+            #endregion
+
+            #region DeleteSelectedTag
+            DeleteSelectedTag = new RelayCommand(o =>
+            {
+                using (DatabaseContext db = new DatabaseContext())
+                {
+                    db.Tags.Remove(db.Tags.FirstOrDefault(t => t.TagId == SelectedTag.TagId));
+                    db.SaveChanges();
+                    TagList = db.Tags.ToList();
+                }
+            }, o =>
+            {
+                if (SelectedTag == null)
+                    return false;
+                else
+                    return true;
+            });
+            #endregion
+
+            #region AddTag
+            AddTag = new RelayCommand(o =>
+            {
+                using (DatabaseContext db = new DatabaseContext())
+                {
+                    if (db.Tags.Any(t => t.Name == TagName))
+                    {
+                        AddError("This tag alredy exists", nameof(TagName));
+                    }
+                    db.Tags.Add(new Tag(TagName));
+                    db.SaveChanges();
+                    TagList = db.Tags.ToList();
+                    IsOpen = false;
+                }
+            });
+            #endregion
+
+            #region OpenDialog
+            OpenDialog = new RelayCommand(o =>
+            {
+                IsOpen = true;
+            });
+            #endregion
+
+            #region AddBook
+            AddBook = new RelayCommand(o =>
+            {
+                AdminWindViewModel.Instance.CurrentView = new AddBooksViewModel(null);
+            });
+            #endregion
+
+            #region BookEdit
+            BookEdit = new RelayCommand(o =>
+            {
+                AdminWindViewModel.Instance.CurrentView = new AddBooksViewModel(SelectedBook);
+            });
+            #endregion
         }
     }
 }

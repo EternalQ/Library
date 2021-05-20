@@ -62,17 +62,16 @@
                 VerticalAlignment="Top"
                 Orientation="Horizontal">
 
+                <!--  passwordbox binding backdoor  -->
                 <Grid>
                     <TextBox
                         Name="txtPassword"
                         Width="280"
                         Panel.ZIndex="-1"
-                        mdes:HintAssist.Hint="Password"
-                        TextChanged="txtPassword_TextChanged"
-                        Foreground="Transparent"
                         IsTabStop="False"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
+                        TextChanged="txtPassword_TextChanged"
+                        Visibility="Hidden" />
 
                     <PasswordBox
                         Name="txtPassbox"
@@ -92,22 +91,22 @@
             </StackPanel>
 
             <CheckBox
-                FontSize="15"
                 Name="remember"
                 Grid.Row="2"
                 Margin="30,0,0,30"
                 VerticalAlignment="Bottom"
                 Content="Remember me"
                 Cursor="Hand"
+                FontSize="15"
                 IsChecked="{Binding IsRememberChecked}" />
 
             <CheckBox
-                FontSize="15"
                 Grid.Row="2"
                 Margin="30,0,0,10"
                 VerticalAlignment="Bottom"
                 Content="Auto login"
                 Cursor="Hand"
+                FontSize="15"
                 IsChecked="{Binding IsAutologinChecked}"
                 IsEnabled="{Binding ElementName=remember, Path=IsChecked}" />
 

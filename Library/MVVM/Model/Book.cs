@@ -23,12 +23,14 @@ namespace Library.MVVM.Model
 
         public Book() { }
 
-        public Book(string name, string author, string description, byte[] image)
+        public Book(string name, string author, string description, byte[] image, byte[] dataFB2, byte[] dataEPUB)
         {
             Name = name;
             Author = author;
             Description = description;
             Image = image;
+            DataFB2 = dataFB2;
+            DataEPUB = dataEPUB;
 
             Tags = new List<Tag>();
             Users = new List<User>();

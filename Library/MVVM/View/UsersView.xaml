@@ -24,6 +24,7 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30" />
+                    <RowDefinition Height="40" />
                     <RowDefinition />
                     <RowDefinition Height="50" />
                 </Grid.RowDefinitions>
@@ -36,8 +37,16 @@
                     FontWeight="SemiBold"
                     Text="User List:" />
 
-                <ListBox
+                <TextBox
                     Grid.Row="1"
+                    Margin="0,0,10,0"
+                    mdes:HintAssist.Foreground="Gray"
+                    mdes:HintAssist.Hint="Search"
+                    FontSize="14"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding UserSearch, UpdateSourceTrigger=PropertyChanged}" />
+                <ListBox
+                    Grid.Row="2"
                     Margin="0,0,10,0"
                     ItemsSource="{Binding UserList}"
                     SelectedItem="{Binding SelectedUser}">
@@ -65,17 +74,29 @@
                             </Border>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-                    <!--  во что обернуть  -->
-                    <!--<ListBoxItem>
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseDoubleClick">
-                                <i:InvokeCommandAction Command="{Binding Test}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </ListBoxItem>-->
+                    <ListBox.Style>
+                        <Style BasedOn="{StaticResource MaterialDesignListBox}" TargetType="{x:Type ListBox}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="16"
+                                                    FontStyle="Italic"
+                                                    Text="Nothing found" />
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.Style>
                 </ListBox>
 
-                <Grid Grid.Row="2" VerticalAlignment="Bottom">
+                <Grid Grid.Row="3" VerticalAlignment="Bottom">
                     <Button
                         Width="100"
                         Command="{Binding DeleteSelectedUser}"
@@ -140,6 +161,7 @@
                             Padding="10,4"
                             HorizontalAlignment="Right"
                             mdes:TextFieldAssist.TextFieldCornerRadius="2"
+                            mdes:ValidationAssist.Background="Transparent"
                             FontSize="16"
                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
                             Text="{Binding Email, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
@@ -195,6 +217,7 @@
             <Grid Grid.Column="2" IsEnabled="{Binding IsUserSelected}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30" />
+                    <RowDefinition Height="40" />
                     <RowDefinition />
                     <RowDefinition Height="50" />
                 </Grid.RowDefinitions>
@@ -207,8 +230,17 @@
                     FontWeight="SemiBold"
                     Text="User's Book List:" />
 
-                <ListBox
+                <TextBox
                     Grid.Row="1"
+                    Margin="10,0,0,0"
+                    mdes:HintAssist.Foreground="Gray"
+                    mdes:HintAssist.Hint="Search"
+                    FontSize="14"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding BookSearch, UpdateSourceTrigger=PropertyChanged}" />
+
+                <ListBox
+                    Grid.Row="2"
                     Margin="10,0,0,0"
                     ItemsSource="{Binding UserBookList}"
                     SelectedItem="{Binding SelectedBook}">
@@ -236,17 +268,29 @@
                             </Border>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
-                    <!--  во что обернуть  -->
-                    <!--<ListBoxItem>
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseDoubleClick">
-                                <i:InvokeCommandAction Command="{Binding Test}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </ListBoxItem>-->
+                    <ListBox.Style>
+                        <Style BasedOn="{StaticResource MaterialDesignListBox}" TargetType="{x:Type ListBox}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <TextBlock
+                                                    HorizontalAlignment="Center"
+                                                    VerticalAlignment="Center"
+                                                    FontSize="16"
+                                                    FontStyle="Italic"
+                                                    Text="Nothing found" />
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.Style>
                 </ListBox>
 
-                <Grid Grid.Row="2" VerticalAlignment="Bottom">
+                <Grid Grid.Row="3" VerticalAlignment="Bottom">
                     <Button
                         Width="100"
                         Command="{Binding OpenSelectedBook}"

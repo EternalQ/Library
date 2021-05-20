@@ -8,341 +8,488 @@
     xmlns:mdes="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:viewmodel="clr-namespace:Library.MVVM.ViewModel"
     d:DataContext="{d:DesignInstance Type=viewmodel:BooksAdminViewModel}"
-    d:DesignHeight="450"
+    d:DesignHeight="500"
     d:DesignWidth="1000"
     mc:Ignorable="d">
 
-    <Border Padding="10" Background="{StaticResource BackgroundColor}">
-        <Grid HorizontalAlignment="Stretch">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="280" />
-                <ColumnDefinition />
-                <ColumnDefinition Width="280" />
-            </Grid.ColumnDefinitions>
+    <mdes:DialogHost CloseOnClickAway="True" IsOpen="{Binding IsOpen}">
+        <mdes:DialogHost.DialogContent>
+            <Grid Margin="20">
+                <StackPanel>
+                    <TextBlock
+                        HorizontalAlignment="Left"
+                        FontSize="18"
+                        Text="Tag Name:" />
 
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30" />
-                    <RowDefinition />
-                    <RowDefinition Height="50" />
-                </Grid.RowDefinitions>
+                    <TextBox
+                        Width="200"
+                        Height="36"
+                        Margin="0,15,10,15"
+                        Padding="10,4"
+                        HorizontalAlignment="Right"
+                        mdes:TextFieldAssist.TextFieldCornerRadius="2"
+                        FontSize="16"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                        Text="{Binding TagName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
 
-                <TextBlock
-                    Margin="15,0,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    FontSize="20"
-                    FontWeight="SemiBold"
-                    Text="Book List:" />
-
-                <ListBox
-                    Grid.Row="1"
-                    Margin="0,0,10,0"
-                    ItemsSource="{Binding BookList}"
-                    SelectedItem="{Binding SelectedBook}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Border VerticalAlignment="Stretch">
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="40" />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-
-                                    <TextBlock
-                                        Margin="10,5,10,5"
-                                        HorizontalAlignment="Center"
-                                        FontSize="15"
-                                        Text="{Binding UserId}" />
-
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        Margin="10,5,10,5"
-                                        FontSize="15"
-                                        Text="{Binding Login}" />
-                                </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                    <!--  во что обернуть  -->
-                    <!--<ListBoxItem>
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseDoubleClick">
-                                <i:InvokeCommandAction Command="{Binding Test}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </ListBoxItem>-->
-                </ListBox>
-
-                <Grid Grid.Row="2" VerticalAlignment="Bottom">
                     <Button
                         Width="100"
-                        Command="{Binding DeleteSelectedUser}"
-                        Content="Delete"
-                        FontSize="15"
+                        HorizontalAlignment="Center"
+                        Command="{Binding AddTag}"
+                        Content="Add"
+                        FontSize="16"
                         Style="{StaticResource MainButton}" />
-                </Grid>
+
+                </StackPanel>
             </Grid>
+        </mdes:DialogHost.DialogContent>
+        <Border Padding="10" Background="{StaticResource BackgroundColor}">
+            <Grid HorizontalAlignment="Stretch">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="280" />
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="280" />
+                </Grid.ColumnDefinitions>
 
-            <Grid Grid.Column="1" IsEnabled="{Binding IsUserSelected}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30" />
-                    <RowDefinition />
-                    <RowDefinition Height="50" />
-                </Grid.RowDefinitions>
-
-                <TextBlock
-                    Margin="15,0,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    FontSize="20"
-                    FontWeight="SemiBold"
-                    Text="Book Info:" />
-
-                <Grid Grid.Row="1" Margin="10,0,10,0">
+                <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="60" />
-                        <RowDefinition Height="60" />
-                        <RowDefinition Height="60" />
-                        <RowDefinition Height="*" />
-
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition />
+                        <RowDefinition Height="50" />
                     </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0">
-                        <TextBlock
-                            Margin="5,0,5,0"
-                            VerticalAlignment="Center"
-                            FontSize="16"
-                            Text="Name" />
-                        <TextBox
-                            Width="260"
-                            Height="36"
-                            Margin="0,0,10,0"
-                            Padding="10,4"
-                            HorizontalAlignment="Right"
-                            mdes:TextFieldAssist.TextFieldCornerRadius="2"
-                            FontSize="16"
-                            Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                            Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                    </Grid>
+                    <TextBlock
+                        Margin="15,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        FontWeight="SemiBold"
+                        Text="Book List:" />
 
-                    <Grid Grid.Row="1">
-                        <TextBlock
-                            Margin="5,0,5,0"
-                            VerticalAlignment="Center"
-                            FontSize="16"
-                            Text="Author Name" />
-                        <TextBox
-                            Width="260"
-                            Height="36"
-                            Margin="0,0,10,0"
-                            Padding="10,4"
-                            HorizontalAlignment="Right"
-                            mdes:TextFieldAssist.TextFieldCornerRadius="2"
-                            FontSize="16"
-                            Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                            Text="{Binding AuthorName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                    </Grid>
+                    <TextBox
+                        Grid.Row="1"
+                        Margin="0,0,10,0"
+                        mdes:HintAssist.Foreground="Gray"
+                        mdes:HintAssist.Hint="Search"
+                        FontSize="14"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        Text="{Binding BookSearch, UpdateSourceTrigger=PropertyChanged}" />
 
-                    <Grid Grid.Row="2">
-                        <TextBlock
-                            Margin="5,0,5,0"
-                            VerticalAlignment="Center"
-                            FontSize="16"
-                            Text="Description" />
-                        <TextBox
-                            Width="260"
-                            Margin="0,0,10,0"
-                            Padding="10,4"
-                            HorizontalAlignment="Right"
-                            mdes:TextFieldAssist.TextFieldCornerRadius="2"
-                            AcceptsReturn="True"
-                            FontSize="16"
-                            Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                            Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                            TextWrapping="Wrap" />
-                    </Grid>
+                    <ListBox
+                        Grid.Row="2"
+                        Margin="0,0,10,0"
+                        ItemsSource="{Binding BookList}"
+                        SelectedItem="{Binding SelectedBook}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border VerticalAlignment="Stretch">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="40" />
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
 
-                    <Grid Grid.Row="3">
-                        <StackPanel Margin="5,20,5,0">
-                            <TextBlock FontSize="18" Text="Data Sources:" />
+                                        <TextBlock
+                                            Margin="10,5,10,5"
+                                            HorizontalAlignment="Center"
+                                            FontSize="15"
+                                            Text="{Binding BookId}" />
 
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            Margin="10,5,10,5"
+                                            FontSize="15"
+                                            Text="{Binding Name}" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.Style>
+                            <Style BasedOn="{StaticResource MaterialDesignListBox}" TargetType="{x:Type ListBox}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="16"
+                                                        FontStyle="Italic"
+                                                        Text="Nothing found" />
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListBox.Style>
+                    </ListBox>
 
-                                <StackPanel>
-                                    <TextBlock
-                                        Margin="0,5,0,5"
-                                        HorizontalAlignment="Center"
-                                        FontSize="16"
-                                        FontWeight="SemiBold"
-                                        Text="FB2" />
+                    <Grid Grid.Row="3" VerticalAlignment="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
 
-                                    <mdes:PackIcon
-                                        Width="30"
-                                        Height="30"
-                                        HorizontalAlignment="Center"
-                                        Foreground="Green"
-                                        Kind="Check">
-                                        <mdes:PackIcon.Style>
-                                            <Style TargetType="mdes:PackIcon">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsFB2}" Value="true">
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </mdes:PackIcon.Style>
-                                    </mdes:PackIcon>
+                        <Button
+                            Width="100"
+                            Command="{Binding AddBook}"
+                            Content="Add"
+                            FontSize="15"
+                            Style="{StaticResource MainButton}" />
 
-                                    <mdes:PackIcon
-                                        Width="30"
-                                        Height="30"
-                                        HorizontalAlignment="Center"
-                                        mdes:HintAssist.HelperText="No resource"
-                                        Foreground="Red"
-                                        Kind="ErrorOutline">
-                                        <mdes:PackIcon.Style>
-                                            <Style TargetType="mdes:PackIcon">
-                                                <Setter Property="Visibility" Value="Visible" />
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsFB2}" Value="true">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </mdes:PackIcon.Style>
-                                    </mdes:PackIcon>
-                                </StackPanel>
-
-                                <StackPanel Grid.Column="1">
-                                    <TextBlock
-                                        Margin="0,5,0,5"
-                                        HorizontalAlignment="Center"
-                                        FontSize="16"
-                                        FontWeight="SemiBold"
-                                        Text="EPUB" />
-
-                                    <mdes:PackIcon
-                                        Width="30"
-                                        Height="30"
-                                        HorizontalAlignment="Center"
-                                        Foreground="Green"
-                                        Kind="Check">
-                                        <mdes:PackIcon.Style>
-                                            <Style TargetType="mdes:PackIcon">
-                                                <Setter Property="Visibility" Value="Collapsed" />
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsEPUB}" Value="true">
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </mdes:PackIcon.Style>
-                                    </mdes:PackIcon>
-
-                                    <mdes:PackIcon
-                                        Width="30"
-                                        Height="30"
-                                        HorizontalAlignment="Center"
-                                        mdes:HintAssist.HelperText="No resource"
-                                        Foreground="Red"
-                                        Kind="ErrorOutline">
-                                        <mdes:PackIcon.Style>
-                                            <Style TargetType="mdes:PackIcon">
-                                                <Setter Property="Visibility" Value="Visible" />
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding IsEPUB}" Value="true">
-                                                        <Setter Property="Visibility" Value="Collapsed" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                            </Style>
-                                        </mdes:PackIcon.Style>
-                                    </mdes:PackIcon>
-                                </StackPanel>
-                            </Grid>
-                        </StackPanel>
-
+                        <Button
+                            Grid.Column="1"
+                            Width="100"
+                            Command="{Binding DeleteSelectedBook}"
+                            Content="Delete"
+                            FontSize="15"
+                            Style="{StaticResource MainButton}" />
                     </Grid>
                 </Grid>
 
-                <Grid Grid.Row="2" VerticalAlignment="Bottom">
-                    <Button
-                        Width="100"
-                        Command="{Binding SaveUserInfo}"
-                        Content="Save"
-                        FontSize="15"
-                        Style="{StaticResource MainButton}" />
-                </Grid>
-            </Grid>
+                <Grid Grid.Column="1" IsEnabled="{Binding IsBookSelected}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
 
-            <Grid Grid.Column="2" IsEnabled="{Binding IsUserSelected}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="30" />
-                    <RowDefinition />
-                    <RowDefinition Height="50" />
-                </Grid.RowDefinitions>
+                    <TextBlock
+                        Margin="15,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        FontWeight="SemiBold"
+                        Text="Book Info:" />
 
-                <TextBlock
-                    Margin="15,0,0,0"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    FontSize="20"
-                    FontWeight="SemiBold"
-                    Text="Book's Tag List:" />
+                    <Grid Grid.Row="1" Margin="10,0,10,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60" />
+                            <RowDefinition Height="60" />
+                            <RowDefinition Height="90" />
+                            <RowDefinition Height="100" />
+                            <RowDefinition Height="*" />
 
-                <ListBox
-                    Grid.Row="1"
-                    Margin="10,0,0,0"
-                    ItemsSource="{Binding UserBookList}"
-                    SelectedItem="{Binding SelectedBook}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <Border VerticalAlignment="Stretch">
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="0">
+                            <TextBlock
+                                Margin="5,0,5,0"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Text="Name" />
+                            <TextBox
+                                Width="260"
+                                Height="36"
+                                Margin="0,0,10,0"
+                                Padding="10,4"
+                                HorizontalAlignment="Right"
+                                mdes:TextFieldAssist.TextFieldCornerRadius="2"
+                                FontSize="16"
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        </Grid>
+
+                        <Grid Grid.Row="1">
+                            <TextBlock
+                                Margin="5,0,5,0"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Text="Author Name" />
+                            <TextBox
+                                Width="260"
+                                Height="36"
+                                Margin="0,0,10,0"
+                                Padding="10,4"
+                                HorizontalAlignment="Right"
+                                mdes:TextFieldAssist.TextFieldCornerRadius="2"
+                                FontSize="16"
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                Text="{Binding AuthorName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                        </Grid>
+
+                        <Grid Grid.Row="2">
+                            <TextBlock
+                                Margin="5,0,5,0"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                Text="Description" />
+                            <TextBox
+                                Width="260"
+                                Margin="0,0,10,0"
+                                Padding="10,4"
+                                HorizontalAlignment="Right"
+                                mdes:TextFieldAssist.TextFieldCornerRadius="2"
+                                AcceptsReturn="True"
+                                FontSize="16"
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                                TextWrapping="Wrap" />
+                        </Grid>
+
+                        <Grid Grid.Row="3">
+                            <StackPanel Margin="5,10,5,0">
+                                <Button
+                                    Command="{Binding BookEdit}"
+                                    Content="Open full editor"
+                                    Style="{StaticResource MainButton}" />
+                                <!--<TextBlock FontSize="18" Text="Tags:" />-->
+
+                                <!--<ListBox ItemsSource="{Binding SelectedBookTags}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <TextBlock Text="{Binding Name}" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                    <ListBox.Style>
+                                        <Style BasedOn="{StaticResource MaterialDesignFilterChipOutlineListBox}" TargetType="{x:Type ListBox}">
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate>
+                                                                <TextBlock
+                                                                    HorizontalAlignment="Center"
+                                                                    VerticalAlignment="Center"
+                                                                    FontSize="16"
+                                                                    FontStyle="Italic"
+                                                                    Text="Nothing found" />
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </ListBox.Style>
+                                </ListBox>-->
+                                <!--<ScrollViewer
+                                    Height="55"
+                                    HorizontalScrollBarVisibility="Hidden"
+                                    VerticalScrollBarVisibility="Auto">
+                                    <TextBox Text="{Binding SelectedBookTags}" TextWrapping="Wrap" />
+                                </ScrollViewer>-->
+                            </StackPanel>
+                        </Grid>
+
+                        <!--<Grid Grid.Row="4">
+                            <StackPanel Margin="5,20,5,0">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    FontSize="18"
+                                    Text="Data Sources:" />
+
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
                                         <ColumnDefinition />
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock
-                                        Grid.Column="0"
-                                        Margin="10,5,10,5"
-                                        FontSize="15"
-                                        Text="{Binding Name}" />
+                                    <StackPanel>
+                                        <TextBlock
+                                            Margin="0,5,0,5"
+                                            HorizontalAlignment="Center"
+                                            FontSize="16"
+                                            FontWeight="SemiBold"
+                                            Text="FB2" />
 
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        Margin="10,5,10,5"
-                                        FontSize="15"
-                                        Text="{Binding Author}" />
+                                        <mdes:PackIcon
+                                            Width="30"
+                                            Height="30"
+                                            HorizontalAlignment="Center"
+                                            Foreground="Green"
+                                            Kind="Check">
+                                            <mdes:PackIcon.Style>
+                                                <Style TargetType="mdes:PackIcon">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsFB2}" Value="true">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </mdes:PackIcon.Style>
+                                        </mdes:PackIcon>
+
+                                        <mdes:PackIcon
+                                            Width="30"
+                                            Height="30"
+                                            HorizontalAlignment="Center"
+                                            Foreground="Red"
+                                            Kind="ErrorOutline"
+                                            ToolTip="Resource not found">
+                                            <mdes:PackIcon.Style>
+                                                <Style TargetType="mdes:PackIcon">
+                                                    <Setter Property="Visibility" Value="Hidden" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsFB2}" Value="true">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </mdes:PackIcon.Style>
+                                        </mdes:PackIcon>
+                                    </StackPanel>
+
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock
+                                            Margin="0,5,0,5"
+                                            HorizontalAlignment="Center"
+                                            FontSize="16"
+                                            FontWeight="SemiBold"
+                                            Text="EPUB" />
+
+                                        <mdes:PackIcon
+                                            Width="30"
+                                            Height="30"
+                                            HorizontalAlignment="Center"
+                                            Foreground="Green"
+                                            Kind="Check">
+                                            <mdes:PackIcon.Style>
+                                                <Style TargetType="mdes:PackIcon">
+                                                    <Setter Property="Visibility" Value="Collapsed" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsEPUB}" Value="true">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </mdes:PackIcon.Style>
+                                        </mdes:PackIcon>
+
+                                        <mdes:PackIcon
+                                            Width="30"
+                                            Height="30"
+                                            HorizontalAlignment="Center"
+                                            Foreground="Red"
+                                            Kind="ErrorOutline"
+                                            ToolTip="Resource not found">
+                                            <mdes:PackIcon.Style>
+                                                <Style TargetType="mdes:PackIcon">
+                                                    <Setter Property="Visibility" Value="Hidden" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsEPUB}" Value="true">
+                                                            <Setter Property="Visibility" Value="Collapsed" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </mdes:PackIcon.Style>
+                                        </mdes:PackIcon>
+                                    </StackPanel>
                                 </Grid>
-                            </Border>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                    <!--  во что обернуть  -->
-                    <!--<ListBoxItem>
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="MouseDoubleClick">
-                                <i:InvokeCommandAction Command="{Binding Test}" />
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </ListBoxItem>-->
-                </ListBox>
+                            </StackPanel>
 
-                <Grid Grid.Row="2" VerticalAlignment="Bottom">
-                    <Button
-                        Width="100"
-                        Command="{Binding OpenSelectedBook}"
-                        Content="Delete"
-                        FontSize="15"
-                        Style="{StaticResource MainButton}" />
+                        </Grid>-->
+                    </Grid>
+
+                    <Grid Grid.Row="2" VerticalAlignment="Bottom">
+                        <Button
+                            Width="100"
+                            Command="{Binding SaveBookInfo}"
+                            Content="Save"
+                            FontSize="15"
+                            Style="{StaticResource MainButton}" />
+                    </Grid>
+                </Grid>
+
+                <Grid Grid.Column="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="40" />
+                        <RowDefinition />
+                        <RowDefinition Height="50" />
+                    </Grid.RowDefinitions>
+
+                    <TextBlock
+                        Margin="15,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Center"
+                        FontSize="20"
+                        FontWeight="SemiBold"
+                        Text="Tag List:" />
+
+                    <TextBox
+                        Grid.Row="1"
+                        Margin="10,0,0,0"
+                        mdes:HintAssist.Foreground="Gray"
+                        mdes:HintAssist.Hint="Search"
+                        FontSize="14"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        Text="{Binding TagSearch, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <ListBox
+                        Grid.Row="2"
+                        Margin="10,0,0,0"
+                        ItemsSource="{Binding TagList}"
+                        SelectedItem="{Binding SelectedTag}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Border VerticalAlignment="Stretch">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition />
+                                        </Grid.ColumnDefinitions>
+
+                                        <TextBlock
+                                            Grid.Column="0"
+                                            Margin="10,5,10,5"
+                                            FontSize="15"
+                                            Text="{Binding Name}" />
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.Style>
+                            <Style BasedOn="{StaticResource MaterialDesignListBox}" TargetType="{x:Type ListBox}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="16"
+                                                        FontStyle="Italic"
+                                                        Text="Nothing found" />
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListBox.Style>
+                    </ListBox>
+
+                    <Grid Grid.Row="3" VerticalAlignment="Bottom">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <Button
+                            Width="100"
+                            Command="{Binding OpenDialog}"
+                            Content="New"
+                            FontSize="15"
+                            Style="{StaticResource MainButton}" />
+
+                        <Button
+                            Grid.Column="1"
+                            Width="100"
+                            Command="{Binding DeleteSelectedTag}"
+                            Content="Delete"
+                            FontSize="15"
+                            Style="{StaticResource MainButton}" />
+
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
-    </Border>
+        </Border>
+    </mdes:DialogHost>
+
 </UserControl>

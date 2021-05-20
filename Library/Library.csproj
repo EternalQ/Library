@@ -77,6 +77,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="MVVM\View\AddBookView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MVVM\View\BooksAdminView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -124,12 +128,16 @@
     <Compile Include="MVVM\Model\Tag.cs" />
     <Compile Include="MVVM\Model\UserCard.cs" />
     <Compile Include="MVVM\Model\User.cs" />
+    <Compile Include="MVVM\ViewModel\AddBooksViewModel.cs" />
     <Compile Include="MVVM\ViewModel\AdminWindViewModel.cs" />
     <Compile Include="MVVM\ViewModel\BooksAdminViewModel.cs" />
     <Compile Include="MVVM\ViewModel\BooksViewModel.cs" />
     <Compile Include="MVVM\ViewModel\MainWindViewModel.cs" />
     <Compile Include="MVVM\ViewModel\RegistrationViewModel.cs" />
     <Compile Include="MVVM\ViewModel\UsersViewModel.cs" />
+    <Compile Include="MVVM\View\AddBookView.xaml.cs">
+      <DependentUpon>AddBookView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MVVM\View\BooksAdminView.xaml.cs">
       <DependentUpon>BooksAdminView.xaml</DependentUpon>
     </Compile>
@@ -154,6 +162,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MVVM\View\Pages\RegistrationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Themes\TextBoxes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

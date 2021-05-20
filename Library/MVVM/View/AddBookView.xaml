@@ -1,0 +1,304 @@
+﻿<UserControl
+    x:Class="Library.MVVM.View.AddBookView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Library.MVVM.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mdes="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:viewmodel="clr-namespace:Library.MVVM.ViewModel"
+    d:DataContext="{d:DesignInstance Type=viewmodel:AddBooksViewModel}"
+    d:DesignHeight="500"
+    d:DesignWidth="1000"
+    mc:Ignorable="d">
+
+    <Border Background="{StaticResource BackgroundColor}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30" />
+                <RowDefinition />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock
+                Grid.ColumnSpan="2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                FontSize="20"
+                FontWeight="SemiBold"
+                Text="Book Info:" />
+
+            <Grid
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="10,0,10,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="90" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <TextBlock
+                        Margin="5,0,5,0"
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        Text="Name" />
+                    <TextBox
+                        Width="260"
+                        Height="36"
+                        Margin="0,0,10,0"
+                        Padding="10,4"
+                        HorizontalAlignment="Right"
+                        mdes:TextFieldAssist.TextFieldCornerRadius="2"
+                        mdes:ValidationAssist.Background="Transparent"
+                        FontSize="16"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                        Text="{Binding Name, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                </Grid>
+
+                <Grid Grid.Row="1">
+                    <TextBlock
+                        Margin="5,0,5,0"
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        Text="Author Name" />
+                    <TextBox
+                        Width="260"
+                        Height="36"
+                        Margin="0,0,10,0"
+                        Padding="10,4"
+                        HorizontalAlignment="Right"
+                        mdes:TextFieldAssist.TextFieldCornerRadius="2"
+                        mdes:ValidationAssist.Background="Transparent"
+                        FontSize="16"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                        Text="{Binding AuthorName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                </Grid>
+
+                <Grid Grid.Row="2">
+
+                    <TextBlock
+                        Margin="5,0,5,0"
+                        VerticalAlignment="Center"
+                        FontSize="16"
+                        Text="Description" />
+
+                    <TextBox
+                        Width="260"
+                        Margin="0,0,10,0"
+                        Padding="10,4"
+                        HorizontalAlignment="Right"
+                        mdes:TextFieldAssist.TextFieldCornerRadius="2"
+                        mdes:ValidationAssist.Background="Transparent"
+                        AcceptsReturn="True"
+                        FontSize="16"
+                        Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                        Text="{Binding Description, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                        TextWrapping="Wrap" />
+                </Grid>
+
+            </Grid>
+
+            <Grid
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                Height="190"
+                VerticalAlignment="Bottom">
+                <StackPanel Margin="5,0,5,0" CanVerticallyScroll="True">
+                    <TextBlock
+                        Margin="0,5,0,5"
+                        FontSize="18"
+                        Text="Book's Tags:" />
+
+                    <ListBox
+                        MaxHeight="100"
+                        ItemsSource="{Binding BookTags}"
+                        SelectedItem="{Binding SelectedBookTag, Mode=TwoWay}"
+                        SelectionMode="Single"
+                        Style="{StaticResource MaterialDesignFilterChipOutlineListBox}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <TextBlock Text="{Binding Name}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <Grid>
+                        <TextBlock
+                            Margin="0,5,0,5"
+                            VerticalAlignment="Center"
+                            FontSize="18"
+                            Text="All Tags:" />
+
+                        <!--<TextBox
+                            Width="150"
+                            Margin="0,0,0,0"
+                            HorizontalAlignment="Right"
+                            HorizontalContentAlignment="Right"
+                            mdes:HintAssist.Foreground="Gray"
+                            mdes:HintAssist.Hint="Search"
+                            FontSize="14"
+                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                            Text="{Binding TagSearch, UpdateSourceTrigger=PropertyChanged}" />-->
+                    </Grid>
+
+                    <ListBox
+                        MaxHeight="100"
+                        ItemsSource="{Binding TagList}"
+                        SelectedItem="{Binding SelectedTag, Mode=TwoWay}"
+                        SelectionMode="Single"
+                        Style="{StaticResource MaterialDesignFilterChipOutlineListBox}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <TextBlock Text="{Binding Name}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="80" />
+                    <RowDefinition Height="80" />
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    Text="Data Sources:" />
+
+                <StackPanel Grid.Row="1">
+
+                    <TextBlock
+                        Margin="0,0,0,10"
+                        HorizontalAlignment="Center"
+                        Background="Transparent"
+                        FontSize="12"
+                        Foreground="Black"
+                        Text="{Binding FB2Source}" />
+
+                    <Button
+                        Width="100"
+                        Command="{Binding AddFB2}"
+                        Content="Add FB2"
+                        FontSize="14"
+                        Style="{StaticResource MainButton}" />
+
+                </StackPanel>
+
+                <StackPanel Grid.Row="2">
+
+                    <TextBlock
+                        Margin="0,0,0,10"
+                        HorizontalAlignment="Center"
+                        Background="Transparent"
+                        FontSize="12"
+                        Foreground="Black"
+                        Text="{Binding EPUBSource}" />
+
+                    <Button
+                        Width="100"
+                        Command="{Binding AddEPUB}"
+                        Content="Add EPUB"
+                        FontSize="14"
+                        Style="{StaticResource MainButton}" />
+
+                    <TextBlock
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        FontSize="12"
+                        Foreground="Red"
+                        Text="{Binding DataError}" />
+                </StackPanel>
+
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="240" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="18"
+                    Text="Image Source:" />
+
+                <Grid Grid.Row="1" Width="180">
+                    <Border BorderBrush="Gray" BorderThickness="2">
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            FontStyle="Italic"
+                            Text="No Image" />
+                    </Border>
+                    <Image
+                        x:Name="imgsource"
+                        Source="{Binding ImageSource}"
+                        Stretch="UniformToFill" />
+                </Grid>
+
+                <StackPanel Grid.Row="2">
+
+                    <TextBlock
+                        Margin="10,10,10,10"
+                        HorizontalAlignment="Center"
+                        Background="Transparent"
+                        FontSize="12"
+                        Foreground="Black"
+                        Text="{Binding ImageSource}" />
+
+                    <Button
+                        Width="120"
+                        Command="{Binding AddImage}"
+                        Content="Add image"
+                        Style="{StaticResource MainButton}" />
+
+                    <TextBlock
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        FontSize="12"
+                        Foreground="Red"
+                        Text="{Binding ImageError}" />
+                </StackPanel>
+            </Grid>
+
+            <Button
+                Grid.Row="2"
+                Width="100"
+                Margin="0,0,30,0"
+                HorizontalAlignment="Right"
+                Command="{Binding AddBook}"
+                Content="Save"
+                Style="{StaticResource MainButton}" />
+
+            <Button
+                Grid.Row="2"
+                Grid.Column="1"
+                Width="100"
+                Margin="30,0,30,0"
+                HorizontalAlignment="Left"
+                Command="{Binding Cancel}"
+                Content="Cancel"
+                Style="{StaticResource MainButton}" />
+
+        </Grid>
+    </Border>
+</UserControl>

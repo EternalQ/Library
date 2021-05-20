@@ -15,15 +15,22 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
                 <ResourceDictionary Source="Resources/Themes/Buttons.xaml" />
+                <ResourceDictionary Source="Resources/Themes/TextBoxes.xaml" />
                 <ResourceDictionary Source="Resources/Dictionaries/Colors.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <DataTemplate DataType="{x:Type viewModel:UsersViewModel}">
                 <view:UsersView />
             </DataTemplate>
+
             <DataTemplate DataType="{x:Type viewModel:BooksAdminViewModel}">
                 <view:BooksAdminView />
             </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:AddBooksViewModel}">
+                <view:AddBookView />
+            </DataTemplate>
+
         </ResourceDictionary>
     </Application.Resources>
 </Application>

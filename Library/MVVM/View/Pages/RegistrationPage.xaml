@@ -54,6 +54,7 @@
                     Name="txtLogin"
                     Width="280"
                     mdes:HintAssist.Hint="Login"
+                    mdes:ValidationAssist.Background="Transparent"
                     BorderBrush="Black"
                     Style="{StaticResource TextBoxVal}"
                     TabIndex="0"
@@ -74,22 +75,22 @@
                 VerticalAlignment="Top"
                 Orientation="Horizontal">
 
+                <!--  passwordbox binding backdoor  -->
                 <Grid>
                     <TextBox
                         Name="txtPassword"
                         Width="280"
                         Panel.ZIndex="-1"
-                        mdes:HintAssist.Hint="Password"
-                        Foreground="Transparent"
                         IsTabStop="False"
-                        Style="{StaticResource TextBoxVal}"
-                        Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"
+                        Visibility="Hidden" />
 
                     <PasswordBox
                         Name="txtPassbox"
                         Width="280"
                         Panel.ZIndex="-1"
                         mdes:HintAssist.Hint="Password"
+                        mdes:ValidationAssist.Background="Transparent"
                         PasswordChanged="txtPassbox_PasswordChanged"
                         Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
                         TabIndex="2" />
@@ -110,21 +111,21 @@
                 VerticalAlignment="Top"
                 Orientation="Horizontal">
 
+                <!--  passwordbox binding backdoor  -->
                 <Grid>
                     <TextBox
                         Name="txtPasswordVerify"
                         Width="280"
                         Panel.ZIndex="-1"
-                        mdes:HintAssist.Hint="Verify Password"
-                        Foreground="Transparent"
                         IsTabStop="False"
-                        Style="{StaticResource TextBoxVal}"
-                        Text="{Binding PasswordVerify, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding PasswordVerify, UpdateSourceTrigger=PropertyChanged}"
+                        Visibility="Hidden" />
 
                     <PasswordBox
                         Name="txtPassVerifbox"
                         Width="280"
                         mdes:HintAssist.Hint="Verify Password"
+                        mdes:ValidationAssist.Background="Transparent"
                         PasswordChanged="txtPassVerifbox_PasswordChanged"
                         Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
                         TabIndex="3" />
