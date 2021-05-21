@@ -95,6 +95,7 @@
                 Grid.Row="2"
                 Margin="30,0,0,30"
                 VerticalAlignment="Bottom"
+                Background="{StaticResource MainColor}"
                 Content="Remember me"
                 Cursor="Hand"
                 FontSize="15"
@@ -104,6 +105,7 @@
                 Grid.Row="2"
                 Margin="30,0,0,10"
                 VerticalAlignment="Bottom"
+                Background="{StaticResource MainColor}"
                 Content="Auto login"
                 Cursor="Hand"
                 FontSize="15"
@@ -117,7 +119,7 @@
                         Width="130"
                         mdes:ButtonAssist.CornerRadius="0"
                         Command="{Binding Signin}"
-                        Style="{StaticResource MaterialDesignFlatDarkBgButton}"
+                        Style="{StaticResource MainButton}"
                         TabIndex="2">
                         <Grid>
                             <TextBlock Text="Sign in">
@@ -159,7 +161,7 @@
                         mdes:ButtonAssist.CornerRadius="0"
                         Command="{Binding Registration}"
                         Content="Create account"
-                        Style="{StaticResource MaterialDesignFlatLightBgButton}"
+                        Style="{StaticResource CancelButton}"
                         TabIndex="3" />
 
                 </StackPanel>

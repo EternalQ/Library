@@ -146,7 +146,7 @@
                             Command="{Binding DeleteSelectedBook}"
                             Content="Delete"
                             FontSize="15"
-                            Style="{StaticResource MainButton}" />
+                            Style="{StaticResource CancelButton}" />
                     </Grid>
                 </Grid>
 
@@ -484,7 +484,7 @@
                             Command="{Binding DeleteSelectedTag}"
                             Content="Delete"
                             FontSize="15"
-                            Style="{StaticResource MainButton}" />
+                            Style="{StaticResource CancelButton}" />
 
                     </Grid>
                 </Grid>

@@ -257,16 +257,16 @@
 
                 <StackPanel Grid.Row="2">
 
-                    <TextBlock
-                        Margin="10,10,10,10"
+                    <!--<TextBlock
                         HorizontalAlignment="Center"
                         Background="Transparent"
                         FontSize="12"
                         Foreground="Black"
-                        Text="{Binding ImageSource}" />
+                        Text="{Binding ImageSource}" />-->
 
                     <Button
                         Width="120"
+                        Margin="10,10,10,10"
                         Command="{Binding AddImage}"
                         Content="Add image"
                         Style="{StaticResource MainButton}" />
@@ -297,7 +297,7 @@
                 HorizontalAlignment="Left"
                 Command="{Binding Cancel}"
                 Content="Cancel"
-                Style="{StaticResource MainButton}" />
+                Style="{StaticResource CancelButton}" />
 
         </Grid>
     </Border>

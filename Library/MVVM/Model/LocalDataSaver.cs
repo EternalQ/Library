@@ -1,10 +1,12 @@
 ﻿using Library.Pages;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
@@ -40,13 +42,15 @@ namespace Library.MVVM.Model
     #endregion
 
     /// <summary>
-    /// Saving some appdata
+    /// Saving some application data
     /// </summary>
     static class LocalDataSaver
     {
         static private string appDataPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
         static private string dataPath = Path.Combine(appDataPath, "Libra");
+        static private string tempDataPath = Path.Combine(appDataPath, "Temp");
         static private string loginSettingsPath = Path.Combine(dataPath, "LoginSettings.xml");
+        static private string tempImagePath = Path.Combine(tempDataPath, "tempimage.jpeg");
 
         /// <summary>
         /// Saving login settings in AppData
@@ -144,9 +148,43 @@ namespace Library.MVVM.Model
             SaveLoginSettings(settings);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="image">Image binary data</param>
+        /// <returns>BitmapImage</returns>
+        public static BitmapImage GetBitmap(byte[] image)
+        {
+            if (image == null)
+                return null;
+
+            var bitmap = new BitmapImage();
+            bitmap.BeginInit();
+            bitmap.StreamSource = new MemoryStream(image);
+            bitmap.EndInit();
+            return bitmap;
+        }
+
+        /// <summary>
+        /// Returns path to temporary image, stored at appdata
+        /// </summary>
+        /// <param name="image">Imabe binary data</param>
+        /// <returns>Image source</returns>
+        public static string GetBitmapSource(byte[] image)
+        {
+            string ImageSource = null;
+            using (var fs = new FileStream(tempImagePath, FileMode.OpenOrCreate))
+            {
+                fs.Write(image, 0, image.Length);
+                ImageSource = tempImagePath;
+            }
+            return ImageSource;
+        }
+
         static LocalDataSaver()
         {
             Directory.CreateDirectory(dataPath);
+            Directory.CreateDirectory(tempDataPath);
             if (!File.Exists(loginSettingsPath))
                 SaveLoginSettings(LoginSettings.Default());
         }

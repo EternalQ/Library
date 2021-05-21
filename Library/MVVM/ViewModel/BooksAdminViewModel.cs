@@ -281,10 +281,10 @@ namespace Library.MVVM.ViewModel
                 using (DatabaseContext db = new DatabaseContext())
                 {
                     var book = db.Books.FirstOrDefault(b => b.BookId == SelectedBook.BookId);
-                    var users = db.Users.Where(u => u.FavBooks.Contains(book)).ToList();
+                    var users = db.Users.Include("Books").Where(u => u.FavBooks.Contains(book)).ToList();
                     foreach (User user in users)
                     {
-                        db.Users.FirstOrDefault(u => u.UserId == user.UserId).FavBooks.Remove(book);
+                        db.Users.Include("Books").FirstOrDefault(u => u.UserId == user.UserId).FavBooks.Remove(book);
                     }
                     db.Books.Remove(book);
                     //db.SaveChanges();

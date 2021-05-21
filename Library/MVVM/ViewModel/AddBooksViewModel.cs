@@ -25,7 +25,7 @@ namespace Library.MVVM.ViewModel
         private ObservableCollection<Tag> baseTagList;
 
         #region ImageSource
-        private string _ImageSource = "Source";
+        private string _ImageSource = "No Source";
 
         public string ImageSource
         {
@@ -39,7 +39,7 @@ namespace Library.MVVM.ViewModel
         #endregion
 
         #region FB2Source
-        private string _FB2Source = "Source";
+        private string _FB2Source = "No Source";
 
         public string FB2Source
         {
@@ -53,7 +53,7 @@ namespace Library.MVVM.ViewModel
         #endregion
 
         #region EPUBSource
-        private string _EPUBSource = "Source";
+        private string _EPUBSource = "No Source";
 
         public string EPUBSource
         {
@@ -78,6 +78,11 @@ namespace Library.MVVM.ViewModel
                 ClearErrors();
                 if (_Name == "")
                     AddError("Can't be empty");
+                using (DatabaseContext db = new DatabaseContext())
+                {
+                    if (db.Books.FirstOrDefault(b => b.Name == _Name) != null)
+                        AddError("Book will be rewrited");
+                }
                 OnPropertyChanged();
             }
         }
@@ -237,6 +242,7 @@ namespace Library.MVVM.ViewModel
 
         public AddBooksViewModel(Book newbook)
         {
+            #region OnBookOpeningFilling
             if (newbook != null)
             {
                 using (DatabaseContext db = new DatabaseContext())
@@ -251,6 +257,7 @@ namespace Library.MVVM.ViewModel
                 {
                     ImageSource = "Uploaded";
                     imgData = newbook.Image;
+                    ImageSource = LocalDataSaver.GetBitmapSource(imgData);
                 }
                 if (newbook.DataFB2 != null)
                 {
@@ -263,6 +270,7 @@ namespace Library.MVVM.ViewModel
                     epubData = newbook.DataEPUB;
                 }
             }
+            #endregion
 
             using (DatabaseContext db = new DatabaseContext())
             {
@@ -287,18 +295,29 @@ namespace Library.MVVM.ViewModel
                     return;
                 }
 
-                Book book = new Book(Name, AuthorName, Description, imgData, fb2Data, epubData);
-
                 using (DatabaseContext db = new DatabaseContext())
                 {
-                    foreach (Tag tag in BookTags.ToList())
+                    if (db.Books.FirstOrDefault(b => b.Name == Name) == null)
                     {
-                        book.Tags.Add(db.Tags.FirstOrDefault(t => t.TagId == tag.TagId));
+                        Book book = new Book(Name, AuthorName, Description, imgData, fb2Data, epubData);
+                        foreach (Tag tag in BookTags.ToList())
+                        {
+                            book.Tags.Add(db.Tags.FirstOrDefault(t => t.TagId == tag.TagId));
+                        }
+                        db.Books.Add(book);
+                    }
+                    else
+                    {
+                        db.Books.FirstOrDefault(b => b.Name == Name).Author = AuthorName;
+                        db.Books.FirstOrDefault(b => b.Name == Name).Description = Description;
+                        db.Books.FirstOrDefault(b => b.Name == Name).DataEPUB = epubData;
+                        db.Books.FirstOrDefault(b => b.Name == Name).DataFB2 = fb2Data;
+                        db.Books.FirstOrDefault(b => b.Name == Name).Image = imgData;
+                        db.Books.Include("Tags").FirstOrDefault(b => b.Name == Name).Tags = BookTags.ToList();
                     }
 
-                    db.Books.Add(book);
                     db.SaveChanges();
-                    MessageBox.Show(book.Tags.Count.ToString());
+                    //MessageBox.Show(book.Tags.Count.ToString());
                 }
             }, o =>
              {

@@ -6,6 +6,7 @@
     xmlns:view="clr-namespace:Library.MVVM.View"
     xmlns:view2="clr-namespace:Library.Windows"
     xmlns:viewModel="clr-namespace:Library.MVVM.ViewModel"
+    xmlns:mdes="http://materialdesigninxaml.net/winfx/xaml/themes"
     StartupUri="MVVM/View/Windows/AuthorizationWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
