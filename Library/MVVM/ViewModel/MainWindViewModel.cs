@@ -65,8 +65,6 @@ namespace Library.MVVM.ViewModel
         }
         #endregion
 
-        public Window RootWindow;
-
         public MainWindViewModel() { }
 
         public MainWindViewModel(User user)

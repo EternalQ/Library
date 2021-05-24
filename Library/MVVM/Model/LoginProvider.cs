@@ -34,9 +34,8 @@ namespace Library.MVVM.Model
                     }
                     AuthorizedUser = user;
                 }
-                catch(Exception ex)
+                catch
                 {
-                    //MessageBox.Show(ex.Message);
                     Error = $"Database connection error";
                     return;
                 }

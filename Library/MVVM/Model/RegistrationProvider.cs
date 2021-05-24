@@ -30,20 +30,12 @@ namespace Library.MVVM.Model
                     {
                         User newUser = new User(Login, ComputeHash(Password));
                         context.Users.Add(newUser);
-                        //foreach(DbEntityValidationResult errors in context.GetValidationErrors())
-                        //{
-                        //    foreach(DbValidationError err in errors.ValidationErrors)
-                        //    {
-                        //        MessageBox.Show(err.PropertyName + ": " + err.ErrorMessage);
-                        //    }
-                        //}
                         context.SaveChanges();
                     }
                 }
-                catch (Exception ex)
+                catch
                 {
                     Error = $"Database connection error";
-                    //MessageBox.Show(ex.Message);
                     return;
                 }
             });

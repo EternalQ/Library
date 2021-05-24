@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Library.MVVM.ViewModel;
+using Library.MVVM.Model;
 
 namespace Library.Windows
 {
@@ -21,11 +22,46 @@ namespace Library.Windows
     /// </summary>
     public partial class AuthorizationWindow : Window
     {
+        List<Tag> tags = new List<Tag>
+        {
+            new Tag("Classic"),
+            new Tag("Verse"),
+            new Tag("Fiction"),
+            new Tag("Mystery"),
+            new Tag("Thriller"),
+            new Tag("Horror"),
+            new Tag("Historical"),
+            new Tag("Romance"),
+            new Tag("Western"),
+            new Tag("Bildungsroman"),
+            new Tag("Speculative Fiction"),
+            new Tag("Sci-Fi"),
+            new Tag("Fantasy"),
+            new Tag("Dystopian"),
+            new Tag("Magic"),
+            new Tag("Realist Literature"),
+            new Tag("Action"),
+            new Tag("Adventure"),
+            new Tag("Comic")
+        };
+
         public AuthorizationWindow()
         {
             InitializeComponent();
             DataContext = AuthWindViewModel.Instance;
             LoginViewModel.Instance.RootWindow = this;
+
+            using (DatabaseContext db = new DatabaseContext())
+            {
+                if (db.Users.Count() == 0)
+                {
+                    RegistrationProvider provider = new RegistrationProvider();
+                    provider.SendRequest("Admin", "Admin", null);
+                }
+
+                if (db.Tags.Count() == 0)
+                    db.Tags.AddRange(tags);
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
