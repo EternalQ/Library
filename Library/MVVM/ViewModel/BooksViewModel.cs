@@ -32,6 +32,7 @@ namespace Library.MVVM.ViewModel
 
         //Data
         private ObservableCollection<Tag> baseTagList = new ObservableCollection<Tag>();
+        private readonly ObservableCollection<Tag> emptyTagList = new ObservableCollection<Tag>();
         private List<Book> baseBookList = new List<Book>();
         public User Account { get; set; }
 
@@ -96,7 +97,7 @@ namespace Library.MVVM.ViewModel
                 {
                     FilterTagList.Add(SelTag);
                     //MessageBox.Show(FilterTagList.Count.ToString());
-                    Task.Run(ChangeBookList);
+                    ChangeBookList();
                     //SelTag = null;
                     TagList.Remove(SelTag);
                 }
@@ -134,7 +135,7 @@ namespace Library.MVVM.ViewModel
                     FilterTagList.Remove(FilterSelTag);
                     //FilterSelTag = null;
                 }
-                Task.Run(ChangeBookList);
+                ChangeBookList();
             }
         }
         #endregion
@@ -193,14 +194,13 @@ namespace Library.MVVM.ViewModel
             }
         }
 
-        private void ChangeBookList()
+        void ChangeBookList()
         {
             using (DatabaseContext db = new DatabaseContext())
             {
                 Account = db.Users.Include("Books").FirstOrDefault(u => u.UserId == Account.UserId);
                 BookList = db.Books.Include("Tags").OrderBy(b => b.BookId).ToList();
                 TagList = new ObservableCollection<Tag>(TagList.OrderBy(t => t.Name).ToList());
-                FilterTagList = new ObservableCollection<Tag>();
 
                 if (FavsCheck)
                     BookList = Account.Books.ToList();
@@ -238,6 +238,7 @@ namespace Library.MVVM.ViewModel
         {
             using (DatabaseContext db = new DatabaseContext())
             {
+                FilterTagList = emptyTagList;
                 Account = db.Users.Include("Books").FirstOrDefault(u => u.UserId == user.UserId);
                 TagList = baseTagList = new ObservableCollection<Tag>(db.Tags.OrderBy(t => t.Name).ToList());
                 BookList = baseBookList = db.Books.Include("Tags").OrderBy(b => b.BookId).ToList();
@@ -250,14 +251,15 @@ namespace Library.MVVM.ViewModel
             #region Reset
             ResetCommand = new RelayCommand(o =>
             {
+                FilterTagList = new ObservableCollection<Tag>();
                 BookSearch = "";
                 SortIndex = null;
-                FilterTagList = null;
                 FavsCheck = false;
                 TagList = baseTagList;
                 BookList = baseBookList;
             });
             #endregion
+
             Instance = this;
         }
 

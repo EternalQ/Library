@@ -22,28 +22,6 @@ namespace Library.Windows
     /// </summary>
     public partial class AuthorizationWindow : Window
     {
-        List<Tag> tags = new List<Tag>
-        {
-            new Tag("Classic"),
-            new Tag("Verse"),
-            new Tag("Fiction"),
-            new Tag("Mystery"),
-            new Tag("Thriller"),
-            new Tag("Horror"),
-            new Tag("Historical"),
-            new Tag("Romance"),
-            new Tag("Western"),
-            new Tag("Bildungsroman"),
-            new Tag("Speculative Fiction"),
-            new Tag("Sci-Fi"),
-            new Tag("Fantasy"),
-            new Tag("Dystopian"),
-            new Tag("Magic"),
-            new Tag("Realist Literature"),
-            new Tag("Action"),
-            new Tag("Adventure"),
-            new Tag("Comic")
-        };
 
         public AuthorizationWindow()
         {
@@ -60,7 +38,32 @@ namespace Library.Windows
                 }
 
                 if (db.Tags.Count() == 0)
+                {
+                    List<Tag> tags = new List<Tag>
+                    {
+                        new Tag("Classic"),
+                        new Tag("Verse"),
+                        new Tag("Fiction"),
+                        new Tag("Mystery"),
+                        new Tag("Thriller"),
+                        new Tag("Horror"),
+                        new Tag("Historical"),
+                        new Tag("Romance"),
+                        new Tag("Western"),
+                        new Tag("Bildungsroman"),
+                        new Tag("Speculative Fiction"),
+                        new Tag("Sci-Fi"),
+                        new Tag("Fantasy"),
+                        new Tag("Dystopian"),
+                        new Tag("Magic"),
+                        new Tag("Realist Literature"),
+                        new Tag("Action"),
+                        new Tag("Adventure"),
+                        new Tag("Comic")
+                    };
+
                     db.Tags.AddRange(tags);
+                }
             }
         }
 
