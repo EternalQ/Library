@@ -27,12 +27,12 @@ namespace Library.MVVM.View
 
         private void verifpass_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            pass.Password = passtext.Text;
+            verifpasstext.Text = verifpass.Password;
         }
 
         private void pass_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            verifpass.Password = verifpasstext.Text;
+            passtext.Text = pass.Password;
         }
     }
 }

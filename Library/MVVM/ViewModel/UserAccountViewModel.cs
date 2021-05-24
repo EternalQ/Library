@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -148,6 +149,23 @@ namespace Library.MVVM.ViewModel
         }
         #endregion
 
+        public string ComputeHash(string input)
+        {
+            var inputBytes = Encoding.UTF8.GetBytes(input);
+            var hashConverter = new StringBuilder(128);
+
+            using (var hash = SHA512.Create())
+            {
+                var hashedBytes = hash.ComputeHash(inputBytes);
+
+                foreach (byte b in hashedBytes)
+                {
+                    hashConverter.Append(b.ToString("X2"));
+                }
+            }
+            return hashConverter.ToString();
+        }
+
         public UserAccountViewModel() { }
 
         public UserAccountViewModel(User newuser)
@@ -172,6 +190,7 @@ namespace Library.MVVM.ViewModel
                     db.Users.Include("UserCard").FirstOrDefault(u => u.Login == newuser.Login).Card.Email = Email;
                     db.Users.Include("UserCard").FirstOrDefault(u => u.Login == newuser.Login).Card.FirstName = Name;
                     db.Users.Include("UserCard").FirstOrDefault(u => u.Login == newuser.Login).Card.SecondName = SecondName;
+                    db.SaveChanges();
                 }
             }, o =>
             {
@@ -184,7 +203,11 @@ namespace Library.MVVM.ViewModel
             #region ChangePassword
             ChangePasswordCommand = new RelayCommand(o =>
             {
-
+                using (DatabaseContext db = new DatabaseContext())
+                {
+                    db.Users.FirstOrDefault(u => u.Login == newuser.Login).Password = ComputeHash(Password);
+                    db.SaveChanges();
+                }
             }, o =>
             {
                 if (string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(PasswordVerify) || Password != PasswordVerify ||

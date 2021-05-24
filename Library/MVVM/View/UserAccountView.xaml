@@ -136,10 +136,11 @@
                         HorizontalAlignment="Right"
                         Panel.ZIndex="-1"
                         mdes:TextFieldAssist.TextFieldCornerRadius="2"
+                        Focusable="False"
                         FontSize="16"
                         Foreground="Transparent"
                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                        Text="{Binding PasswordVerify, UpdateSourceTrigger=PropertyChanged}" />
+                        Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" />
 
                     <PasswordBox
                         Name="pass"
@@ -169,8 +170,10 @@
                         Height="36"
                         Margin="0,0,10,0"
                         Padding="10,4"
+                        Panel.ZIndex="0"
                         HorizontalAlignment="Right"
                         mdes:TextFieldAssist.TextFieldCornerRadius="2"
+                        Focusable="False"
                         FontSize="16"
                         Foreground="Transparent"
                         Style="{StaticResource MaterialDesignOutlinedTextBox}"
