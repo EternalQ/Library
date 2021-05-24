@@ -98,8 +98,8 @@ namespace Library.MVVM.ViewModel
                     FilterTagList.Add(SelTag);
                     //MessageBox.Show(FilterTagList.Count.ToString());
                     ChangeBookList();
-                    //SelTag = null;
                     TagList.Remove(SelTag);
+                    SelTag = null;
                 }
             }
         }
@@ -133,7 +133,7 @@ namespace Library.MVVM.ViewModel
                 {
                     TagList.Add(FilterSelTag);
                     FilterTagList.Remove(FilterSelTag);
-                    //FilterSelTag = null;
+                    FilterSelTag = null;
                 }
                 ChangeBookList();
             }

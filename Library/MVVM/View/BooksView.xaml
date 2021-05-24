@@ -246,9 +246,10 @@
                                 </Grid>
                             </Expander.Header>
 
-                            <Grid Width="370" Height="80">
+                            <Grid Width="370" Height="90">
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
+                                    <RowDefinition Height="20" />
                                     <RowDefinition Height="30" />
                                 </Grid.RowDefinitions>
 
@@ -258,7 +259,21 @@
                                     Text="{Binding TagsTxt}"
                                     TextWrapping="Wrap" />
 
-                                <Grid Grid.Row="1">
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Margin="0,0,45,0"
+                                    HorizontalAlignment="Center"
+                                    FontSize="15"
+                                    Text="Downloads" />
+
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Margin="0,0,8,0"
+                                    HorizontalAlignment="Right"
+                                    FontSize="15"
+                                    Text="In Fav" />
+
+                                <Grid Grid.Row="2">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
                                         <ColumnDefinition />

@@ -254,7 +254,7 @@
                     </Border>
                     <Image
                         x:Name="imgsource"
-                        Source="{Binding ImageSource, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                        Source="{Binding ImageData}"
                         Stretch="UniformToFill" />
                 </Grid>
 

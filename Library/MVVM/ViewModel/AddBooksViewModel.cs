@@ -217,8 +217,8 @@ namespace Library.MVVM.ViewModel
                 if (TagList.Contains(SelectedTag) && !BookTags.Contains(SelectedTag))
                 {
                     BookTags.Add(SelectedTag);
-                    //SelectedTag = null;
                     TagList.Remove(SelectedTag);
+                    SelectedTag = null;
                 }
             }
         }
@@ -252,6 +252,7 @@ namespace Library.MVVM.ViewModel
                 {
                     TagList.Add(SelectedBookTag);
                     BookTags.Remove(SelectedBookTag);
+                    SelectedBookTag = null;
                 }
             }
         }

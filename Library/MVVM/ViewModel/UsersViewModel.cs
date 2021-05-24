@@ -245,7 +245,7 @@ namespace Library.MVVM.ViewModel
                 }
             }, o =>
             {
-                if (SelectedUser == null)
+                if (SelectedUser == null || SelectedUser.Login.ToLower() == "admin")
                     return false;
                 else
                     return true;

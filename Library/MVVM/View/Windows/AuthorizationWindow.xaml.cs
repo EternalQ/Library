@@ -63,6 +63,8 @@ namespace Library.Windows
                     };
 
                     db.Tags.AddRange(tags);
+
+                    tags = null;
                 }
             }
         }
