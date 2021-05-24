@@ -3,10 +3,9 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:Library"
-    xmlns:view="clr-namespace:Library.MVVM.View"
-    xmlns:view2="clr-namespace:Library.Windows"
-    xmlns:viewModel="clr-namespace:Library.MVVM.ViewModel"
     xmlns:mdes="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:view="clr-namespace:Library.MVVM.View"
+    xmlns:viewModel="clr-namespace:Library.MVVM.ViewModel"
     StartupUri="MVVM/View/Windows/AuthorizationWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
@@ -30,6 +29,18 @@
 
             <DataTemplate DataType="{x:Type viewModel:AddBooksViewModel}">
                 <view:AddBookView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:BooksViewModel}">
+                <view:BooksView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:UserAccountViewModel}">
+                <view:UserAccountView />
+            </DataTemplate>
+
+            <DataTemplate DataType="{x:Type viewModel:AddBookUserViewModel}">
+                <view:AddBookUserView />
             </DataTemplate>
 
         </ResourceDictionary>

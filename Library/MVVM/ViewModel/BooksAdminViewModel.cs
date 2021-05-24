@@ -11,6 +11,24 @@ namespace Library.MVVM.ViewModel
 {
     class BooksAdminViewModel : ObservableObject
     {
+        #region Singleton
+        private static BooksAdminViewModel instance;
+
+        public static BooksAdminViewModel Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new BooksAdminViewModel();
+                }
+                return instance;
+            }
+            set => instance = value;
+        }
+        #endregion
+
+        //Commands
         public RelayCommand DeleteSelectedBook { get; set; }
         public RelayCommand SaveBookInfo { get; set; }
         public RelayCommand DeleteSelectedTag { get; set; }
@@ -19,6 +37,7 @@ namespace Library.MVVM.ViewModel
         public RelayCommand AddBook { get; set; }
         public RelayCommand BookEdit { get; set; }
 
+        //Bindable properties
         #region BookList
         private List<Book> _BookList;
 
@@ -266,12 +285,12 @@ namespace Library.MVVM.ViewModel
 
         public BooksAdminViewModel(Book tbook)
         {
-            if (tbook != null)
-                SelectedBook = tbook;
-
             using (DatabaseContext db = new DatabaseContext())
             {
-                BookList = db.Books.ToList();
+                BookList = db.Books.Include("Tags").ToList();
+                if (tbook != null)
+                    BookEdit.Execute(SelectedBook);
+
                 TagList = db.Tags.ToList();
             }
 
@@ -281,10 +300,10 @@ namespace Library.MVVM.ViewModel
                 using (DatabaseContext db = new DatabaseContext())
                 {
                     var book = db.Books.FirstOrDefault(b => b.BookId == SelectedBook.BookId);
-                    var users = db.Users.Include("Books").Where(u => u.FavBooks.Contains(book)).ToList();
+                    var users = db.Users.Include("Books").Where(u => u.Books.Contains(book)).ToList();
                     foreach (User user in users)
                     {
-                        db.Users.Include("Books").FirstOrDefault(u => u.UserId == user.UserId).FavBooks.Remove(book);
+                        db.Users.Include("Books").FirstOrDefault(u => u.UserId == user.UserId).Books.Remove(book);
                     }
                     db.Books.Remove(book);
                     //db.SaveChanges();
@@ -350,9 +369,22 @@ namespace Library.MVVM.ViewModel
             #region BookEdit
             BookEdit = new RelayCommand(o =>
             {
-                AdminWindViewModel.Instance.CurrentView = new AddBooksViewModel(SelectedBook);
+                Book newbook;
+                if (o != null)
+                {
+                    newbook = (Book)o;
+                }
+                else
+                {
+                    newbook = SelectedBook;
+                }
+
+                using (DatabaseContext db = new DatabaseContext())
+                    AdminWindViewModel.Instance.CurrentView = new AddBooksViewModel(db.Books.FirstOrDefault(b => b.Name == newbook.Name));
             });
             #endregion
+
+            Instance = this;
         }
     }
 }

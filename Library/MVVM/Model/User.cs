@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data.Entity;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using Library.Core;
 
 namespace Library.MVVM.Model
 {
@@ -25,7 +26,7 @@ namespace Library.MVVM.Model
         /// <summary>
         /// Favourit books of user
         /// </summary>
-        public List<Book> FavBooks { get; set; }
+        public List<Book> Books { get; set; }
 
         public User() { }
 
@@ -35,7 +36,7 @@ namespace Library.MVVM.Model
             Password = password;
 
             Card = new UserCard();
-            FavBooks = new List<Book>();
+            Books = new List<Book>();
         }
     }
 }

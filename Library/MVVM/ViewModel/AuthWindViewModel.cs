@@ -9,6 +9,7 @@ namespace Library.MVVM.ViewModel
 {
     class AuthWindViewModel : ObservableObject
     {
+        #region Singleton
         private static AuthWindViewModel instance;
 
         public static AuthWindViewModel Instance
@@ -23,7 +24,9 @@ namespace Library.MVVM.ViewModel
             }
             set => instance = value;
         }
+        #endregion
 
+        #region CurrentView
         private Uri _currentView;
 
         public Uri CurrentView
@@ -35,6 +38,7 @@ namespace Library.MVVM.ViewModel
                 OnPropertyChanged();
             }
         }
+        #endregion
 
         public AuthWindViewModel()
         {

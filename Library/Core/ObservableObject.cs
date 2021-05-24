@@ -9,12 +9,17 @@ namespace Library.Core
 {
     class ObservableObject : INotifyPropertyChanged, INotifyDataErrorInfo
     {
-        public bool HasErrors => _propertyErrors.Any();
-
         public event PropertyChangedEventHandler PropertyChanged;
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
         private readonly Dictionary<string, List<string>> _propertyErrors = new Dictionary<string, List<string>>();
+
+        public bool HasErrors => _propertyErrors.Any();
+
+        public bool PropHasErrors(string propertyName)
+        {
+            return (_propertyErrors.ContainsKey(propertyName)) ? true : false;
+        }
 
         public IEnumerable GetErrors(string propertyName)
         {

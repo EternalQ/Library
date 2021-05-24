@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Library.MVVM.Model;
 using Library.MVVM.ViewModel;
+using Library.Windows;
 
 namespace Library
 {
@@ -26,7 +27,6 @@ namespace Library
         {
             //Ошибка
             InitializeComponent();
-            //DataContext = new MainWindViewModel();
         }
 
         public void SetVM(User user)
@@ -34,7 +34,16 @@ namespace Library
             DataContext = new MainWindViewModel(user);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        public void LogOut(object sender, RoutedEventArgs e)
+        {
+            AuthorizationWindow mainwindow = new AuthorizationWindow();
+
+            LocalDataSaver.SetAutologin();
+            Close();
+            mainwindow.Show();
+        }
+
+        public void Button_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Library.MVVM.Model.Book" Collapsed="true">
+    <Position X="9.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAGCAAAAAiAAAAgAAAAAQAAAAAAFAQAAACAAAAAAA=</HashCode>
+      <FileName>MVVM\Model\Book.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.MVVM.Model.Tag" Collapsed="true">
+    <Position X="9.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAQAgAAAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>MVVM\Model\Tag.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.MVVM.Model.User" Collapsed="true">
+    <Position X="11.25" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AABAAAAAAAAAAAAAAAAAAAgAAAAAAAACAAAQQAAAAAA=</HashCode>
+      <FileName>MVVM\Model\User.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.MVVM.Model.UserCard" Collapsed="true">
+    <Position X="11.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABAEgAACAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MVVM\Model\UserCard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -7,8 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mdes="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:viewModel="clr-namespace:Library.MVVM.ViewModel"
-    Width="1020"
+    Width="1050"
     Height="600"
+    d:DataContext="{d:DesignInstance Type=viewModel:MainWindViewModel}"
     AllowsTransparency="True"
     Background="Transparent"
     IsTabStop="False"
@@ -17,10 +18,6 @@
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
-
-    <Window.DataContext>
-        <viewModel:MainWindViewModel />
-    </Window.DataContext>
 
     <Border Background="{StaticResource BackgroundColor}">
 
@@ -36,8 +33,9 @@
                 Padding="0"
                 Panel.ZIndex="10"
                 Background="{StaticResource MainColor}"
+                BorderThickness="0"
                 MouseDown="Grid_MouseDown">
-                
+
                 <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
 
                     <Button
@@ -69,135 +67,101 @@
                 </StackPanel>
             </Border>
 
-            <mdes:DrawerHost Grid.Row="1">
-                
-                <mdes:DrawerHost.LeftDrawerContent>
-                    <Grid></Grid>
-                </mdes:DrawerHost.LeftDrawerContent>
 
-                <ContentControl Content="{Binding }"/>
-            </mdes:DrawerHost>
-            <!--<Grid Grid.Row="1" Grid.RowSpan="2">
-                --><!--  Основной элемент, в котором будет все содержимое окна  --><!--
-                <mdes:DrawerHost
-                    Margin="0"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Stretch"
-                    BorderBrush="{DynamicResource MaterialDesignDivider}"
-                    BorderThickness="0">
-                    --><!--  Собственно, сама выдвижная панель  --><!--
-                    <mdes:DrawerHost.LeftDrawerContent>
-                        <StackPanel Width="300" Margin="5">
-                            <Button
-                                Height="30"
-                                Content="Кнопка1"
-                                Style="{StaticResource MaterialDesignFlatButton}" />
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="50" />
+                </Grid.ColumnDefinitions>
 
-                            <Button
-                                Height="30"
-                                Content="Кнопка2"
-                                Style="{StaticResource MaterialDesignFlatButton}" />
-
-                            <Separator Margin="10" Style="{StaticResource MaterialDesignDarkSeparator}" />
-
-                            <Button
-                                Margin="4"
+                <mdes:DialogHost IsOpen="{Binding Dialog}">
+                    <mdes:DialogHost.DialogContent>
+                        <Grid Margin="10">
+                            <TextBlock
                                 HorizontalAlignment="Center"
-                                Command="{x:Static mdes:DrawerHost.CloseDrawerCommand}"
-                                CommandParameter="{x:Static Dock.Left}"
-                                Style="{DynamicResource MaterialDesignFlatButton}">
-                                <StackPanel Orientation="Horizontal">
-                                    <mdes:PackIcon
-                                        Width="25"
-                                        Height="25"
-                                        Foreground="{StaticResource PrimaryHueDarkBrush}"
-                                        Kind="CloseBoxOutline" />
-                                    <TextBlock
-                                        Margin="3"
-                                        Foreground="{StaticResource PrimaryHueDarkBrush}"
-                                        Text="Закрыть" />
-                                </StackPanel>
-                            </Button>
-                        </StackPanel>
-                    </mdes:DrawerHost.LeftDrawerContent>
-
-                    --><!--  Тут контент самого окна  --><!--
-                    <Grid>
-                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="top">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="40" />
-                                <RowDefinition Height="{Binding ActHeight}" />
-                            </Grid.RowDefinitions>
-
-                            --><!--  Верхняя панель  --><!--
-                            <mdes:ColorZone Padding="0" Mode="Standard">
-
-                                <DockPanel
-                                    Height="40"
-                                    Margin="5,2,2,2"
-                                    VerticalAlignment="Center">
-                                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                                        --><!--  MenuButton  --><!--
-                                        <Button
-                                            x:Name="ButtonOpen"
-                                            Width="40"
-                                            Height="40"
-                                            Padding="0"
-                                            HorizontalAlignment="Left"
-                                            VerticalAlignment="Top"
-                                            Background="{x:Null}"
-                                            BorderBrush="{x:Null}"
-                                            Command="{x:Static mdes:DrawerHost.OpenDrawerCommand}"
-                                            CommandParameter="{x:Static Dock.Left}">
-                                            <mdes:PackIcon
-                                                Width="30"
-                                                Height="30"
-                                                Foreground="{StaticResource PrimaryHueMidBrush}"
-                                                Kind="Menu" />
-                                        </Button>
-
-                                    </StackPanel>
-
-
-                                </DockPanel>
-
-                            </mdes:ColorZone>
-
-                            --><!--  Тут основной контент  --><!--
-                            <StackPanel
-                                Grid.Row="1"
-                                HorizontalAlignment="Stretch"
-                                VerticalAlignment="Top"
-                                Orientation="Vertical">
-                                <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
-                                    <ContentControl
-                                        x:Name="ContentField"
-                                        MaxHeight="{Binding ActHeight}"
-                                        Content="{Binding CurrentControl}"
-                                        Opacity="{Binding FrameOpacity}" />
-                                </ScrollViewer>
-
-                            </StackPanel>
-
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                FontWeight="SemiBold"
+                                Text="Success" />
                         </Grid>
-                    </Grid>
-                </mdes:DrawerHost>
-            </Grid>-->
-            <!--<StackPanel
-                Grid.Row="1"
-                VerticalAlignment="Bottom"
-                Orientation="Horizontal">
-                <RadioButton Content="All books" Style="{StaticResource RadioButtonStyle}" />
-                <RadioButton Content="My Libary" Style="{StaticResource RadioButtonStyle}" />
-                <RadioButton Content="Account" Style="{StaticResource RadioButtonStyle}" />
-                <RadioButton
-                    Content="Reader [WIP]"
-                    IsEnabled="False"
-                    Style="{StaticResource RadioButtonStyle}" />
-            </StackPanel>
+                    </mdes:DialogHost.DialogContent>
+                    <ContentControl Grid.Column="0" Content="{Binding CurrentView}" />
+                </mdes:DialogHost>
 
-            <ContentControl Grid.Row="2" Content="{Binding}" />-->
+                <!--  Controls  -->
+                <Grid Grid.Column="1" Background="{DynamicResource MainColor}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="2*" />
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="10" />
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="3*" />
+                        <RowDefinition Height="60" />
+                        <RowDefinition Height="20" />
+                    </Grid.RowDefinitions>
 
+                    <!--<ToggleButton
+                            Name="MenuToggleBtn"
+                            Grid.Row="1"
+                            Background="Transparent"
+                            Cursor="Hand"
+                            Foreground="White"
+                            IsChecked="False"
+                            Style="{StaticResource MaterialDesignHamburgerToggleButton}" />-->
+
+                    <RadioButton
+                        Name="AllBooks"
+                        Grid.Row="3"
+                        Command="{Binding BooksViewCommand}"
+                        Content="BookOpenVariant"
+                        Foreground="white"
+                        IsChecked="True"
+                        Style="{StaticResource MenuRadioItem}"
+                        ToolTip="All books"
+                        ToolTipService.HorizontalOffset="-70"
+                        ToolTipService.Placement="RelativePoint"
+                        ToolTipService.VerticalOffset="15" />
+
+                    <RadioButton
+                        Name="Favorites"
+                        Grid.Row="5"
+                        Command="{Binding AddBookViewCommand}"
+                        Content="BookAdd"
+                        Foreground="white"
+                        Style="{StaticResource MenuRadioItem}"
+                        ToolTip="Add Book"
+                        ToolTipService.HorizontalOffset="-70"
+                        ToolTipService.Placement="RelativePoint"
+                        ToolTipService.VerticalOffset="15" />
+
+                    <RadioButton
+                        Name="AccountR"
+                        Grid.Row="7"
+                        Command="{Binding AccountViewCommand}"
+                        Content="Account"
+                        Foreground="white"
+                        Style="{StaticResource MenuRadioItem}"
+                        ToolTip="Account"
+                        ToolTipService.HorizontalOffset="-65"
+                        ToolTipService.Placement="RelativePoint"
+                        ToolTipService.VerticalOffset="15" />
+
+                    <Button
+                        Grid.Row="9"
+                        Grid.ColumnSpan="2"
+                        Click="LogOut"
+                        Foreground="white"
+                        Style="{StaticResource LogoutButtonExtended}"
+                        ToolTip="LogOut"
+                        ToolTipService.HorizontalOffset="-65"
+                        ToolTipService.Placement="RelativePoint"
+                        ToolTipService.VerticalOffset="15" />
+                </Grid>
+            </Grid>
         </Grid>
     </Border>
 

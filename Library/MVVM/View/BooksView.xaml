@@ -1,12 +1,320 @@
-﻿<UserControl x:Class="Library.MVVM.View.BooksView"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Library.MVVM.View"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+﻿<UserControl
+    x:Class="Library.MVVM.View.BooksView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Library.MVVM.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mdes="http://materialdesigninxaml.net/winfx/xaml/themes"
+    xmlns:viewmodel="clr-namespace:Library.MVVM.ViewModel"
+    d:DataContext="{d:DesignInstance Type=viewmodel:BooksViewModel}"
+    d:DesignHeight="570"
+    d:DesignWidth="970"
+    mc:Ignorable="d">
+
+    <Border Background="{StaticResource BackgroundColor}">
+
+        <Grid Width="650">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="250" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <Button
+                    HorizontalAlignment="Center"
+                    Command="{Binding ResetCommand}"
+                    Content="Reset"
+                    Style="{StaticResource CancelButton}" />
+
+                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                    <TextBlock
+                        Margin="0,0,0,10"
+                        HorizontalAlignment="Center"
+                        FontSize="15"
+                        Text="Favs" />
+                    <ToggleButton Cursor="Hand" IsChecked="{Binding FavsCheck}" />
+                </StackPanel>
+            </Grid>
+
+            <Grid Grid.Column="1" Margin="0,10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+
+                <TextBox
+                    Grid.Row="1"
+                    Margin="10,0,10,0"
+                    mdes:HintAssist.Foreground="Gray"
+                    mdes:HintAssist.Hint="Search book name"
+                    FontSize="14"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding BookSearch, UpdateSourceTrigger=PropertyChanged}" />
+
+                <ComboBox
+                    Grid.Column="1"
+                    Margin="10,0"
+                    VerticalAlignment="Stretch"
+                    VerticalContentAlignment="Center"
+                    mdes:HintAssist.Hint="Sort by"
+                    FontSize="14"
+                    SelectedIndex="{Binding SortIndex}">
+                    <ComboBoxItem Content="Name" Tag="Name" />
+                    <ComboBoxItem Content="Author Name" Tag="AuthorName" />
+                </ComboBox>
+            </Grid>
+
+            <Grid Grid.Row="1" Grid.Column="0">
+                <StackPanel>
+                    <TextBlock
+                        Margin="5"
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        Text="Filter" />
+
+                    <ListBox
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        ItemsSource="{Binding FilterTagList}"
+                        SelectedItem="{Binding FilterSelTag, Mode=TwoWay}"
+                        SelectionMode="Single">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Height="30">
+                                    <!--<CheckBox IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem, AncestorLevel=1}, Path=IsSelected}" />-->
+
+                                    <TextBlock
+                                        Margin="0,0,0,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        Text="{Binding Name}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.Style>
+                            <Style BasedOn="{StaticResource MaterialDesignFilterChipAccentOutlineListBox}" TargetType="{x:Type ListBox}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="16"
+                                                        FontStyle="Italic"
+                                                        Text="Empty" />
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListBox.Style>
+                    </ListBox>
+
+                    <TextBlock
+                        Margin="5"
+                        FontSize="16"
+                        FontWeight="SemiBold"
+                        Text="Tags" />
+
+                    <ListBox
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        ItemsSource="{Binding TagList}"
+                        SelectedItem="{Binding SelTag, Mode=TwoWay}"
+                        SelectionMode="Single">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Height="30">
+                                    <!--<CheckBox IsChecked="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem, AncestorLevel=1}, Path=IsSelected}" />-->
+
+                                    <TextBlock
+                                        Margin="0,0,0,0"
+                                        VerticalAlignment="Center"
+                                        FontSize="14"
+                                        Text="{Binding Name}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                        <ListBox.Style>
+                            <Style BasedOn="{StaticResource MaterialDesignFilterChipAccentOutlineListBox}" TargetType="{x:Type ListBox}">
+                                <Style.Triggers>
+                                    <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
+                                        <Setter Property="Template">
+                                            <Setter.Value>
+                                                <ControlTemplate>
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="16"
+                                                        FontStyle="Italic"
+                                                        Text="Empty" />
+                                                </ControlTemplate>
+                                            </Setter.Value>
+                                        </Setter>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListBox.Style>
+                    </ListBox>
+                </StackPanel>
+            </Grid>
+
+            <ListBox
+                x:Name="BookList"
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="0,0,0,10"
+                ItemsSource="{Binding BookList}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Expander
+                            mdes:ExpanderAssist.HeaderBackground="Transparent"
+                            mdes:ExpanderAssist.HorizontalHeaderPadding="0"
+                            Cursor="Hand"
+                            IsExpanded="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem, AncestorLevel=1}, Path=IsSelected}"
+                            Style="{StaticResource MaterialDesignExpander}">
+                            <Expander.Header>
+                                <Grid
+                                    Width="370"
+                                    MinHeight="120"
+                                    Margin="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="90" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid>
+                                        <Border BorderBrush="Gray" BorderThickness="2">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontSize="16"
+                                                FontStyle="Italic"
+                                                Text="No Image" />
+                                        </Border>
+                                        <Image Source="{Binding Image}" Stretch="UniformToFill" />
+                                    </Grid>
+
+                                    <Grid Grid.Column="1" Margin="10,0,0,0">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="35" />
+                                            <RowDefinition Height="35" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock
+                                            Margin="10,0,0,0"
+                                            VerticalAlignment="Center"
+                                            FontSize="15"
+                                            FontWeight="SemiBold"
+                                            Text="{Binding Name}" />
+
+                                        <TextBlock
+                                            Grid.Row="1"
+                                            Margin="10,0,0,0"
+                                            VerticalAlignment="Center"
+                                            FontSize="15"
+                                            FontWeight="SemiBold"
+                                            Foreground="{StaticResource PrimaryHueDarkBrush}"
+                                            Text="{Binding Author}" />
+
+                                        <TextBlock
+                                            Grid.Row="2"
+                                            Margin="10,5,0,5"
+                                            VerticalAlignment="Top"
+                                            mdes:TextFieldAssist.PrefixText="Description: "
+                                            mdes:TextFieldAssist.SuffixText="..."
+                                            FontSize="15"
+                                            FontWeight="SemiBold"
+                                            Text="{Binding Description}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
+                                </Grid>
+                            </Expander.Header>
+
+                            <Grid Width="370" Height="80">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition Height="30" />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock
+                                    Margin="5,5"
+                                    FontSize="13"
+                                    Text="{Binding TagsTxt}"
+                                    TextWrapping="Wrap" />
+
+                                <Grid Grid.Row="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                        <ColumnDefinition Width="50" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Button
+                                        Width="100"
+                                        Command="{Binding DownloadFB2Command}"
+                                        Content="FB2"
+                                        Style="{StaticResource MainButton}" />
+
+                                    <Button
+                                        Grid.Column="1"
+                                        Width="100"
+                                        Command="{Binding DownloadEPUBCommand}"
+                                        Content="EPUB"
+                                        Style="{StaticResource MainButton}" />
+
+                                    <ToggleButton
+                                        Grid.Column="2"
+                                        Background="{x:Null}"
+                                        BorderBrush="{x:Null}"
+                                        BorderThickness="0"
+                                        Checked="ToggleButton_Checked"
+                                        IsChecked="{Binding InFavs}"
+                                        Style="{StaticResource LikeToggleButton}"
+                                        Unchecked="ToggleButton_Unchecked" />
+                                </Grid>
+                            </Grid>
+                        </Expander>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.Style>
+                    <Style BasedOn="{StaticResource MaterialDesignListBox}" TargetType="{x:Type ListBox}">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontSize="16"
+                                                FontStyle="Italic"
+                                                Text="Nothing found" />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ListBox.Style>
+            </ListBox>
+
+        </Grid>
+
+    </Border>
 </UserControl>

@@ -80,7 +80,7 @@
                         Grid.Row="2"
                         Margin="0,0,10,0"
                         ItemsSource="{Binding BookList}"
-                        SelectedItem="{Binding SelectedBook}">
+                        SelectedItem="{Binding SelectedBook, Mode=TwoWay}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
                                 <Border VerticalAlignment="Stretch">
@@ -127,7 +127,7 @@
                         </ListBox.Style>
                     </ListBox>
 
-                    <Grid Grid.Row="3" VerticalAlignment="Bottom">
+                    <Grid Grid.Row="4" VerticalAlignment="Bottom">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
@@ -143,6 +143,8 @@
                         <Button
                             Grid.Column="1"
                             Width="100"
+                            Margin="20,0"
+                            VerticalAlignment="Top"
                             Command="{Binding DeleteSelectedBook}"
                             Content="Delete"
                             FontSize="15"
@@ -236,154 +238,8 @@
                                     Command="{Binding BookEdit}"
                                     Content="Open full editor"
                                     Style="{StaticResource MainButton}" />
-                                <!--<TextBlock FontSize="18" Text="Tags:" />-->
-
-                                <!--<ListBox ItemsSource="{Binding SelectedBookTags}">
-                                    <ListBox.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid>
-                                                <TextBlock Text="{Binding Name}" />
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListBox.ItemTemplate>
-                                    <ListBox.Style>
-                                        <Style BasedOn="{StaticResource MaterialDesignFilterChipOutlineListBox}" TargetType="{x:Type ListBox}">
-                                            <Style.Triggers>
-                                                <DataTrigger Binding="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=Items.Count}" Value="0">
-                                                    <Setter Property="Template">
-                                                        <Setter.Value>
-                                                            <ControlTemplate>
-                                                                <TextBlock
-                                                                    HorizontalAlignment="Center"
-                                                                    VerticalAlignment="Center"
-                                                                    FontSize="16"
-                                                                    FontStyle="Italic"
-                                                                    Text="Nothing found" />
-                                                            </ControlTemplate>
-                                                        </Setter.Value>
-                                                    </Setter>
-                                                </DataTrigger>
-                                            </Style.Triggers>
-                                        </Style>
-                                    </ListBox.Style>
-                                </ListBox>-->
-                                <!--<ScrollViewer
-                                    Height="55"
-                                    HorizontalScrollBarVisibility="Hidden"
-                                    VerticalScrollBarVisibility="Auto">
-                                    <TextBox Text="{Binding SelectedBookTags}" TextWrapping="Wrap" />
-                                </ScrollViewer>-->
                             </StackPanel>
                         </Grid>
-
-                        <!--<Grid Grid.Row="4">
-                            <StackPanel Margin="5,20,5,0">
-                                <TextBlock
-                                    HorizontalAlignment="Center"
-                                    FontSize="18"
-                                    Text="Data Sources:" />
-
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-
-                                    <StackPanel>
-                                        <TextBlock
-                                            Margin="0,5,0,5"
-                                            HorizontalAlignment="Center"
-                                            FontSize="16"
-                                            FontWeight="SemiBold"
-                                            Text="FB2" />
-
-                                        <mdes:PackIcon
-                                            Width="30"
-                                            Height="30"
-                                            HorizontalAlignment="Center"
-                                            Foreground="Green"
-                                            Kind="Check">
-                                            <mdes:PackIcon.Style>
-                                                <Style TargetType="mdes:PackIcon">
-                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding IsFB2}" Value="true">
-                                                            <Setter Property="Visibility" Value="Visible" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </mdes:PackIcon.Style>
-                                        </mdes:PackIcon>
-
-                                        <mdes:PackIcon
-                                            Width="30"
-                                            Height="30"
-                                            HorizontalAlignment="Center"
-                                            Foreground="Red"
-                                            Kind="ErrorOutline"
-                                            ToolTip="Resource not found">
-                                            <mdes:PackIcon.Style>
-                                                <Style TargetType="mdes:PackIcon">
-                                                    <Setter Property="Visibility" Value="Hidden" />
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding IsFB2}" Value="true">
-                                                            <Setter Property="Visibility" Value="Collapsed" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </mdes:PackIcon.Style>
-                                        </mdes:PackIcon>
-                                    </StackPanel>
-
-                                    <StackPanel Grid.Column="1">
-                                        <TextBlock
-                                            Margin="0,5,0,5"
-                                            HorizontalAlignment="Center"
-                                            FontSize="16"
-                                            FontWeight="SemiBold"
-                                            Text="EPUB" />
-
-                                        <mdes:PackIcon
-                                            Width="30"
-                                            Height="30"
-                                            HorizontalAlignment="Center"
-                                            Foreground="Green"
-                                            Kind="Check">
-                                            <mdes:PackIcon.Style>
-                                                <Style TargetType="mdes:PackIcon">
-                                                    <Setter Property="Visibility" Value="Collapsed" />
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding IsEPUB}" Value="true">
-                                                            <Setter Property="Visibility" Value="Visible" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </mdes:PackIcon.Style>
-                                        </mdes:PackIcon>
-
-                                        <mdes:PackIcon
-                                            Width="30"
-                                            Height="30"
-                                            HorizontalAlignment="Center"
-                                            Foreground="Red"
-                                            Kind="ErrorOutline"
-                                            ToolTip="Resource not found">
-                                            <mdes:PackIcon.Style>
-                                                <Style TargetType="mdes:PackIcon">
-                                                    <Setter Property="Visibility" Value="Hidden" />
-                                                    <Style.Triggers>
-                                                        <DataTrigger Binding="{Binding IsEPUB}" Value="true">
-                                                            <Setter Property="Visibility" Value="Collapsed" />
-                                                        </DataTrigger>
-                                                    </Style.Triggers>
-                                                </Style>
-                                            </mdes:PackIcon.Style>
-                                        </mdes:PackIcon>
-                                    </StackPanel>
-                                </Grid>
-                            </StackPanel>
-
-                        </Grid>-->
                     </Grid>
 
                     <Grid Grid.Row="2" VerticalAlignment="Bottom">

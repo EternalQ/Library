@@ -53,7 +53,7 @@ namespace Library.MVVM.ViewModel
             UserCard card;
             using (DatabaseContext db = new DatabaseContext())
             {
-                selected = db.Users.FirstOrDefault(u => u.UserId == SelectedUser.UserId);
+                selected = db.Users.Include("Books").FirstOrDefault(u => u.UserId == SelectedUser.UserId);
                 card = db.UserCards.FirstOrDefault(u => u.UserId == SelectedUser.UserId);
             }
 
@@ -62,10 +62,7 @@ namespace Library.MVVM.ViewModel
             SecondName = card.SecondName;
             Email = card.Email;
             IsUserSelected = true;
-            UserBookList = selected.FavBooks;
-            //if (SelectedBook != null)
-            //{
-            //}
+            UserBookList = selected.Books;
         }
         #endregion
 
@@ -233,6 +230,7 @@ namespace Library.MVVM.ViewModel
                 UserList = db.Users.ToList();
             }
 
+            #region DeleteUser
             DeleteSelectedUser = new RelayCommand(o =>
             {
                 using (DatabaseContext db = new DatabaseContext())
@@ -252,13 +250,15 @@ namespace Library.MVVM.ViewModel
                 else
                     return true;
             });
+            #endregion
 
+            #region OpenBook
             OpenSelectedBook = new RelayCommand(o =>
             {
                 using (DatabaseContext db = new DatabaseContext())
                 {
                     var selected = db.Books.FirstOrDefault(u => u.BookId == SelectedBook.BookId);
-                    AdminWindViewModel.Instance.CurrentView = new BooksAdminViewModel(selected);
+                    BooksAdminViewModel.Instance.BookEdit.Execute(selected);
                     //AdminWindViewModel.Instance.ToBooksCommand.Execute(null);
                 }
             }, o =>
@@ -268,7 +268,9 @@ namespace Library.MVVM.ViewModel
                 else
                     return true;
             });
+            #endregion
 
+            #region SaveUserInfo
             SaveUserInfo = new RelayCommand(o =>
             {
                 using (DatabaseContext db = new DatabaseContext())
@@ -287,11 +289,7 @@ namespace Library.MVVM.ViewModel
                 else
                     return true;
             });
-
-            //Test = new RelayCommand(o =>
-            //{
-            //    MessageBox.Show("working");
-            //});
+            #endregion
         }
     }
 }

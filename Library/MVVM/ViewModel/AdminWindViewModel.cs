@@ -13,6 +13,7 @@ namespace Library.MVVM.ViewModel
 {
     class AdminWindViewModel : ObservableObject
     {
+        #region Singleton
         private static AdminWindViewModel instance;
 
         public static AdminWindViewModel Instance
@@ -27,17 +28,21 @@ namespace Library.MVVM.ViewModel
             }
             set => instance = value;
         }
+        #endregion
 
+        //Views of admin panel
         BooksAdminViewModel BooksVM;
         UsersViewModel UsersVM;
         AddBooksViewModel AddBookVM;
 
+        //Commands
         public RelayCommand ToUsersCommand { get; set; }
         public RelayCommand ToBooksCommand { get; set; }
         public RelayCommand ToAddBookCommand { get; set; }
-        public RelayCommand OffAutoLogin { get; set; }
-        public RelayCommand LogOut { get; set; }
+        public RelayCommand OffAutoLoginCommand { get; set; }
+        public RelayCommand LogOutCommand { get; set; }
 
+        //bindable properties
         #region CurrentView
         private object _currentView;
 
@@ -111,7 +116,7 @@ namespace Library.MVVM.ViewModel
                 CurrentView = AddBookVM;
             });
 
-            LogOut = new RelayCommand(o =>
+            LogOutCommand = new RelayCommand(o =>
             {
                 AuthorizationWindow mainwindow = new AuthorizationWindow();
 
@@ -120,7 +125,7 @@ namespace Library.MVVM.ViewModel
                 mainwindow.Show();
             });
 
-            OffAutoLogin = new RelayCommand(o =>
+            OffAutoLoginCommand = new RelayCommand(o =>
             {
                 LocalDataSaver.SetAutologin();
                 //MessageBox.Show("hehe");

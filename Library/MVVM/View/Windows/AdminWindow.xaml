@@ -103,7 +103,7 @@
                     <Button
                         Grid.Row="0"
                         HorizontalAlignment="Stretch"
-                        Command="{Binding OffAutoLogin}"
+                        Command="{Binding OffAutoLoginCommand}"
                         Content="Off Auto login"
                         FontSize="10"
                         Style="{StaticResource MainButton}" />
@@ -112,7 +112,7 @@
                         Grid.Row="1"
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Bottom"
-                        Command="{Binding LogOut}"
+                        Command="{Binding LogOutCommand}"
                         Content="LogOut"
                         FontSize="10"
                         Style="{StaticResource MainButton}" />

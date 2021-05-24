@@ -1,17 +1,16 @@
-﻿using Library.Core;
-using Library.MVVM.Model;
-using Microsoft.Win32;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows;
+using Library.Core;
+using Library.MVVM.Model;
+using Microsoft.Win32;
 
 namespace Library.MVVM.ViewModel
 {
-    class AddBooksViewModel : ObservableObject
+    class AddBookUserViewModel : ObservableObject
     {
         //Commands
         public RelayCommand AddBook { get; set; }
@@ -98,7 +97,7 @@ namespace Library.MVVM.ViewModel
                 using (DatabaseContext db = new DatabaseContext())
                 {
                     if (db.Books.FirstOrDefault(b => b.Name == _Name) != null)
-                        AddError("Book will be rewrited");
+                        AddError("Name alredy exist");
                 }
                 OnPropertyChanged();
             }
@@ -257,40 +256,8 @@ namespace Library.MVVM.ViewModel
         }
         #endregion
 
-        public AddBooksViewModel(Book newbook)
+        public AddBookUserViewModel()
         {
-            #region OnBookOpeningFilling
-            if (newbook != null)
-            {
-                using (DatabaseContext db = new DatabaseContext())
-                {
-                    newbook = db.Books.Include("Tags").FirstOrDefault(b => b.BookId == newbook.BookId);
-                    Name = newbook.Name;
-                    AuthorName = newbook.Author;
-                    Description = newbook.Description;
-                    BookTags = new ObservableCollection<Tag>();
-                    foreach (Tag tag in newbook.Tags)
-                        BookTags.Add(tag);
-                }
-                if (newbook.Image != null)
-                {
-                    ImageSource = "Uploaded";
-                    imgData = newbook.Image;
-                    ImageData = newbook.Image;
-                }
-                if (newbook.DataFB2 != null)
-                {
-                    FB2Source = "Uploaded";
-                    fb2Data = newbook.DataFB2;
-                }
-                if (newbook.DataEPUB != null)
-                {
-                    EPUBSource = "Uploaded";
-                    epubData = newbook.DataEPUB;
-                }
-            }
-            #endregion
-
             using (DatabaseContext db = new DatabaseContext())
             {
                 if (BookTags == null)
@@ -298,10 +265,9 @@ namespace Library.MVVM.ViewModel
                 baseTagList = new ObservableCollection<Tag>(db.Tags.OrderBy(t => t.Name).ToList());
                 TagList = baseTagList;
                 foreach (Tag tag in BookTags)
-                    TagList.Remove(baseTagList.FirstOrDefault(t=>t.Name == tag.Name));
+                    TagList.Remove(baseTagList.FirstOrDefault(t => t.Name == tag.Name));
             }
 
-            //add rewriting
             #region AddBook
             AddBook = new RelayCommand(o =>
             {
@@ -329,28 +295,16 @@ namespace Library.MVVM.ViewModel
                             db.Books.Include("Tags").FirstOrDefault(b => b.Name == book.Name).Tags.Add(db.Tags.FirstOrDefault(t => t.Name == tag.Name));
                         }
                     }
-                    else
-                    {
-                        db.Books.FirstOrDefault(b => b.Name == Name).Author = AuthorName;
-                        db.Books.FirstOrDefault(b => b.Name == Name).Description = Description;
-                        db.Books.FirstOrDefault(b => b.Name == Name).DataEPUB = epubData;
-                        db.Books.FirstOrDefault(b => b.Name == Name).DataFB2 = fb2Data;
-                        db.Books.FirstOrDefault(b => b.Name == Name).Image = imgData;
-                        foreach (Tag tag in BookTags)
-                            db.Books.Include("Tags").FirstOrDefault(b => b.Name == Name).Tags.Add(db.Tags.FirstOrDefault(t => t.Name == tag.Name));
-                    }
-
                     db.SaveChanges();
-                    AdminWindViewModel.Instance.ToBooksCommand.Execute(null);
-                    //MessageBox.Show(book.Tags.Count.ToString());
+                    Cancel.Execute(null);
                 }
             }, o =>
-             {
-                 if (String.IsNullOrWhiteSpace(Name) || String.IsNullOrWhiteSpace(AuthorName) ||
-                 String.IsNullOrWhiteSpace(Description))
-                     return false;
-                 return true;
-             });
+            {
+                if (String.IsNullOrWhiteSpace(Name) || String.IsNullOrWhiteSpace(AuthorName) ||
+                String.IsNullOrWhiteSpace(Description) || HasErrors)
+                    return false;
+                return true;
+            });
             #endregion
 
             #region AddImg
@@ -366,6 +320,7 @@ namespace Library.MVVM.ViewModel
                     imgData = new byte[fs.Length];
                     fs.Read(imgData, 0, imgData.Length);
                 }
+                ImageData = imgData;
             });
             #endregion
 
@@ -404,7 +359,8 @@ namespace Library.MVVM.ViewModel
             #region Cancel
             Cancel = new RelayCommand(o =>
             {
-                AdminWindViewModel.Instance.ToBooksCommand.Execute(null);
+                MainWindViewModel.Instance.AddBookVM = new AddBookUserViewModel();
+                MainWindViewModel.Instance.CurrentView = MainWindViewModel.Instance.AddBookVM;
             });
             #endregion
         }
