@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Library.Core;
-using System.Runtime.CompilerServices;
 using Library.MVVM.Model;
 using System.Collections.ObjectModel;
-using System.Windows;
 
 namespace Library.MVVM.ViewModel
 {

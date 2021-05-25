@@ -4,10 +4,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:fa="http://schemas.fontawesome.io/icons/"
-    xmlns:local="clr-namespace:Library.Pages"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:mdes="http://materialdesigninxaml.net/winfx/xaml/themes"
-    xmlns:viewmodel="clr-namespace:Library.MVVM.ViewModel"
     Title="RegisrationPage"
     d:DesignHeight="450"
     mc:Ignorable="d">
@@ -53,9 +51,11 @@
                 <TextBox
                     Name="txtLogin"
                     Width="280"
+                    Margin="0,1,0,-1"
                     mdes:HintAssist.Hint="Login"
                     mdes:ValidationAssist.Background="Transparent"
                     BorderBrush="Black"
+                    MaxLength="20"
                     Style="{StaticResource TextBoxVal}"
                     TabIndex="0"
                     Text="{Binding Login, UpdateSourceTrigger=PropertyChanged}" />

@@ -1,12 +1,5 @@
 ﻿using Library.Core;
 using Library.MVVM.Model;
-using Library.Windows;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 
 namespace Library.MVVM.ViewModel
 {

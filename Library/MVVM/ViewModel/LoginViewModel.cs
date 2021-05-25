@@ -1,16 +1,9 @@
 ﻿using Library.Core;
 using Library.MVVM.Model;
-using Library.MVVM.View;
 using Library.MVVM.View.Windows;
 using Library.Pages;
-using Library.Windows;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace Library.MVVM.ViewModel
 {

@@ -1,15 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using Library.Core;
-using Library.Pages;
 using Library.MVVM.Model;
-using System.Windows;
-using Library.Windows;
-using System.Runtime.CompilerServices;
 
 namespace Library.MVVM.ViewModel
 {
