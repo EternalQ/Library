@@ -207,6 +207,8 @@ namespace Library.MVVM.ViewModel
                     db.Users.FirstOrDefault(u => u.Login == newuser.Login).Password = ComputeHash(Password);
                     db.SaveChanges();
                 }
+                Password = "";
+                PasswordVerify = "";
             }, o =>
             {
                 if (string.IsNullOrWhiteSpace(Password) || string.IsNullOrWhiteSpace(PasswordVerify) || Password != PasswordVerify ||

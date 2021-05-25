@@ -1,31 +1,117 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Library.MVVM.Model.Book" Collapsed="true">
-    <Position X="9.25" Y="0.75" Width="1.5" />
+  <Class Name="Library.Core.BaseProvider">
+    <Position X="6" Y="1.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAGCAAAAAiAAAAgAAAAAQAAAAAAFAQAAACAAAAAAA=</HashCode>
-      <FileName>MVVM\Model\Book.cs</FileName>
+      <HashCode>gAAAAAAAAAAAAQAAAAAAAACAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Core\BaseProvider.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Library.MVVM.Model.Tag" Collapsed="true">
-    <Position X="9.25" Y="1.5" Width="1.5" />
+  <Class Name="Library.MVVM.Model.LoginProvider">
+    <Position X="8" Y="3" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAAAAAAAQAgAAAAAAAAAAAAAAAAAE=</HashCode>
-      <FileName>MVVM\Model\Tag.cs</FileName>
+      <HashCode>AAAAAAAAAAAAQAAAAAAAAACAAAAAAAAAAAAAAAAAAEA=</HashCode>
+      <FileName>MVVM\Model\LoginProvider.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Library.MVVM.Model.User" Collapsed="true">
-    <Position X="11.25" Y="0.75" Width="1.5" />
+  <Class Name="Library.MVVM.Model.RegistrationProvider">
+    <Position X="8" Y="1.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AABAAAAAAAAAAAAAAAAAAAgAAAAAAAACAAAQQAAAAAA=</HashCode>
-      <FileName>MVVM\Model\User.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>MVVM\Model\RegistrationProvider.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Library.MVVM.Model.UserCard" Collapsed="true">
-    <Position X="11.25" Y="1.5" Width="1.5" />
+  <Class Name="Library.Core.ObservableObject" Collapsed="true">
+    <Position X="10" Y="1" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAABAEgAACAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>MVVM\Model\UserCard.cs</FileName>
+      <HashCode>AAAAAAAAAAAEAAABIAAAAAAAgAABAAAIAAAAAAAhoAA=</HashCode>
+      <FileName>Core\ObservableObject.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Library.MVVM.ViewModel.AddBooksViewModel" Collapsed="true">
+    <Position X="12.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADAABQJQAAgEEABCCEAIMSAAA1IAEF0ABAABQACAAA=</HashCode>
+      <FileName>MVVM\ViewModel\AddBooksViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.MVVM.ViewModel.AddBookUserViewModel" Collapsed="true">
+    <Position X="12.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AADAABQJQAAgEEABCCEAIMSAAA1IAEF0ABAABQACAAA=</HashCode>
+      <FileName>MVVM\ViewModel\AddBookUserViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.MVVM.ViewModel.AdminWindViewModel" Collapsed="true">
+    <Position X="15" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAwQACAAIAAAAAoAEAAEAAAABAACAAUACAAAAABAI=</HashCode>
+      <FileName>MVVM\ViewModel\AdminWindViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.MVVM.ViewModel.AuthWindViewModel" Collapsed="true">
+    <Position X="15" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAACAAAAAAAAAAEAAAAAAABAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>MVVM\ViewModel\AuthWindViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.MVVM.ViewModel.BooksAdminViewModel" Collapsed="true">
+    <Position X="15" Y="1.25" Width="1.5" />
+    <InheritanceLine Type="Library.Core.ObservableObject" FixedFromPoint="true">
+      <Path>
+        <Point X="10.75" Y="1.562" />
+        <Point X="10.75" Y="2.3" />
+        <Point X="15.75" Y="2.3" />
+        <Point X="15.75" Y="1.941" />
+      </Path>
+    </InheritanceLine>
+    <TypeIdentifier>
+      <HashCode>IACEABAIiAAgCYEACCAAIIQIEEjkAECEQBIQEAQKCAA=</HashCode>
+      <FileName>MVVM\ViewModel\BooksAdminViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.MVVM.ViewModel.BooksViewModel" Collapsed="true">
+    <Position X="10.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAHABAAACAIAAAQAAABCAsgrAAEBAQAAAEAgCAEA=</HashCode>
+      <FileName>MVVM\ViewModel\BooksViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.MVVM.ViewModel.LoginViewModel" Collapsed="true">
+    <Position X="10.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAgAACAEAEAAAEACAAABQABAADACQACUggAEAIA=</HashCode>
+      <FileName>MVVM\ViewModel\LoginViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.MVVM.ViewModel.MainWindViewModel" Collapsed="true">
+    <Position X="15.25" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAQQwCAAEAAAAAAAAAAAACAABAAAAAUAAAAAAAAIA=</HashCode>
+      <FileName>MVVM\ViewModel\MainWindViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.MVVM.ViewModel.RegistrationViewModel" Collapsed="true">
+    <Position X="10.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAgAQCAEAFAAAAAAAAABAAAAgCACAAAUAAAEAAA=</HashCode>
+      <FileName>MVVM\ViewModel\RegistrationViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.MVVM.ViewModel.UserAccountViewModel" Collapsed="true">
+    <Position X="12.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IAAAIAgEACABAFAAAAAAIAQAAAEAAAACAAAQCAQAAAA=</HashCode>
+      <FileName>MVVM\ViewModel\UserAccountViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Library.MVVM.ViewModel.UsersViewModel" Collapsed="true">
+    <Position X="12.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>IgCAQAgAACAAAAAAAAAAYAQAEBEAAACgAYAxEACCAAA=</HashCode>
+      <FileName>MVVM\ViewModel\UsersViewModel.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Font Name="Segoe UI" Size="9" />

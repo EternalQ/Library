@@ -181,7 +181,7 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Expander
-                            mdes:ExpanderAssist.HeaderBackground="Transparent"
+                            mdes:ExpanderAssist.HeaderBackground="{StaticResource BackgroundColor}"
                             mdes:ExpanderAssist.HorizontalHeaderPadding="0"
                             Cursor="Hand"
                             IsExpanded="{Binding RelativeSource={RelativeSource AncestorType=ListBoxItem, AncestorLevel=1}, Path=IsSelected}"

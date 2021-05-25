@@ -33,6 +33,9 @@ namespace Library.MVVM.ViewModel
         public RelayCommand AddBook { get; set; }
         public RelayCommand BookEdit { get; set; }
 
+        //data
+        string name;
+
         //Bindable properties
         #region BookList
         private List<Book> _BookList;
@@ -73,7 +76,7 @@ namespace Library.MVVM.ViewModel
                 tags = selected.Tags;
             }
 
-            Name = selected.Name;
+            Name = name = selected.Name;
             AuthorName = selected.Author;
             Description = selected.Description;
             SelectedBookTags = tags;
@@ -132,6 +135,14 @@ namespace Library.MVVM.ViewModel
             set
             {
                 _Name = value;
+                ClearErrors();
+                if (_Name == "")
+                    AddError("Can't be empty");
+                using (DatabaseContext db = new DatabaseContext())
+                {
+                    if (db.Books.FirstOrDefault(b => b.Name == _Name && Name != name) != null)
+                        AddError("Book will be rewrited");
+                }
                 OnPropertyChanged();
             }
         }
@@ -146,6 +157,9 @@ namespace Library.MVVM.ViewModel
             set
             {
                 _AuthorName = value;
+                ClearErrors();
+                if (_AuthorName == "")
+                    AddError("Can't be empty");
                 OnPropertyChanged();
             }
         }
@@ -160,6 +174,9 @@ namespace Library.MVVM.ViewModel
             set
             {
                 _Description = value;
+                ClearErrors();
+                if (_Description == "")
+                    AddError("Can't be empty");
                 OnPropertyChanged();
             }
         }
@@ -290,6 +307,19 @@ namespace Library.MVVM.ViewModel
                 TagList = db.Tags.ToList();
             }
 
+            #region SaveBookInfo
+            SaveBookInfo = new RelayCommand(o =>
+            {
+                using(DatabaseContext db = new DatabaseContext())
+                {
+                    db.Books.FirstOrDefault(b => b.BookId == SelectedBook.BookId).Name = Name;
+                    db.Books.FirstOrDefault(b => b.BookId == SelectedBook.BookId).Author = AuthorName;
+                    db.Books.FirstOrDefault(b => b.BookId == SelectedBook.BookId).Description = Description;
+                    db.SaveChanges();
+                }
+            });
+            #endregion
+
             #region DeleteSelectedBook
             DeleteSelectedBook = new RelayCommand(o =>
             {
@@ -337,13 +367,14 @@ namespace Library.MVVM.ViewModel
                 using (DatabaseContext db = new DatabaseContext())
                 {
                     if (db.Tags.Any(t => t.Name == TagName))
-                    {
                         AddError("This tag alredy exists", nameof(TagName));
+                    else
+                    {
+                        db.Tags.Add(new Tag(TagName));
+                        db.SaveChanges();
+                        TagList = db.Tags.ToList();
+                        IsOpen = false;
                     }
-                    db.Tags.Add(new Tag(TagName));
-                    db.SaveChanges();
-                    TagList = db.Tags.ToList();
-                    IsOpen = false;
                 }
             });
             #endregion

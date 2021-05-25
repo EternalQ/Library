@@ -142,6 +142,14 @@ namespace Library.MVVM.Model
             SaveLoginSettings(settings);
         }
 
+        static LocalDataSaver()
+        {
+            Directory.CreateDirectory(dataPath);
+            Directory.CreateDirectory(tempDataPath);
+            if (!File.Exists(loginSettingsPath))
+                SaveLoginSettings(LoginSettings.Default());
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -173,14 +181,6 @@ namespace Library.MVVM.Model
                 ImageSource = tempImagePath;
             }
             return ImageSource;
-        }
-
-        static LocalDataSaver()
-        {
-            Directory.CreateDirectory(dataPath);
-            Directory.CreateDirectory(tempDataPath);
-            if (!File.Exists(loginSettingsPath))
-                SaveLoginSettings(LoginSettings.Default());
         }
     }
 }
