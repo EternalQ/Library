@@ -282,7 +282,7 @@
             <Setter Property="Focusable" Value="False" />
             <Setter Property="Cursor" Value="Hand" />
             <Setter Property="Padding" Value="0" />
-            <Setter Property="Foreground" Value="{StaticResource PrimaryHueLightBrush}" />
+            <Setter Property="Foreground" Value="{StaticResource SelectColor}" />
             <Setter Property="Background" Value="Transparent" />
 
             <Setter Property="Template">
@@ -308,7 +308,7 @@
                 <Setter Property="Foreground" Value="Red" />
             </Trigger>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{DynamicResource FocusColor}" />
+                <Setter Property="Opacity" Value="0.7" />
             </Trigger>
         </Style.Triggers>
     </Style>

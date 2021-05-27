@@ -325,14 +325,9 @@ namespace Library.MVVM.ViewModel
             {
                 using (DatabaseContext db = new DatabaseContext())
                 {
-                    var book = db.Books.FirstOrDefault(b => b.BookId == SelectedBook.BookId);
-                    var users = db.Users.Include("Books").Where(u => u.Books.Contains(book)).ToList();
-                    foreach (User user in users)
-                    {
-                        db.Users.Include("Books").FirstOrDefault(u => u.UserId == user.UserId).Books.Remove(book);
-                    }
-                    db.Books.Remove(book);
-                    //db.SaveChanges();
+                    db.Books.Remove(db.Books.FirstOrDefault(b => b.BookId == SelectedBook.BookId));
+                    db.SaveChanges();
+                    BookList = db.Books.ToList();
                 }
             }, o =>
             {

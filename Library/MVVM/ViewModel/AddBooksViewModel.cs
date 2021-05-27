@@ -363,6 +363,7 @@ namespace Library.MVVM.ViewModel
                     imgData = new byte[fs.Length];
                     fs.Read(imgData, 0, imgData.Length);
                 }
+                ImageData = imgData;
             });
             #endregion
 

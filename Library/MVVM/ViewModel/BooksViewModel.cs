@@ -34,6 +34,7 @@ namespace Library.MVVM.ViewModel
 
         //Commands
         public RelayCommand ResetCommand { get; set; }
+        public RelayCommand RefreshCommand { get; set; }
 
         //Bindable properties
         #region BookSearch
@@ -93,7 +94,7 @@ namespace Library.MVVM.ViewModel
                 {
                     FilterTagList.Add(SelTag);
                     //MessageBox.Show(FilterTagList.Count.ToString());
-                    ChangeBookList();
+                    Task.Run(ChangeBookList);
                     TagList.Remove(SelTag);
                     SelTag = null;
                 }
@@ -131,7 +132,7 @@ namespace Library.MVVM.ViewModel
                     FilterTagList.Remove(FilterSelTag);
                     FilterSelTag = null;
                 }
-                ChangeBookList();
+                Task.Run(ChangeBookList);
             }
         }
         #endregion
@@ -151,7 +152,7 @@ namespace Library.MVVM.ViewModel
         }
         #endregion
 
-        #region FavsChecked
+        #region IsSearching
         private bool _FavsCheck;
 
         public bool FavsCheck
@@ -163,6 +164,20 @@ namespace Library.MVVM.ViewModel
                 OnPropertyChanged();
                 Task.Run(ChangeBookList);
                 //ChangeBookList();
+            }
+        }
+        #endregion
+
+        #region IsSearching
+        private bool _IsSearching = false;
+
+        public bool IsSearching
+        {
+            get { return _IsSearching; }
+            set
+            {
+                _IsSearching = value;
+                OnPropertyChanged();
             }
         }
         #endregion
@@ -217,6 +232,11 @@ namespace Library.MVVM.ViewModel
                                 BookList = BookList.OrderBy(b => b.Author).ToList();
                                 break;
                             }
+                        case 2:
+                            {
+                                BookList = BookList.OrderBy(b => b.Downloads).ToList();
+                                break;
+                            }
                         default:
                             break;
                     }
@@ -254,6 +274,13 @@ namespace Library.MVVM.ViewModel
                 TagList = baseTagList;
                 BookList = baseBookList;
             });
+            #endregion
+
+            #region Refreshs
+            RefreshCommand = new RelayCommand(o =>
+                {
+                    ChangeBookList();
+                }); 
             #endregion
 
             Instance = this;

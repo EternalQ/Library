@@ -28,6 +28,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition />
                     <ColumnDefinition />
+                    <ColumnDefinition />
                 </Grid.ColumnDefinitions>
 
                 <Button
@@ -36,7 +37,15 @@
                     Content="Reset"
                     Style="{StaticResource CancelButton}" />
 
-                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                <Button
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    BorderBrush="{StaticResource PrimaryHueDarkBrush}"
+                    Command="{Binding RefreshCommand}"
+                    Content="Refresh"
+                    Style="{StaticResource CancelButton}" />
+
+                <StackPanel Grid.Column="2" VerticalAlignment="Center">
                     <TextBlock
                         Margin="0,0,0,10"
                         HorizontalAlignment="Center"
@@ -71,6 +80,7 @@
                     SelectedIndex="{Binding SortIndex}">
                     <ComboBoxItem Content="Name" Tag="Name" />
                     <ComboBoxItem Content="Author Name" Tag="AuthorName" />
+                    <ComboBoxItem Content="Downloads" Tag="Downloads" />
                 </ComboBox>
             </Grid>
 
@@ -210,8 +220,8 @@
 
                                     <Grid Grid.Column="1" Margin="10,0,0,0">
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="35" />
-                                            <RowDefinition Height="35" />
+                                            <RowDefinition Height="30" />
+                                            <RowDefinition Height="30" />
                                             <RowDefinition />
                                         </Grid.RowDefinitions>
 
@@ -245,12 +255,18 @@
                                 </Grid>
                             </Expander.Header>
 
-                            <Grid Width="370" Height="90">
+                            <Grid Width="370" Height="110">
                                 <Grid.RowDefinitions>
                                     <RowDefinition />
-                                    <RowDefinition Height="20" />
-                                    <RowDefinition Height="30" />
+                                    <RowDefinition Height="25" />
+                                    <RowDefinition Height="40" />
                                 </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="50" />
+                                </Grid.ColumnDefinitions>
 
                                 <TextBlock
                                     Margin="5,5"
@@ -260,52 +276,67 @@
 
                                 <TextBlock
                                     Grid.Row="1"
-                                    Margin="0,0,45,0"
+                                    Grid.Column="0"
+                                    Margin="0,0,0,0"
                                     HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="15"
+                                    Text="{Binding Downloads}" />
+
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="0,0,0,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
                                     FontSize="15"
                                     Text="Downloads" />
 
                                 <TextBlock
                                     Grid.Row="1"
-                                    Margin="0,0,8,0"
-                                    HorizontalAlignment="Right"
-                                    FontSize="15"
-                                    Text="In Fav" />
+                                    Grid.Column="2"
+                                    Margin="0,0,5,0"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Text="To Fav" />
 
-                                <Grid Grid.Row="2">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition Width="50" />
-                                    </Grid.ColumnDefinitions>
+                                <Button
+                                    Grid.Row="2"
+                                    Width="100"
+                                    Command="{Binding DownloadFB2Command}"
+                                    Content="FB2"
+                                    Style="{StaticResource MainButton}" />
 
-                                    <Button
-                                        Width="100"
-                                        Command="{Binding DownloadFB2Command}"
-                                        Content="FB2"
-                                        Style="{StaticResource MainButton}" />
+                                <Button
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    Width="100"
+                                    Command="{Binding DownloadEPUBCommand}"
+                                    Content="EPUB"
+                                    Style="{StaticResource MainButton}" />
 
-                                    <Button
-                                        Grid.Column="1"
-                                        Width="100"
-                                        Command="{Binding DownloadEPUBCommand}"
-                                        Content="EPUB"
-                                        Style="{StaticResource MainButton}" />
+                                <ToggleButton
+                                    Grid.Row="2"
+                                    Grid.Column="2"
+                                    Background="{x:Null}"
+                                    BorderBrush="{x:Null}"
+                                    BorderThickness="0"
+                                    Checked="ToggleButton_Checked"
+                                    IsChecked="{Binding InFavs}"
+                                    Style="{StaticResource LikeToggleButton}"
+                                    Unchecked="ToggleButton_Unchecked" />
 
-                                    <ToggleButton
-                                        Grid.Column="2"
-                                        Background="{x:Null}"
-                                        BorderBrush="{x:Null}"
-                                        BorderThickness="0"
-                                        Checked="ToggleButton_Checked"
-                                        IsChecked="{Binding InFavs}"
-                                        Style="{StaticResource LikeToggleButton}"
-                                        Unchecked="ToggleButton_Unchecked" />
-                                </Grid>
                             </Grid>
                         </Expander>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
+                <ListBox.Effect>
+                    <DropShadowEffect
+                        BlurRadius="10"
+                        Opacity="0.7"
+                        ShadowDepth="4" />
+                </ListBox.Effect>
                 <ListBox.Style>
                     <Style BasedOn="{StaticResource MaterialDesignListBox}" TargetType="{x:Type ListBox}">
                         <Style.Triggers>
@@ -319,6 +350,20 @@
                                                 FontSize="16"
                                                 FontStyle="Italic"
                                                 Text="Nothing found" />
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType={x:Type viewmodel:BooksViewModel}}, Path=IsSearching}" Value="true">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate>
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontSize="16"
+                                                FontStyle="Italic"
+                                                Text="Searching" />
                                         </ControlTemplate>
                                     </Setter.Value>
                                 </Setter>

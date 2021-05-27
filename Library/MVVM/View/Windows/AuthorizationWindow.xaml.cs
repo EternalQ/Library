@@ -31,10 +31,15 @@ namespace Library.Windows
 
             using (DatabaseContext db = new DatabaseContext())
             {
+                Action<bool> succesAction = o =>
+                {
+                    //Cancel.Execute(o);
+                };
+
                 if (db.Users.Count() == 0)
                 {
                     RegistrationProvider provider = new RegistrationProvider();
-                    provider.SendRequest("Admin", "Admin", null);
+                    provider.SendRequest("Admin", "Admin", succesAction);
                 }
 
                 if (db.Tags.Count() == 0)
@@ -63,7 +68,7 @@ namespace Library.Windows
                     };
 
                     db.Tags.AddRange(tags);
-
+                    db.SaveChanges();
                     tags = null;
                 }
             }

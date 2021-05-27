@@ -2,6 +2,7 @@
 using Microsoft.Win32;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 
 namespace Library.MVVM.Model
 {
@@ -16,8 +17,11 @@ namespace Library.MVVM.Model
         public string Name { get; set; }
         public string Author { get; set; }
         public string Description { get; set; }
+        public int Downloads { get; set; }
         [NotMapped]
         public bool InFavs { get; set; }
+
+        #region TagsAsString
         [NotMapped]
         public string TagsTxt { get => GetTags(); }
 
@@ -27,15 +31,14 @@ namespace Library.MVVM.Model
 
             if (tags != null)
                 foreach (Tag tag in Tags)
-                    tags += $"{tag.Name}, ";
+                    tags += $"{tag.Name} ";
 
             return tags;
         }
+        #endregion
 
         public List<Tag> Tags { get; set; }
         public List<User> Users { get; set; }
-
-        public Book() { }
 
         #region DownloadCommands
         public RelayCommand DownloadFB2Command
@@ -50,6 +53,11 @@ namespace Library.MVVM.Model
                 {
                     var fs = sfd.OpenFile();
                     fs.Write(DataFB2, 0, DataFB2.Length);
+                    using (DatabaseContext db = new DatabaseContext())
+                    {
+                        db.Books.FirstOrDefault(b => b.Name == this.Name).Downloads += 1;
+                        db.SaveChanges();
+                    }
                 }
             }, o =>
             {
@@ -72,6 +80,11 @@ namespace Library.MVVM.Model
                 {
                     var fs = sfd.OpenFile();
                     fs.Write(DataFB2, 0, DataFB2.Length);
+                    using (DatabaseContext db = new DatabaseContext())
+                    {
+                        db.Books.FirstOrDefault(b => b.Name == this.Name).Downloads += 1;
+                        db.SaveChanges();
+                    }
                 }
             }, o =>
             {
@@ -82,6 +95,8 @@ namespace Library.MVVM.Model
             });
         }
         #endregion
+
+        public Book() { }
 
         public Book(string name, string author, string description, byte[] image, byte[] dataFB2, byte[] dataEPUB)
         {
