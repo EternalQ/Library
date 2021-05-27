@@ -4,6 +4,7 @@ using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace Library.MVVM.ViewModel
 {
@@ -91,6 +92,8 @@ namespace Library.MVVM.ViewModel
                 ClearErrors();
                 if (_Name == "")
                     AddError("Can't be empty");
+                if (!Regex.IsMatch(value, @"^[a-zA-Z0-9-_\-\.\s]*$"))
+                    AddError("Latins letters only");
                 using (DatabaseContext db = new DatabaseContext())
                 {
                     if (db.Books.FirstOrDefault(b => b.Name == _Name) != null)
@@ -113,6 +116,8 @@ namespace Library.MVVM.ViewModel
                 ClearErrors();
                 if (_AuthorName == "")
                     AddError("Can't be empty");
+                if (!Regex.IsMatch(value, @"^[a-zA-Z0-9-_\-\.\s]*$"))
+                    AddError("Latins letters only");
                 OnPropertyChanged();
             }
         }
@@ -130,6 +135,8 @@ namespace Library.MVVM.ViewModel
                 ClearErrors();
                 if (_Description == "")
                     AddError("Can't be empty");
+                if (!Regex.IsMatch(value, @"^[a-zA-Z0-9-_\-\.\s]*$"))
+                    AddError("Latins letters only");
                 OnPropertyChanged();
             }
         }
@@ -229,6 +236,11 @@ namespace Library.MVVM.ViewModel
             set
             {
                 _BookTags = value;
+                ClearErrors();
+                if (BookTags.Count() < 1)
+                    AddError("Min tags: 1");
+                if (BookTags.Count() > 5)
+                    AddError("Max tags: 5");
                 OnPropertyChanged();
             }
         }
@@ -250,6 +262,20 @@ namespace Library.MVVM.ViewModel
                     BookTags.Remove(SelectedBookTag);
                     SelectedBookTag = null;
                 }
+            }
+        }
+        #endregion
+
+        #region TagError
+        private string _TagError;
+
+        public string TagError
+        {
+            get { return _TagError; }
+            set
+            {
+                _TagError = value;
+                OnPropertyChanged();
             }
         }
         #endregion
@@ -314,6 +340,12 @@ namespace Library.MVVM.ViewModel
                     return;
                 }
 
+                if (BookTags.Count() < 1 || BookTags.Count() > 5)
+                {
+                    TagError = "Min 1, Max 5";
+                    return;
+                }
+
                 using (DatabaseContext db = new DatabaseContext())
                 {
                     if (db.Books.FirstOrDefault(b => b.Name == Name) == null)
@@ -355,7 +387,7 @@ namespace Library.MVVM.ViewModel
             {
                 OpenFileDialog ofd = new OpenFileDialog();
                 ofd.Title = "Add Image";
-                ofd.Filter = "Image Files(*.BMP;*.JPG;*.GIF)|*.BMP;*.JPG;*.GIF|All files (*.*)|*.*";
+                ofd.Filter = "Image Files(*.BMP;*.JPG;*.GIF)|*.BMP;*.JPG;*.GIF";
                 if (ofd.ShowDialog() == true)
                 {
                     ImageSource = ofd.FileName;

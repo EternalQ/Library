@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Library.Core;
 using Library.MVVM.Model;
 
@@ -138,6 +139,8 @@ namespace Library.MVVM.ViewModel
                 ClearErrors();
                 if (_Name == "")
                     AddError("Can't be empty");
+                if (!Regex.IsMatch(value, @"^[a-zA-Z0-9-_\-\.\s]*$"))
+                    AddError("Latins letters only");
                 using (DatabaseContext db = new DatabaseContext())
                 {
                     if (db.Books.FirstOrDefault(b => b.Name == _Name && Name != name) != null)
@@ -158,6 +161,8 @@ namespace Library.MVVM.ViewModel
             {
                 _AuthorName = value;
                 ClearErrors();
+                if (!Regex.IsMatch(value, @"^[a-zA-Z0-9-_\-\.\s]*$"))
+                    AddError("Latins letters only");
                 if (_AuthorName == "")
                     AddError("Can't be empty");
                 OnPropertyChanged();
@@ -175,6 +180,8 @@ namespace Library.MVVM.ViewModel
             {
                 _Description = value;
                 ClearErrors();
+                if (!Regex.IsMatch(value, @"^[a-zA-Z0-9-_\-\.\s]*$"))
+                    AddError("Latins letters only");
                 if (_Description == "")
                     AddError("Can't be empty");
                 OnPropertyChanged();
@@ -191,6 +198,9 @@ namespace Library.MVVM.ViewModel
             set
             {
                 _TagName = value;
+                ClearErrors();
+                if (!Regex.IsMatch(value, @"^[a-zA-Z-\\s]+$"))
+                    AddError("Latins letters only");
                 OnPropertyChanged();
             }
         }

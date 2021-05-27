@@ -54,6 +54,7 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="30" />
                         <RowDefinition Height="40" />
+                        <RowDefinition Height="20" />
                         <RowDefinition />
                         <RowDefinition Height="50" />
                     </Grid.RowDefinitions>
@@ -75,8 +76,36 @@
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                         Text="{Binding BookSearch, UpdateSourceTrigger=PropertyChanged}" />
 
+                    <Grid Grid.Row="2" Margin="0,5,10,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="40" />
+                            <ColumnDefinition Width="165" />
+                            <ColumnDefinition Width="60" />
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="12"
+                            Text="Id" />
+
+                        <TextBlock
+                            Grid.Column="1"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="12"
+                            Text="Name" />
+
+                        <TextBlock
+                            Grid.Column="2"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontSize="12"
+                            Text="Loads" />
+                    </Grid>
+
                     <ListBox
-                        Grid.Row="2"
+                        Grid.Row="3"
                         Margin="0,0,10,0"
                         ItemsSource="{Binding BookList}"
                         SelectedItem="{Binding SelectedBook, Mode=TwoWay}">
@@ -327,7 +356,12 @@
                         </ListBox.Style>
                     </ListBox>
 
-                    <Grid Grid.Row="3" VerticalAlignment="Bottom">
+                    <Grid
+                        Grid.Row="3"
+                        VerticalAlignment="Bottom"
+                        IsEnabled="False"
+                        ToolTip="Item disabled"
+                        ToolTipService.Placement="Top">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />

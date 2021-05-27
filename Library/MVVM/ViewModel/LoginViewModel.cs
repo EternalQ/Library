@@ -9,6 +9,7 @@ namespace Library.MVVM.ViewModel
 {
     class LoginViewModel : ObservableObject
     {
+        #region Singleton
         private static LoginViewModel instance;
 
         public static LoginViewModel Instance
@@ -22,7 +23,8 @@ namespace Library.MVVM.ViewModel
                 return instance;
             }
             set => instance = value;
-        }
+        } 
+        #endregion
 
         public RelayCommand Registration { get; set; }
         public RelayCommand Signin { get; set; }

@@ -86,6 +86,8 @@ namespace Library.MVVM.ViewModel
                 ClearErrors();
                 if (value == "" || value == null)
                     AddError("Login can't be empty");
+                if (!Regex.IsMatch(value, @"^[a-zA-Z-_\.\s]*$"))
+                    AddError("Latins letters only");
                 _Login = value;
                 OnPropertyChanged();
             }
@@ -101,6 +103,9 @@ namespace Library.MVVM.ViewModel
             set
             {
                 _Name = value;
+                ClearErrors();
+                if (!Regex.IsMatch(value, @"^[a-zA-Z-\-\s]*$"))
+                    AddError("Latins letters only");
                 OnPropertyChanged();
             }
         }
@@ -115,6 +120,9 @@ namespace Library.MVVM.ViewModel
             set
             {
                 _SecName = value;
+                ClearErrors();
+                if (!Regex.IsMatch(value, @"^[a-zA-Z-\-\s]*$"))
+                    AddError("Latins letters only");
                 OnPropertyChanged();
             }
         }

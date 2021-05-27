@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Library.Core;
 using Library.MVVM.Model;
 using Microsoft.Win32;
@@ -91,6 +92,8 @@ namespace Library.MVVM.ViewModel
                 ClearErrors();
                 if (_Name == "")
                     AddError("Can't be empty");
+                if (!Regex.IsMatch(value, @"^[a-zA-Z0-9-_\-\.\s]*$"))
+                    AddError("Latins letters only");
                 using (DatabaseContext db = new DatabaseContext())
                 {
                     if (db.Books.FirstOrDefault(b => b.Name == _Name) != null)
@@ -113,6 +116,8 @@ namespace Library.MVVM.ViewModel
                 ClearErrors();
                 if (_AuthorName == "")
                     AddError("Can't be empty");
+                if (!Regex.IsMatch(value, @"^[a-zA-Z0-9-_\-\.\s]*$"))
+                    AddError("Latins letters only");
                 OnPropertyChanged();
             }
         }
@@ -130,6 +135,8 @@ namespace Library.MVVM.ViewModel
                 ClearErrors();
                 if (_Description == "")
                     AddError("Can't be empty");
+                if (!Regex.IsMatch(value, @"^[a-zA-Z0-9-_\-\.\s]*$"))
+                    AddError("Latins letters only");
                 OnPropertyChanged();
             }
         }
@@ -213,8 +220,8 @@ namespace Library.MVVM.ViewModel
                 if (TagList.Contains(SelectedTag) && !BookTags.Contains(SelectedTag))
                 {
                     BookTags.Add(SelectedTag);
-                    //SelectedTag = null;
                     TagList.Remove(SelectedTag);
+                    SelectedTag = null;
                 }
             }
         }
@@ -248,9 +255,24 @@ namespace Library.MVVM.ViewModel
                 {
                     TagList.Add(SelectedBookTag);
                     BookTags.Remove(SelectedBookTag);
+                    SelectedBookTag = null;
                 }
             }
         }
+        #endregion
+
+        #region TagError
+        private string _TagError;
+
+        public string TagError
+        {
+            get { return _TagError; }
+            set
+            {
+                _TagError = value;
+                OnPropertyChanged();
+            }
+        } 
         #endregion
 
         public AddBookUserViewModel()
@@ -277,6 +299,12 @@ namespace Library.MVVM.ViewModel
                 if (fb2Data == null && epubData == null)
                 {
                     DataError = "Add some of data sources";
+                    return;
+                }
+
+                if (BookTags.Count() < 1 || BookTags.Count() > 5)
+                {
+                    TagError = "Min 1, Max 5";
                     return;
                 }
 
@@ -326,7 +354,7 @@ namespace Library.MVVM.ViewModel
             {
                 OpenFileDialog ofd = new OpenFileDialog();
                 ofd.Title = "Add FB2";
-                ofd.Filter = "FB2 Files(*.FB2)|*.FB2|All files (*.*)|*.*";
+                ofd.Filter = "FB2 Files(*.FB2)|*.FB2";
                 if (ofd.ShowDialog() == true)
                 {
                     FB2Source = ofd.FileName;
@@ -342,7 +370,7 @@ namespace Library.MVVM.ViewModel
             {
                 OpenFileDialog ofd = new OpenFileDialog();
                 ofd.Title = "Add EPUB";
-                ofd.Filter = "EPUB Files(*.EPUB)|*.EPUB|All files (*.*)|*.*";
+                ofd.Filter = "EPUB Files(*.EPUB)|*.EPUB";
                 if (ofd.ShowDialog() == true)
                 {
                     EPUBSource = ofd.FileName;

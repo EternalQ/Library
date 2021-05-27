@@ -48,7 +48,7 @@ namespace Library.MVVM.Model
                 SaveFileDialog sfd = new SaveFileDialog();
                 sfd.Title = $"Save {Name} as FB2";
                 sfd.FileName = $"{Author}_{Name}.fb2";
-                sfd.Filter = "FB2 Files(*.FB2)|*.FB2|All files (*.*)|*.*";
+                sfd.Filter = "FB2 Files(*.FB2)|*.FB2";
                 if (sfd.ShowDialog() == true)
                 {
                     var fs = sfd.OpenFile();
@@ -75,7 +75,7 @@ namespace Library.MVVM.Model
                 SaveFileDialog sfd = new SaveFileDialog();
                 sfd.Title = $"Save {Name} as FB2";
                 sfd.FileName = $"{Author}_{Name}.epub";
-                sfd.Filter = "EPUB Files(*.EPUB)|*.EPUB|All files (*.*)|*.*";
+                sfd.Filter = "EPUB Files(*.EPUB)|*.EPUB";
                 if (sfd.ShowDialog() == true)
                 {
                     var fs = sfd.OpenFile();
