@@ -135,7 +135,7 @@ namespace Library.MVVM.ViewModel
                 ClearErrors();
                 if (_Description == "")
                     AddError("Can't be empty");
-                if (!Regex.IsMatch(value, @"^[a-zA-Z0-9-_\-\.\s]*$"))
+                if (!Regex.IsMatch(value, @"^[a-zA-Z0-9-_\-\.'\s]*$"))
                     AddError("Latins letters only");
                 OnPropertyChanged();
             }
@@ -236,11 +236,6 @@ namespace Library.MVVM.ViewModel
             set
             {
                 _BookTags = value;
-                ClearErrors();
-                if (BookTags.Count() < 1)
-                    AddError("Min tags: 1");
-                if (BookTags.Count() > 5)
-                    AddError("Max tags: 5");
                 OnPropertyChanged();
             }
         }
@@ -282,49 +277,6 @@ namespace Library.MVVM.ViewModel
 
         public AddBooksViewModel(Book newbook)
         {
-            #region OnBookOpeningFilling
-            if (newbook != null)
-            {
-                using (DatabaseContext db = new DatabaseContext())
-                {
-                    newbook = db.Books.Include("Tags").FirstOrDefault(b => b.BookId == newbook.BookId);
-                    Name = newbook.Name;
-                    AuthorName = newbook.Author;
-                    Description = newbook.Description;
-                    BookTags = new ObservableCollection<Tag>();
-                    foreach (Tag tag in newbook.Tags)
-                        BookTags.Add(tag);
-                }
-                if (newbook.Image != null)
-                {
-                    ImageSource = "Uploaded";
-                    imgData = newbook.Image;
-                    ImageData = newbook.Image;
-                }
-                if (newbook.DataFB2 != null)
-                {
-                    FB2Source = "Uploaded";
-                    fb2Data = newbook.DataFB2;
-                }
-                if (newbook.DataEPUB != null)
-                {
-                    EPUBSource = "Uploaded";
-                    epubData = newbook.DataEPUB;
-                }
-            }
-            #endregion
-
-            using (DatabaseContext db = new DatabaseContext())
-            {
-                if (BookTags == null)
-                    BookTags = new ObservableCollection<Tag>();
-                baseTagList = new ObservableCollection<Tag>(db.Tags.OrderBy(t => t.Name).ToList());
-                TagList = baseTagList;
-                foreach (Tag tag in BookTags)
-                    TagList.Remove(baseTagList.FirstOrDefault(t=>t.Name == tag.Name));
-            }
-
-            //add rewriting
             #region AddBook
             AddBook = new RelayCommand(o =>
             {
@@ -333,18 +285,24 @@ namespace Library.MVVM.ViewModel
                     ImageError = "Add Image";
                     return;
                 }
+                else
+                    ImageError = "";
 
                 if (fb2Data == null && epubData == null)
                 {
                     DataError = "Add some of data sources";
                     return;
                 }
+                else
+                    DataError = "";
 
                 if (BookTags.Count() < 1 || BookTags.Count() > 5)
                 {
                     TagError = "Min 1, Max 5";
                     return;
                 }
+                else
+                    TagError = "";
 
                 using (DatabaseContext db = new DatabaseContext())
                 {
@@ -382,6 +340,116 @@ namespace Library.MVVM.ViewModel
              });
             #endregion
 
+            #region OnBookOpeningFilling
+            if (newbook != null)
+            {
+                using (DatabaseContext db = new DatabaseContext())
+                {
+                    newbook = db.Books.Include("Tags").FirstOrDefault(b => b.BookId == newbook.BookId);
+                    Name = newbook.Name;
+                    AuthorName = newbook.Author;
+                    Description = newbook.Description;
+                    BookTags = new ObservableCollection<Tag>();
+                    foreach (Tag tag in newbook.Tags)
+                        BookTags.Add(tag);
+                }
+
+                if (newbook.Image != null)
+                {
+                    ImageSource = "Uploaded";
+                    imgData = newbook.Image;
+                    ImageData = newbook.Image;
+                }
+
+                if (newbook.DataFB2 != null)
+                {
+                    FB2Source = "Uploaded";
+                    fb2Data = newbook.DataFB2;
+                }
+
+                if (newbook.DataEPUB != null)
+                {
+                    EPUBSource = "Uploaded";
+                    epubData = newbook.DataEPUB;
+                }
+
+                #region AddBook
+                AddBook = new RelayCommand(o =>
+                {
+                    if (string.IsNullOrWhiteSpace(ImageSource))
+                    {
+                        ImageError = "Add Image";
+                        return;
+                    }
+                    else
+                        ImageError = "";
+
+                    if (fb2Data == null && epubData == null)
+                    {
+                        DataError = "Add some of data sources";
+                        return;
+                    }
+                    else
+                        DataError = "";
+
+                    if (BookTags.Count() < 1 || BookTags.Count() > 5)
+                    {
+                        TagError = "Min 1, Max 5";
+                        return;
+                    }
+                    else
+                        TagError = "";
+
+                    using (DatabaseContext db = new DatabaseContext())
+                    {
+                        if (db.Books.FirstOrDefault(b => b.BookId == newbook.BookId) != null)
+                        {
+                            db.Books.FirstOrDefault(b => b.BookId == newbook.BookId).Name = Name;
+                            db.Books.FirstOrDefault(b => b.BookId == newbook.BookId).Author = AuthorName;
+                            db.Books.FirstOrDefault(b => b.BookId == newbook.BookId).Description = Description;
+                            db.Books.FirstOrDefault(b => b.BookId == newbook.BookId).DataEPUB = epubData;
+                            db.Books.FirstOrDefault(b => b.BookId == newbook.BookId).DataFB2 = fb2Data;
+                            db.Books.FirstOrDefault(b => b.BookId == newbook.BookId).Image = imgData;
+                            foreach (Tag tag in BookTags)
+                                db.Books.Include("Tags").FirstOrDefault(b => b.BookId == newbook.BookId).Tags.Add(db.Tags.FirstOrDefault(t => t.Name == tag.Name));
+                        }
+                        else
+                        {
+                            Book book = new Book(Name, AuthorName, Description, imgData, fb2Data, epubData);
+                            db.Books.Add(book);
+                            db.SaveChanges();
+                            foreach (Tag tag in BookTags.ToList())
+                            {
+                                db.Books.Include("Tags").FirstOrDefault(b => b.Name == book.Name).Tags.Add(db.Tags.FirstOrDefault(t => t.Name == tag.Name));
+                            }
+                        }
+
+                        db.SaveChanges();
+                        AdminWindViewModel.Instance.ToBooksCommand.Execute(null);
+                        //MessageBox.Show(book.Tags.Count.ToString());
+                    }
+                }, o =>
+                {
+                    if (String.IsNullOrWhiteSpace(Name) || String.IsNullOrWhiteSpace(AuthorName) ||
+                    String.IsNullOrWhiteSpace(Description))
+                        return false;
+                    return true;
+                });
+                #endregion
+            }
+            #endregion
+
+            using (DatabaseContext db = new DatabaseContext())
+            {
+                if (BookTags == null)
+                    BookTags = new ObservableCollection<Tag>();
+                baseTagList = new ObservableCollection<Tag>(db.Tags.OrderBy(t => t.Name).ToList());
+                TagList = baseTagList;
+                foreach (Tag tag in BookTags)
+                    TagList.Remove(baseTagList.FirstOrDefault(t => t.Name == tag.Name));
+            }
+
+            //add rewriting
             #region AddImg
             AddImage = new RelayCommand(o =>
             {

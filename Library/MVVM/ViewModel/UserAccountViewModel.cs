@@ -119,6 +119,7 @@ namespace Library.MVVM.ViewModel
             get { return _Password; }
             set
             {
+                _Password = value;
                 Dictionary<string, string> loginValidation = new Dictionary<string, string>()
                 {
                     {"(?=.*[0-9a-zA-Z])", "Allowed numbers and latin letters only"},
@@ -128,13 +129,13 @@ namespace Library.MVVM.ViewModel
                     {"(?=.{6,15})", "Length must be 6-15 symbols"}
                 };
                 ClearErrors();
+                if(_Password != "")
                 foreach (var pattern in loginValidation.Keys)
                     if (!Regex.IsMatch(value, pattern))
                     {
                         AddError(loginValidation[pattern]);
                         break;
                     }
-                _Password = value;
                 OnPropertyChanged();
             }
         }
@@ -193,10 +194,10 @@ namespace Library.MVVM.ViewModel
             {
                 using (DatabaseContext db = new DatabaseContext())
                 {
-                    db.Users.Include("UserCard").FirstOrDefault(u => u.Login == newuser.Login).Login = Login;
-                    db.Users.Include("UserCard").FirstOrDefault(u => u.Login == newuser.Login).Card.Email = Email;
-                    db.Users.Include("UserCard").FirstOrDefault(u => u.Login == newuser.Login).Card.FirstName = Name;
-                    db.Users.Include("UserCard").FirstOrDefault(u => u.Login == newuser.Login).Card.SecondName = SecondName;
+                    db.Users.Include("Card").FirstOrDefault(u => u.Login == newuser.Login).Login = Login;
+                    db.Users.Include("Card").FirstOrDefault(u => u.Login == newuser.Login).Card.Email = Email;
+                    db.Users.Include("Card").FirstOrDefault(u => u.Login == newuser.Login).Card.FirstName = Name;
+                    db.Users.Include("Card").FirstOrDefault(u => u.Login == newuser.Login).Card.SecondName = SecondName;
                     db.SaveChanges();
                 }
             }, o =>

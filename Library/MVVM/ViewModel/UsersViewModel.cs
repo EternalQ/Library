@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
+using System.Windows;
 using Library.Core;
 using Library.MVVM.Model;
 
@@ -53,9 +54,18 @@ namespace Library.MVVM.ViewModel
             }
 
             Login = selected.Login;
-            Name = card.FirstName;
-            SecondName = card.SecondName;
-            Email = card.Email;
+            if (!string.IsNullOrWhiteSpace(card.Email))
+                Email = card.Email;
+            else
+                Email = "";
+            if (!string.IsNullOrWhiteSpace(card.FirstName))
+                Name = card.FirstName;
+            else
+                Name = "";
+            if (!string.IsNullOrWhiteSpace(card.SecondName))
+                SecondName = card.SecondName;
+            else
+                SecondName = "";
             IsUserSelected = true;
             UserBookList = selected.Books;
         }
@@ -140,7 +150,7 @@ namespace Library.MVVM.ViewModel
                 Dictionary<string, string> emailValidation = new Dictionary<string, string>()
                 {
                     //{@"^([a-z0-9_-]+\.)*[a-z0-9_-]+@[a-z0-9_-]+(\.[a-z0-9_-]+)*\.[a-z]{2,6}$", "Wrong E-Mail"},
-                    {@"^[a-zA-Z].[a-zA-Z0-9]*@[a-zA-Z].[a-zA-Z0-9]*\.[a-zA-Z0-9]{2,6}$", "Wrong E-Mail"}
+                    {@"^([a-zA-Z].[a-zA-Z0-9]*@[a-zA-Z].[a-zA-Z0-9]*\.[a-zA-Z0-9]{2,6})?$", "Wrong E-Mail"}
                 };
                 ClearErrors();
                 if (value != null)

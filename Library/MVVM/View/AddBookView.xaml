@@ -304,7 +304,7 @@
                 Margin="30,0,30,0"
                 HorizontalAlignment="Left"
                 Command="{Binding Cancel}"
-                Content="Clear"
+                Content="Cancel"
                 Style="{StaticResource CancelButton}" />
 
         </Grid>

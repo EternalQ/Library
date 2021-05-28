@@ -216,7 +216,7 @@ namespace Library.MVVM.ViewModel
                 if (FavsCheck)
                     BookList = Account.Books.ToList();
                 if (!string.IsNullOrEmpty(BookSearch))
-                    BookList = BookList.Where(b => b.Name.Trim().Contains(BookSearch.Trim())).ToList();
+                    BookList = BookList.Where(b => b.Name.Trim().ToLower().Contains(BookSearch.Trim().ToLower())).ToList();
                 if (FilterTagList.Count != 0)
                     BookList = BookList.Where(b => TagsCheck(b)).ToList();
                 if (SortIndex != null)
@@ -234,7 +234,7 @@ namespace Library.MVVM.ViewModel
                             }
                         case 2:
                             {
-                                BookList = BookList.OrderBy(b => b.Downloads).ToList();
+                                BookList = BookList.OrderByDescending(b => b.Downloads).ToList();
                                 break;
                             }
                         default:

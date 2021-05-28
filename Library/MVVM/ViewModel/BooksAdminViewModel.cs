@@ -180,7 +180,7 @@ namespace Library.MVVM.ViewModel
             {
                 _Description = value;
                 ClearErrors();
-                if (!Regex.IsMatch(value, @"^[a-zA-Z0-9-_\-\.\s]*$"))
+                if (!Regex.IsMatch(value, @"^[a-zA-Z0-9-_\-\.'\s]*$"))
                     AddError("Latins letters only");
                 if (_Description == "")
                     AddError("Can't be empty");
@@ -326,6 +326,7 @@ namespace Library.MVVM.ViewModel
                     db.Books.FirstOrDefault(b => b.BookId == SelectedBook.BookId).Author = AuthorName;
                     db.Books.FirstOrDefault(b => b.BookId == SelectedBook.BookId).Description = Description;
                     db.SaveChanges();
+                    BookList = db.Books.Include("Tags").ToList();
                 }
             });
             #endregion
@@ -412,7 +413,7 @@ namespace Library.MVVM.ViewModel
                 }
 
                 using (DatabaseContext db = new DatabaseContext())
-                    AdminWindViewModel.Instance.CurrentView = new AddBooksViewModel(db.Books.FirstOrDefault(b => b.Name == newbook.Name));
+                    AdminWindViewModel.Instance.CurrentView = new AddBooksViewModel(newbook);
             });
             #endregion
 

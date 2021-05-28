@@ -135,7 +135,7 @@ namespace Library.MVVM.ViewModel
                 ClearErrors();
                 if (_Description == "")
                     AddError("Can't be empty");
-                if (!Regex.IsMatch(value, @"^[a-zA-Z0-9-_\-\.\s]*$"))
+                if (!Regex.IsMatch(value, @"^[a-zA-Z0-9-_\-\.'\s]*$"))
                     AddError("Latins letters only");
                 OnPropertyChanged();
             }
@@ -295,18 +295,24 @@ namespace Library.MVVM.ViewModel
                     ImageError = "Add Image";
                     return;
                 }
+                else
+                    ImageError = "";
 
                 if (fb2Data == null && epubData == null)
                 {
                     DataError = "Add some of data sources";
                     return;
                 }
+                else
+                    DataError = "";
 
                 if (BookTags.Count() < 1 || BookTags.Count() > 5)
                 {
                     TagError = "Min 1, Max 5";
                     return;
                 }
+                else
+                    TagError = "";
 
                 using (DatabaseContext db = new DatabaseContext())
                 {
